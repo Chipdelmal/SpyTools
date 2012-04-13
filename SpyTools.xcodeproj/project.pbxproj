@@ -35,19 +35,19 @@
 		451678BB1537A99A00B45007 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		451678BC1537A99A00B45007 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		451678BD1537A99A00B45007 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		451678C01537A99A00B45007 /* SpyTools-Info.plist */ = {isa = PBXFileReference; path = "SpyTools-Info.plist"; sourceTree = "<group>"; };
+		451678C01537A99A00B45007 /* SpyTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpyTools-Info.plist"; sourceTree = "<group>"; };
 		451678C21537A99A00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		451678C41537A99A00B45007 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		451678C61537A99A00B45007 /* SpyTools-Prefix.pch */ = {isa = PBXFileReference; path = "SpyTools-Prefix.pch"; sourceTree = "<group>"; };
+		451678C61537A99A00B45007 /* SpyTools-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpyTools-Prefix.pch"; sourceTree = "<group>"; };
 		451678C81537A99A00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		451678CA1537A99A00B45007 /* spyAppDelegate.h */ = {isa = PBXFileReference; path = spyAppDelegate.h; sourceTree = "<group>"; };
+		451678CA1537A99A00B45007 /* spyAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spyAppDelegate.h; sourceTree = "<group>"; };
 		451678CB1537A99A00B45007 /* spyAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = spyAppDelegate.m; sourceTree = "<group>"; };
 		451678CE1537A99A00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		451678D51537A99B00B45007 /* SpyToolsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpyToolsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		451678D61537A99B00B45007 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		451678DD1537A99B00B45007 /* SpyToolsTests-Info.plist */ = {isa = PBXFileReference; path = "SpyToolsTests-Info.plist"; sourceTree = "<group>"; };
+		451678DD1537A99B00B45007 /* SpyToolsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpyToolsTests-Info.plist"; sourceTree = "<group>"; };
 		451678DF1537A99B00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		451678E11537A99B00B45007 /* SpyToolsTests.h */ = {isa = PBXFileReference; path = SpyToolsTests.h; sourceTree = "<group>"; };
+		451678E11537A99B00B45007 /* SpyToolsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpyToolsTests.h; sourceTree = "<group>"; };
 		451678E21537A99B00B45007 /* SpyToolsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpyToolsTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
