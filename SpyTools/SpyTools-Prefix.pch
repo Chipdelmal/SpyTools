@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'SpyTools' target in the 'SpyTools' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
