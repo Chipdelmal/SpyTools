@@ -17,6 +17,10 @@
 		451678D81537A99B00B45007 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451678B81537A99A00B45007 /* Cocoa.framework */; };
 		451678E01537A99B00B45007 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 451678DE1537A99B00B45007 /* InfoPlist.strings */; };
 		451678E31537A99B00B45007 /* SpyToolsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 451678E21537A99B00B45007 /* SpyToolsTests.m */; };
+		451EA7B2153DC14A006ECB1D /* sputnik.icns in Resources */ = {isa = PBXBuildFile; fileRef = 451EA7B1153DC14A006ECB1D /* sputnik.icns */; };
+		451EA7B5153DC167006ECB1D /* sputnik.icns in Resources */ = {isa = PBXBuildFile; fileRef = 451EA7B4153DC167006ECB1D /* sputnik.icns */; };
+		45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */; };
+		45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A14153DB1470029B229 /* HSTextEncryptor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,12 @@
 		451678DF1537A99B00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		451678E11537A99B00B45007 /* SpyToolsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpyToolsTests.h; sourceTree = "<group>"; };
 		451678E21537A99B00B45007 /* SpyToolsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpyToolsTests.m; sourceTree = "<group>"; };
+		451EA7B1153DC14A006ECB1D /* sputnik.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sputnik.icns; sourceTree = "<group>"; };
+		451EA7B4153DC167006ECB1D /* sputnik.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sputnik.icns; sourceTree = "<group>"; };
+		45240A0B153DAEE90029B229 /* HSCryptoFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; path = HSCryptoFunctions.h; sourceTree = "<group>"; };
+		45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSCryptoFunctions.m; sourceTree = "<group>"; };
+		45240A13153DB1470029B229 /* HSTextEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTextEncryptor.h; sourceTree = "<group>"; };
+		45240A14153DB1470029B229 /* HSTextEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTextEncryptor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +85,7 @@
 		451678A91537A99900B45007 = {
 			isa = PBXGroup;
 			children = (
+				451EA7B4153DC167006ECB1D /* sputnik.icns */,
 				451678BE1537A99A00B45007 /* SpyTools */,
 				451678DB1537A99B00B45007 /* SpyToolsTests */,
 				451678B71537A99A00B45007 /* Frameworks */,
@@ -114,6 +125,10 @@
 		451678BE1537A99A00B45007 /* SpyTools */ = {
 			isa = PBXGroup;
 			children = (
+				45240A0B153DAEE90029B229 /* HSCryptoFunctions.h */,
+				45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */,
+				45240A13153DB1470029B229 /* HSTextEncryptor.h */,
+				45240A14153DB1470029B229 /* HSTextEncryptor.m */,
 				451678CA1537A99A00B45007 /* spyAppDelegate.h */,
 				451678CB1537A99A00B45007 /* spyAppDelegate.m */,
 				451678CD1537A99A00B45007 /* MainMenu.xib */,
@@ -125,6 +140,7 @@
 		451678BF1537A99A00B45007 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				451EA7B1153DC14A006ECB1D /* sputnik.icns */,
 				451678C01537A99A00B45007 /* SpyTools-Info.plist */,
 				451678C11537A99A00B45007 /* InfoPlist.strings */,
 				451678C41537A99A00B45007 /* main.m */,
@@ -227,6 +243,8 @@
 				451678C31537A99A00B45007 /* InfoPlist.strings in Resources */,
 				451678C91537A99A00B45007 /* Credits.rtf in Resources */,
 				451678CF1537A99A00B45007 /* MainMenu.xib in Resources */,
+				451EA7B2153DC14A006ECB1D /* sputnik.icns in Resources */,
+				451EA7B5153DC167006ECB1D /* sputnik.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +281,8 @@
 			files = (
 				451678C51537A99A00B45007 /* main.m in Sources */,
 				451678CC1537A99A00B45007 /* spyAppDelegate.m in Sources */,
+				45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */,
+				45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +456,7 @@
 				451678E81537A99B00B45007 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		451678E91537A99B00B45007 /* Build configuration list for PBXNativeTarget "SpyToolsTests" */ = {
 			isa = XCConfigurationList;
@@ -444,6 +465,7 @@
 				451678EB1537A99B00B45007 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
