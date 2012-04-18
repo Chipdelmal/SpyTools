@@ -16,6 +16,7 @@
     IBOutlet    NSSegmentedControl  *processActionSelector;
     IBOutlet    NSTextField         *informationLabel;
     IBOutlet    NSTabView           *tabView;
+    IBOutlet    NSButton            *startOverButton;
     /*Text Encryption*/
     IBOutlet    NSBox               *keyGenerationBox;
     IBOutlet    NSTextField         *textToProcessField;
@@ -25,7 +26,7 @@
     IBOutlet    NSTextField         *keyField;
     IBOutlet    NSButton            *processButton;
     IBOutlet    NSTextField         *textProcessedField;
-    IBOutlet    NSButton            *startOverButton;
+    IBOutlet    NSButton            *sendToSteganographyButton;
     /*Text in Image*/
     IBOutlet    NSImageView         *stInputImageWell;
     IBOutlet    NSTextField         *stTextToProcessField;
@@ -34,6 +35,7 @@
     IBOutlet    NSTextField         *stAnalyzeLabel;
     IBOutlet    NSProgressIndicator *stProgressIndicator;
     IBOutlet    NSButton            *stProcessButton;
+    IBOutlet    NSButton            *stSendToTextButton;
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender;
@@ -48,11 +50,13 @@
 -(IBAction)processText:(id)sender;
 -(IBAction)encryptText:(id)sender;
 -(IBAction)decryptText:(id)sender;
+-(IBAction)sendResultToImage:(id)sender;
 /*Text in Image Encryption*/
 -(IBAction)analyzeSpace:(id)sender;
 -(IBAction)encryptTextImage:(id)sender;
 -(IBAction)decryptText:(id)sender;
 -(IBAction)processTextImage:(id)sender;
+-(IBAction)sendResultToText:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

@@ -12,33 +12,32 @@
 
 @synthesize window = _window;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
     [processActionSelector setSelectedSegment:0];
     [informationLabel setStringValue:@"Enter the text to be encrypted."];
     [stProgressIndicator setHidden:TRUE];
+    [sendToSteganographyButton setEnabled:FALSE];
+    [stSendToTextButton setEnabled:FALSE];
+    
     stTextFits = FALSE;
     
     [self processActionSelectorChange:self];
     [self processSequence:self];
-    
-    
-    /*
-    HSTextEncryptor *testObject = [[HSTextEncryptor alloc] initWithNSString:@"Testing Héctor init"];
-    NSString *keyString = [[NSString alloc] initWithString:@"2,3,4,5"];
-    //[testObject stringToProcess];
-    [testObject stringLength];
-    NSString *encryptedString = [testObject encryptStringToProcessWithKey:keyString];
-    
-    HSTextEncryptor *testObject2 = [[HSTextEncryptor alloc] initWithNSString:encryptedString];
-    [testObject2 decryptStringToProcessWithKey:keyString];
-     */
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{
-    //[textToProcessField setStringValue:[textProcessedField stringValue]];
-    //[textProcessedField setStringValue:@""];
     [self processSequence:self];
+}
+-(IBAction)clearInterface:(id)sender{
+    [textToProcessField setStringValue:@""];
+    [keyField setStringValue:@""];
+    [keyLengthTextField setStringValue:@""];
+    [maxRandomValueField setStringValue:@""];
+    [textProcessedField setStringValue:@""];
+    [stTextProcessedField setStringValue:@""];
+    [stTextToProcessField setStringValue:@""];
+    [stInputImageWell setImage:NULL];
+    [self processActionSelectorChange:self];
 }
 -(IBAction)processSequence:(id)sender{
     if ([processActionSelector selectedSegment]==0) {
@@ -57,14 +56,10 @@
         [textProcessedField setTextColor:[NSColor blackColor]];
         [self textDecryptionSequence:self];
         [self textImageDecryptionSequence:self];
-        //[stTextToProcessField setEnabled:FALSE];
-        //[stImageFormatSelector setEnabled:FALSE];
-        //[stAnalyzeLabel setHidden:TRUE];
     }
 }
 -(IBAction)textEncryptionSequence:(id)sender{
     NSLog(@"Interface: Text Encryption Sequence");
-    //NSLog(@"Interface: TextToProcess String: '%@'",[textToProcessField stringValue]);
     if ([[textToProcessField stringValue] length]==0){
         [informationLabel setStringValue:@"Enter a text to encrypt and press Enter."];
         NSLog(@"Interface: No text entered.");
@@ -97,6 +92,12 @@
         [informationLabel setStringValue:@"Your text has been processed."];
         NSLog(@"Interface: Text processed.");
     }
+    
+    if (([[textProcessedField stringValue] length]!=0)&&([processActionSelector selectedSegment]==0)) {
+        [sendToSteganographyButton setEnabled:TRUE];
+    }else {
+        [sendToSteganographyButton setEnabled:FALSE];
+    }
 }
 -(IBAction)textDecryptionSequence:(id)sender{
     NSLog(@"Interface: Text Decryption Sequence");
@@ -128,14 +129,6 @@
         [processButton setEnabled:TRUE];
         [textProcessedField setEnabled:TRUE];
     }
-}
--(IBAction)clearInterface:(id)sender{
-    [textToProcessField setStringValue:@""];
-    [keyField setStringValue:@""];
-    [keyLengthTextField setStringValue:@""];
-    [maxRandomValueField setStringValue:@""];
-    [textProcessedField setStringValue:@""];
-    [self processActionSelectorChange:self];
 }
 -(IBAction)textImageEncryptionSequence:(id)sender{
     if ([[stTextToProcessField stringValue] length]==0) {
@@ -184,6 +177,12 @@
         [informationLabel setStringValue:@"Image is ready to be decrypted."];
     }
     
+    if (([[stTextProcessedField stringValue] length]!=0)&&([processActionSelector selectedSegment]!=0)) {
+        [stSendToTextButton setEnabled:TRUE];
+    }else {
+        [stSendToTextButton setEnabled:FALSE];
+    }
+    
 }
 /*Text encryption*/
 -(IBAction)generateRandomKey:(id)sender{
@@ -222,7 +221,12 @@
     NSString *decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
     NSLog(@"Interface: Decryption Finished With result [%@]", decryptedString);
     [textProcessedField setStringValue:decryptedString];
-    [self textEncryptionSequence:self];
+    [self textDecryptionSequence:self];
+}
+-(IBAction)sendResultToImage:(id)sender{
+    [stTextToProcessField setStringValue:[textProcessedField stringValue]];
+    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:1]];
+    [processActionSelector setSelectedSegment:0];
 }
 /*Text in Image encryption*/
 -(IBAction)analyzeSpace:(id)sender{
@@ -249,7 +253,7 @@
     [informationLabel setStringValue:@"Working. Please wait."];
     [stProgressIndicator setHidden:FALSE];
     [stProgressIndicator startAnimation:self];
-    
+
     NSData *imageData = [[NSData alloc] initWithData:[[stInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor    *imageObject = [[HSImageEncryptor alloc] initWithData:imageData];
     NSBitmapImageRep    *bitmapRep = [imageObject encryptImageWithBits:8 andComponents:3 andString:[stTextToProcessField stringValue]];
@@ -276,6 +280,7 @@
     [informationLabel setStringValue:@"Image succesfully encrypted and saved on your desktop."];
     [stProgressIndicator setHidden:TRUE];
     [stProgressIndicator stopAnimation:self];
+    [self textImageEncryptionSequence:self];
 }
 -(IBAction)decryptTextImage:(id)sender{
     [informationLabel setStringValue:@"Working. Please wait."];
@@ -291,6 +296,7 @@
     [stProgressIndicator setHidden:TRUE];
     [stProgressIndicator stopAnimation:self];
     [informationLabel setStringValue:@"Text successfully decrypted."];
+    [self textImageDecryptionSequence:self];
 }
 -(IBAction)processTextImage:(id)sender{
     if ([processActionSelector selectedSegment]==0) {
@@ -301,5 +307,9 @@
         [self decryptTextImage:self];
     }
 }
-
+-(IBAction)sendResultToText:(id)sender{
+    [textToProcessField setStringValue:[stTextProcessedField stringValue]];
+    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
+    [processActionSelector setSelectedSegment:1];
+}
 @end
