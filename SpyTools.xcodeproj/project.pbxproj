@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45013CB5153F0246007A557F /* HSImageEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45013CB4153F0246007A557F /* HSImageEncryptor.m */; };
+		45013CB7153F0342007A557F /* Security-Camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB6153F0342007A557F /* Security-Camera.icns */; };
+		45013CB9153F03F4007A557F /* camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB8153F03F4007A557F /* camera.icns */; };
+		45013CBD153F049F007A557F /* search.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CBC153F049F007A557F /* search.icns */; };
 		451678B91537A99A00B45007 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451678B81537A99A00B45007 /* Cocoa.framework */; };
 		451678C31537A99A00B45007 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 451678C11537A99A00B45007 /* InfoPlist.strings */; };
 		451678C51537A99A00B45007 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 451678C41537A99A00B45007 /* main.m */; };
@@ -33,6 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45013CB3153F0246007A557F /* HSImageEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSImageEncryptor.h; sourceTree = "<group>"; };
+		45013CB4153F0246007A557F /* HSImageEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSImageEncryptor.m; sourceTree = "<group>"; };
+		45013CB6153F0342007A557F /* Security-Camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Security-Camera.icns"; sourceTree = "<group>"; };
+		45013CB8153F03F4007A557F /* camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = camera.icns; sourceTree = "<group>"; };
+		45013CBC153F049F007A557F /* search.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = search.icns; sourceTree = "<group>"; };
 		451678B41537A99A00B45007 /* SpyTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpyTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		451678B81537A99A00B45007 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		451678BB1537A99A00B45007 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -84,6 +93,9 @@
 			isa = PBXGroup;
 			children = (
 				451EA7B4153DC167006ECB1D /* sputnik.icns */,
+				45013CB8153F03F4007A557F /* camera.icns */,
+				45013CBC153F049F007A557F /* search.icns */,
+				45013CB6153F0342007A557F /* Security-Camera.icns */,
 				451678BE1537A99A00B45007 /* SpyTools */,
 				451678DB1537A99B00B45007 /* SpyToolsTests */,
 				451678B71537A99A00B45007 /* Frameworks */,
@@ -127,6 +139,8 @@
 				45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */,
 				45240A13153DB1470029B229 /* HSTextEncryptor.h */,
 				45240A14153DB1470029B229 /* HSTextEncryptor.m */,
+				45013CB3153F0246007A557F /* HSImageEncryptor.h */,
+				45013CB4153F0246007A557F /* HSImageEncryptor.m */,
 				451678CA1537A99A00B45007 /* spyAppDelegate.h */,
 				451678CB1537A99A00B45007 /* spyAppDelegate.m */,
 				451678CD1537A99A00B45007 /* MainMenu.xib */,
@@ -241,6 +255,9 @@
 				451678C91537A99A00B45007 /* Credits.rtf in Resources */,
 				451678CF1537A99A00B45007 /* MainMenu.xib in Resources */,
 				451EA7B5153DC167006ECB1D /* sputnik.icns in Resources */,
+				45013CB7153F0342007A557F /* Security-Camera.icns in Resources */,
+				45013CB9153F03F4007A557F /* camera.icns in Resources */,
+				45013CBD153F049F007A557F /* search.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +296,7 @@
 				451678CC1537A99A00B45007 /* spyAppDelegate.m in Sources */,
 				45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */,
 				45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */,
+				45013CB5153F0246007A557F /* HSImageEncryptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

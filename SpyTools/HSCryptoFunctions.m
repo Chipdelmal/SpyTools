@@ -106,5 +106,72 @@ NSString *prepareStringForEncryption(NSString *inputString){
     NSString *cleanString = [[NSString alloc] initWithData: stringData encoding: NSASCIIStringEncoding];
     return cleanString;
 }
+/*Image Encryption Functions*/
+char *NSStringToCharArray(NSString *inputString){
+    /*Converts a NSString object to a char array*/
+    NSString *preparedString = [[NSString alloc] initWithString:prepareStringForEncryption(inputString)];
+    int stringLength = [preparedString length];
+    char *tempCString = (char *)malloc(stringLength*sizeof(char)+sizeof(char));
+    strcpy(tempCString, [preparedString cStringUsingEncoding:4]);
+    return tempCString;
+    /*Remember to free char array after using*/
+}
+char *NSArrayToCharArray(NSArray *inputArray){
+    int stringLength = [inputArray count];
+    char *tempCString = (char *)malloc(stringLength*sizeof(char)+sizeof(char));
+    for (int i=0; i<stringLength; i++) {
+        tempCString[i] = [[inputArray objectAtIndex:i] intValue];
+    }
+    return tempCString;
+}
+NSMutableArray *characterToBinaryArray(int characterToConvert, int bitsNumber){
+    int mask = 1;
+    NSMutableArray *bitsArray = [[NSMutableArray alloc] initWithCapacity:bitsNumber];
+    for (int i = 0; i<bitsNumber; i++) {
+        if((characterToConvert&mask)>0){
+            [bitsArray addObject:[[NSNumber alloc] initWithInt:1]];
+        }else {
+            [bitsArray addObject:[[NSNumber alloc] initWithInt:0]];
+        }
+        mask = 2*mask;
+    }
+    return bitsArray;
+}
+int binaryArrayToCharacter(NSArray *bitsArray, int bitsNumber){
+    int characterValue = 0;
+    int mask = 1;
+    for (int i = 0; i<bitsNumber; i++) {
+        characterValue = mask*[[bitsArray objectAtIndex:i] intValue] + characterValue;
+        mask=2*mask;
+    }
+    return characterValue;
+}
+NSArray *setBitWithArrayValue(NSArray *inputArray, NSArray *modifierArray, int bitInput, int bitReplaced){
+    NSMutableArray *returnArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i<[inputArray count]; i++) {
+        if (i==bitReplaced) {
+            [returnArray addObject:[modifierArray objectAtIndex:bitInput]];
+        }else {
+            [returnArray addObject:[inputArray objectAtIndex:i]];
+        }
+    }
+    return returnArray;
+}
+int checkIndex(int maxValue, int indexValue){
+    if (indexValue>=maxValue-1){
+        return 0;
+    }else{
+        return indexValue+1;
+    }
+}
+NSString *bitArrayDescriptor(NSArray *inputArray){
+    NSMutableString *outputString = [[NSMutableString alloc] initWithString:@"["];
+    int arraySize = [inputArray count]-1;
+    for(int i=0; i<=arraySize; i++){
+        [outputString appendFormat:@"%i", [[inputArray objectAtIndex:(arraySize-i)] intValue]];
+    }
+    [outputString appendFormat:@"]"];
+    return outputString;
+};
 
 @end

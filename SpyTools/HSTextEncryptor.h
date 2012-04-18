@@ -13,7 +13,6 @@
     int         stringLength;
     NSString    *stringToProcess;
 }
-
 /*Initializers*/
 -(id)init;
 -(id)initWithNSString:(NSString *)initializerString;

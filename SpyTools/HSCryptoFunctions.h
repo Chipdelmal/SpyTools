@@ -20,6 +20,12 @@ NSString *padArrayToString(NSArray *padArray);
 NSArray *keyStringToKeyArray(NSString *stringToSplit);
 NSString *prepareStringForEncryption(NSString *inputString);
 /*Image Encryption Functions*/
-
+char *NSStringToCharArray(NSString *inputString);
+char *NSArrayToCharArray(NSArray *inputArray);
+NSMutableArray *characterToBinaryArray(int characterToConvert, int bitsNumber);
+int binaryArrayToCharacter(NSArray *bitsArray, int bitsNumber);
+NSArray *setBitWithArrayValue(NSArray *inputArray, NSArray *modifierArray, int bitInput, int bitReplaced);
+int checkIndex(int maxValue, int indexValue);
+NSString *bitArrayDescriptor(NSArray *inputArray);
 
 @end
