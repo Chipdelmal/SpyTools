@@ -25,15 +25,18 @@
     IBOutlet    NSTextField         *keyField;
     IBOutlet    NSButton            *processButton;
     IBOutlet    NSTextField         *textProcessedField;
+    IBOutlet    NSButton            *startOverButton;
     /*Text in Image*/
 }
 
 -(IBAction)processActionSelectorChange:(id)sender;
 -(IBAction)textEncryptionSequence:(id)sender;
 -(IBAction)textDecryptionSequence:(id)sender;
+-(IBAction)clearInterface:(id)sender;
 
+-(IBAction)generateRandomKey:(id)sender;
+-(IBAction)autoGenerateRandomKeyParameters:(id)sender;
 -(IBAction)processText:(id)sender;
-
 -(IBAction)encryptText:(id)sender;
 -(IBAction)decryptText:(id)sender;
 

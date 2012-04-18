@@ -31,8 +31,13 @@
      */
 }
 -(IBAction)processActionSelectorChange:(id)sender{
+    [textToProcessField setStringValue:[textProcessedField stringValue]];
+    [textProcessedField setStringValue:@""];
+}
+-(IBAction)processSequence:(id)sender{
     if ([processActionSelector selectedSegment]==0) {
         NSLog(@"Interface: Text Encryption Selected");
+        [processButton setStringValue:@"Encrypt"];
         [textToProcessField setTextColor:[NSColor blackColor]];
         [textProcessedField setTextColor:[NSColor blueColor]];
         //[textToProcessField setStringValue:@""];
@@ -41,6 +46,7 @@
         [self textEncryptionSequence:NULL];
     }else if([processActionSelector selectedSegment]==1){
         NSLog(@"Interface: Text Decryption Selected");
+        [processButton setStringValue:@"Decrypt"];
         [textToProcessField setTextColor:[NSColor blueColor]];
         [textProcessedField setTextColor:[NSColor blackColor]];
         //[textToProcessField setStringValue:@""];
@@ -63,7 +69,7 @@
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
     }else if([[keyField stringValue] length]==0){
-        [informationLabel setStringValue:@"Enter an encryption key or generate one and press Enter."];
+        [informationLabel setStringValue:@"Enter an encryption key or generate one."];
         NSLog(@"Interface: No key entered.");
         [keyLengthTextField setEnabled:TRUE];
         [maxRandomValueField setEnabled:TRUE];
@@ -72,7 +78,8 @@
         [keyField setEnabled:TRUE];
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
-    }else {
+        [self autoGenerateRandomKeyParameters:self];
+    }else if([[textProcessedField stringValue] length]==0){
         [informationLabel setStringValue:@"Ready to process."];
         NSLog(@"Interface: Ready to Process.");
         [keyLengthTextField setEnabled:TRUE];
@@ -82,6 +89,9 @@
         [keyField setEnabled:TRUE];
         [processButton setEnabled:TRUE];
         [textProcessedField setEnabled:TRUE];
+    }else {
+        [informationLabel setStringValue:@"Your text has been processed."];
+        NSLog(@"Interface: Text processed.");
     }
 }
 -(IBAction)textDecryptionSequence:(id)sender{
@@ -118,7 +128,26 @@
         [textProcessedField setEnabled:TRUE];
     }
 }
+-(IBAction)clearInterface:(id)sender{
+    [textToProcessField setStringValue:@""];
+    [keyField setStringValue:@""];
+    [keyLengthTextField setStringValue:@""];
+    [maxRandomValueField setStringValue:@""];
+    [textProcessedField setStringValue:@""];
+    [self processActionSelectorChange:self];
+}
 
+-(IBAction)generateRandomKey:(id)sender{
+    NSArray *keyArray = generateRandomPad([keyLengthTextField intValue], [maxRandomValueField intValue]);
+    NSString *keyString = padArrayToString(keyArray);
+    [keyField setStringValue:keyString];
+    [self textEncryptionSequence:self];
+}
+-(IBAction)autoGenerateRandomKeyParameters:(id)sender{
+    int keyLength = [[textToProcessField stringValue] length];
+    [keyLengthTextField setIntValue:keyLength];
+    [maxRandomValueField setIntValue:(122-65)];
+}
 -(IBAction)processText:(id)sender{
     if ([processActionSelector selectedSegment]==0) {
         [self encryptText:self];
@@ -126,7 +155,6 @@
         [self decryptText:self];
     }
 }
-
 -(IBAction)encryptText:(id)sender{
     NSLog(@"Interface: Encryption Started");
     NSString *stringToProcess = [textToProcessField stringValue];
@@ -135,7 +163,7 @@
     NSString *encryptedString = [encryptorObject encryptStringToProcessWithKey:keyString];
     NSLog(@"Interface: Encryption Finished With result [%@]", encryptedString);
     [textProcessedField setStringValue:encryptedString];
-    [informationLabel setStringValue:@"Your text has been encrypted."];
+    [self textEncryptionSequence:self];
 }
 -(IBAction)decryptText:(id)sender{
     NSLog(@"Interface: Encryption Started");
@@ -143,9 +171,9 @@
     NSString *keyString = [keyField stringValue];
     HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToProcess];
     NSString *decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
-    NSLog(@"Interface: Encryption Finished With result [%@]", decryptedString);
+    NSLog(@"Interface: Decryption Finished With result [%@]", decryptedString);
     [textProcessedField setStringValue:decryptedString];
-    [informationLabel setStringValue:@"Your text has been encrypted."];
+    [self textEncryptionSequence:self];
 }
 
 @end
