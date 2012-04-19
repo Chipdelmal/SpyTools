@@ -106,6 +106,15 @@ NSString *prepareStringForEncryption(NSString *inputString){
     NSString *cleanString = [[NSString alloc] initWithData: stringData encoding: NSASCIIStringEncoding];
     return cleanString;
 }
+NSArray *NSStringToKeyArray(NSString *inputString){
+    /*Converts a string into an array that can be used ass an encryption key*/
+    char *encryptionCharArray = NSStringToCharArray(inputString);
+    NSMutableArray *keyArray = [[NSMutableArray alloc] initWithCapacity:[inputString length]];
+    for (int j=0; j<[inputString length]; j++) {
+        [keyArray addObject:[NSNumber numberWithInt:encryptionCharArray[j]]];
+    }
+    return keyArray;
+}
 /*Image Encryption Functions*/
 char *NSStringToCharArray(NSString *inputString){
     /*Converts a NSString object to a char array*/

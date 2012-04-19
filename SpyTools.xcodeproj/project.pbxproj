@@ -24,6 +24,8 @@
 		451EA7B5153DC167006ECB1D /* sputnik.icns in Resources */ = {isa = PBXBuildFile; fileRef = 451EA7B4153DC167006ECB1D /* sputnik.icns */; };
 		45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */; };
 		45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A14153DB1470029B229 /* HSTextEncryptor.m */; };
+		4530828015404D3300AA38EB /* HSKeyLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4530827F15404D3300AA38EB /* HSKeyLibrary.m */; };
+		45D7665E153F526200F41EED /* 1984.txt in Resources */ = {isa = PBXBuildFile; fileRef = 45D7665D153F526200F41EED /* 1984.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,9 @@
 		45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSCryptoFunctions.m; sourceTree = "<group>"; };
 		45240A13153DB1470029B229 /* HSTextEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTextEncryptor.h; sourceTree = "<group>"; };
 		45240A14153DB1470029B229 /* HSTextEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTextEncryptor.m; sourceTree = "<group>"; };
+		4530827E15404D3200AA38EB /* HSKeyLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSKeyLibrary.h; sourceTree = "<group>"; };
+		4530827F15404D3300AA38EB /* HSKeyLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSKeyLibrary.m; sourceTree = "<group>"; };
+		45D7665D153F526200F41EED /* 1984.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1984.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +144,8 @@
 				45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */,
 				45240A13153DB1470029B229 /* HSTextEncryptor.h */,
 				45240A14153DB1470029B229 /* HSTextEncryptor.m */,
+				4530827E15404D3200AA38EB /* HSKeyLibrary.h */,
+				4530827F15404D3300AA38EB /* HSKeyLibrary.m */,
 				45013CB3153F0246007A557F /* HSImageEncryptor.h */,
 				45013CB4153F0246007A557F /* HSImageEncryptor.m */,
 				451678CA1537A99A00B45007 /* spyAppDelegate.h */,
@@ -152,6 +159,7 @@
 		451678BF1537A99A00B45007 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				45D7665D153F526200F41EED /* 1984.txt */,
 				451678C01537A99A00B45007 /* SpyTools-Info.plist */,
 				451678C11537A99A00B45007 /* InfoPlist.strings */,
 				451678C41537A99A00B45007 /* main.m */,
@@ -258,6 +266,7 @@
 				45013CB7153F0342007A557F /* Security-Camera.icns in Resources */,
 				45013CB9153F03F4007A557F /* camera.icns in Resources */,
 				45013CBD153F049F007A557F /* search.icns in Resources */,
+				45D7665E153F526200F41EED /* 1984.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +306,7 @@
 				45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */,
 				45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */,
 				45013CB5153F0246007A557F /* HSImageEncryptor.m in Sources */,
+				4530828015404D3300AA38EB /* HSKeyLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

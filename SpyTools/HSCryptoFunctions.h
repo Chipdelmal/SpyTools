@@ -19,6 +19,7 @@ NSString *decryptUTF8StringWithPad(NSString *inputString, NSArray *padArray);
 NSString *padArrayToString(NSArray *padArray);
 NSArray *keyStringToKeyArray(NSString *stringToSplit);
 NSString *prepareStringForEncryption(NSString *inputString);
+NSArray *NSStringToKeyArray(NSString *inputString);
 /*Image Encryption Functions*/
 char *NSStringToCharArray(NSString *inputString);
 char *NSArrayToCharArray(NSArray *inputArray);

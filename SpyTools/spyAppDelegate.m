@@ -23,6 +23,16 @@
     
     [self processActionSelectorChange:self];
     [self processSequence:self];
+
+    
+    /*Debug*/
+    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
+    NSLog(@"%@",[keyObject keysArray]);
+    //NSLog(@"%@",sentencesCleanArray); 
+    
+    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
+    NSArray *keyArray2 = [[NSArray alloc] initWithArray:NSStringToKeyArray(encryptionString)];
+    NSLog(@"%@",keyArray2);
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{

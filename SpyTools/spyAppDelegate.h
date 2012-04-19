@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "HSTextEncryptor.h"
 #import "HSImageEncryptor.h"
+#import "HSKeyLibrary.h"
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
     BOOL        stTextFits;
