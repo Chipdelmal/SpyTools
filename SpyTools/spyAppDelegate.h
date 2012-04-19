@@ -24,10 +24,12 @@
     IBOutlet    NSTextField         *keyLengthTextField;
     IBOutlet    NSTextField         *maxRandomValueField;
     IBOutlet    NSButton            *generateRandomKeyButton;
+    IBOutlet    NSButton            *generateRandomPassphraseButton;
     IBOutlet    NSTextField         *keyField;
     IBOutlet    NSButton            *processButton;
     IBOutlet    NSTextField         *textProcessedField;
     IBOutlet    NSButton            *sendToSteganographyButton;
+    IBOutlet    NSTabView           *keyTypeTabView;
     /*Text in Image*/
     IBOutlet    NSImageView         *stInputImageWell;
     IBOutlet    NSTextField         *stTextToProcessField;
@@ -46,6 +48,7 @@
 -(IBAction)textImageEncryptionSequence:(id)sender;
 -(IBAction)textImageDecryptionSequence:(id)sender;
 /*Text Encryption*/
+-(IBAction)generateRandomPassphrase:(id)sender;
 -(IBAction)generateRandomKey:(id)sender;
 -(IBAction)autoGenerateRandomKeyParameters:(id)sender;
 -(IBAction)processText:(id)sender;

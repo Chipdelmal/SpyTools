@@ -22,4 +22,7 @@
 /*Action Methods*/
 -(NSString *)encryptStringToProcessWithKey:(NSString *)keyString;
 -(NSString *)decryptStringToProcessWithKey:(NSString *)keyString;
+-(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString;
+-(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString;
+
 @end

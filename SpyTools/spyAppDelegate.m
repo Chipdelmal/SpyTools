@@ -23,16 +23,6 @@
     
     [self processActionSelectorChange:self];
     [self processSequence:self];
-
-    
-    /*Debug*/
-    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
-    NSLog(@"%@",[keyObject keysArray]);
-    //NSLog(@"%@",sentencesCleanArray); 
-    
-    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
-    NSArray *keyArray2 = [[NSArray alloc] initWithArray:NSStringToKeyArray(encryptionString)];
-    NSLog(@"%@",keyArray2);
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{
@@ -79,6 +69,7 @@
         [keyField setEnabled:FALSE];
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
+        [generateRandomPassphraseButton setEnabled:FALSE];
     }else if([[keyField stringValue] length]==0){
         [informationLabel setStringValue:@"Enter an encryption key or generate one."];
         NSLog(@"Interface: No key entered.");
@@ -89,6 +80,7 @@
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
         [self autoGenerateRandomKeyParameters:self];
+        [generateRandomPassphraseButton setEnabled:TRUE];
     }else if([[textProcessedField stringValue] length]==0){
         [informationLabel setStringValue:@"Ready to process."];
         NSLog(@"Interface: Ready to Process.");
@@ -98,6 +90,7 @@
         [keyField setEnabled:TRUE];
         [processButton setEnabled:TRUE];
         [textProcessedField setEnabled:TRUE];
+        [generateRandomPassphraseButton setEnabled:TRUE];
     }else {
         [informationLabel setStringValue:@"Your text has been processed."];
         NSLog(@"Interface: Text processed.");
@@ -120,6 +113,7 @@
         [keyField setEnabled:FALSE];
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
+        [generateRandomPassphraseButton setEnabled:FALSE];
     }else if([[keyField stringValue] length]==0){
         [informationLabel setStringValue:@"Enter a decryption key and press Enter."];
         NSLog(@"Interface: No key entered.");
@@ -129,6 +123,7 @@
         [keyField setEnabled:TRUE];
         [processButton setEnabled:FALSE];
         [textProcessedField setEnabled:FALSE];
+        [generateRandomPassphraseButton setEnabled:FALSE];
     }else {
         [informationLabel setStringValue:@"Ready to process."];
         NSLog(@"Interface: Ready to Process.");
@@ -138,6 +133,7 @@
         [keyField setEnabled:TRUE];
         [processButton setEnabled:TRUE];
         [textProcessedField setEnabled:TRUE];
+        [generateRandomPassphraseButton setEnabled:FALSE];
     }
 }
 -(IBAction)textImageEncryptionSequence:(id)sender{
@@ -195,6 +191,12 @@
     
 }
 /*Text encryption*/
+-(IBAction)generateRandomPassphrase:(id)sender{
+    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
+    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
+    [keyField setStringValue:encryptionString];
+    [self textEncryptionSequence:self];
+}
 -(IBAction)generateRandomKey:(id)sender{
     NSArray *keyArray = generateRandomPad([keyLengthTextField intValue], [maxRandomValueField intValue]);
     NSString *keyString = padArrayToString(keyArray);
@@ -216,9 +218,16 @@
 -(IBAction)encryptText:(id)sender{
     NSLog(@"Interface: Encryption Started");
     NSString *stringToProcess = [textToProcessField stringValue];
-    NSString *keyString = [keyField stringValue];
+    NSString *keyString = [keyField stringValue];    
     HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToProcess];
-    NSString *encryptedString = [encryptorObject encryptStringToProcessWithKey:keyString];
+    NSString *encryptedString = [[NSString alloc] init];
+    
+    if([keyTypeTabView indexOfTabViewItem:[keyTypeTabView selectedTabViewItem]]==1){
+        encryptedString = [encryptorObject encryptStringToProcessWithKey:keyString];
+    }else {
+        encryptedString = [encryptorObject encryptStringToProcessWithPassphrase:keyString];
+    }
+        
     NSLog(@"Interface: Encryption Finished With result [%@]", encryptedString);
     [textProcessedField setStringValue:encryptedString];
     [self textEncryptionSequence:self];
@@ -228,7 +237,14 @@
     NSString *stringToProcess = [textToProcessField stringValue];
     NSString *keyString = [keyField stringValue];
     HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToProcess];
-    NSString *decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
+    NSString *decryptedString = [[NSString alloc] init];
+    
+    if ([keyTypeTabView indexOfTabViewItem:[keyTypeTabView selectedTabViewItem]]==1) {
+        decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
+    }else {
+        decryptedString = [encryptorObject decryptStringToProcessWithPassphrase:keyString];
+    }
+    
     NSLog(@"Interface: Decryption Finished With result [%@]", decryptedString);
     [textProcessedField setStringValue:decryptedString];
     [self textDecryptionSequence:self];

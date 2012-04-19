@@ -45,5 +45,11 @@
     NSLog(@"HSTextEncryptor Decrypted String: %@",decryptedString);
     return decryptedString;
 }
+-(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString{
+    return encryptUTF8StringWithPad(stringToProcess, NSStringToKeyArray(passphraseString));
+}
+-(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString{
+    return decryptUTF8StringWithPad(stringToProcess, NSStringToKeyArray(passphraseString));
+}
 
 @end
