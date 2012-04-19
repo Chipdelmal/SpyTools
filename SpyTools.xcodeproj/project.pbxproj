@@ -25,6 +25,7 @@
 		45240A0D153DAEE90029B229 /* HSCryptoFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */; };
 		45240A15153DB1470029B229 /* HSTextEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45240A14153DB1470029B229 /* HSTextEncryptor.m */; };
 		4530828015404D3300AA38EB /* HSKeyLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4530827F15404D3300AA38EB /* HSKeyLibrary.m */; };
+		45308283154064A200AA38EB /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 45308282154064A200AA38EB /* README.txt */; };
 		45D7665E153F526200F41EED /* 1984.txt in Resources */ = {isa = PBXBuildFile; fileRef = 45D7665D153F526200F41EED /* 1984.txt */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		45240A14153DB1470029B229 /* HSTextEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSTextEncryptor.m; sourceTree = "<group>"; };
 		4530827E15404D3200AA38EB /* HSKeyLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSKeyLibrary.h; sourceTree = "<group>"; };
 		4530827F15404D3300AA38EB /* HSKeyLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSKeyLibrary.m; sourceTree = "<group>"; };
+		45308282154064A200AA38EB /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		45D7665D153F526200F41EED /* 1984.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1984.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 		451678A91537A99900B45007 = {
 			isa = PBXGroup;
 			children = (
+				45308282154064A200AA38EB /* README.txt */,
 				451EA7B4153DC167006ECB1D /* sputnik.icns */,
 				45013CB8153F03F4007A557F /* camera.icns */,
 				45013CBC153F049F007A557F /* search.icns */,
@@ -267,6 +270,7 @@
 				45013CB9153F03F4007A557F /* camera.icns in Resources */,
 				45013CBD153F049F007A557F /* search.icns in Resources */,
 				45D7665E153F526200F41EED /* 1984.txt in Resources */,
+				45308283154064A200AA38EB /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
