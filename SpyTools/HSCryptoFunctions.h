@@ -28,5 +28,6 @@ int binaryArrayToCharacter(NSArray *bitsArray, int bitsNumber);
 NSArray *setBitWithArrayValue(NSArray *inputArray, NSArray *modifierArray, int bitInput, int bitReplaced);
 int checkIndex(int maxValue, int indexValue);
 NSString *bitArrayDescriptor(NSArray *inputArray);
+BOOL distiguisher(NSString *inputText);
 
 @end

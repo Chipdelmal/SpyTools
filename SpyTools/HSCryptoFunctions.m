@@ -182,5 +182,8 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
     [outputString appendFormat:@"]"];
     return outputString;
 };
+BOOL distiguisher(NSString *inputText){
+    return TRUE;
+}
 
 @end
