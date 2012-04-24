@@ -181,7 +181,52 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
     }
     [outputString appendFormat:@"]"];
     return outputString;
-};
+}
+
+NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents){
+    
+    NSMutableArray *imageArray = [[NSMutableArray alloc] init];
+    int imageWidth = CGImageGetWidth([inputImage CGImage]);
+    int imageHeight = CGImageGetHeight([inputImage CGImage]);
+    
+    unsigned long tempPixelValues[numberOfComponents];
+    
+    [imageArray addObject:[NSNumber numberWithInt:imageWidth]];
+    [imageArray addObject:[NSNumber numberWithInt:imageHeight]];
+    
+    for (int j=0; j<imageHeight; j++) {
+        for (int i=0; i<imageWidth; i++) {
+            [inputImage getPixel:tempPixelValues atX:i y:j];
+            for (int k=0; k<numberOfComponents; k++) {
+                //NSLog(@"[%i,%i]::[%i]",j,i,k);
+                [imageArray addObject:[NSNumber numberWithInt:tempPixelValues[k]]];
+            }
+        }
+    }
+    return imageArray;    
+}
+NSBitmapImageRep *NSArrayToNSBitmapImageRep(NSArray *inputArray, int numberOfComponents){
+    NSBitmapImageRep *image = [[NSBitmapImageRep alloc] init];
+    
+    int imageWidth = [[inputArray objectAtIndex:0] intValue];
+    int imageHeight = [[inputArray objectAtIndex:1] intValue];
+    
+    unsigned long tempPixelValues[numberOfComponents];
+    
+    int arrayIndex = 2;
+    
+    for (int j=0; j<imageHeight; j++) {
+        for (int i=0; i<imageWidth; i++) {
+            for (int k=0; k<numberOfComponents; k++) {
+                tempPixelValues[k] = [[inputArray objectAtIndex:arrayIndex] intValue];
+                arrayIndex++;
+            }
+            [image setPixel:tempPixelValues atX:i y:j];
+        }
+    }
+    
+    return image;
+}
 BOOL distiguisher(NSString *inputText){
     return TRUE;
 }

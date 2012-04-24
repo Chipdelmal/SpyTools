@@ -28,6 +28,9 @@ int binaryArrayToCharacter(NSArray *bitsArray, int bitsNumber);
 NSArray *setBitWithArrayValue(NSArray *inputArray, NSArray *modifierArray, int bitInput, int bitReplaced);
 int checkIndex(int maxValue, int indexValue);
 NSString *bitArrayDescriptor(NSArray *inputArray);
+
+NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents);
+NSBitmapImageRep *NSArrayToNSBitmapImageRep(NSArray *inputArray, int numberOfComponents);
 BOOL distiguisher(NSString *inputText);
 
 @end
