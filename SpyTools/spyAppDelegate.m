@@ -23,6 +23,14 @@
     
     [self processActionSelectorChange:self];
     [self processSequence:self];
+    
+    NSData *encryptionImageData = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];    
+    unsigned char aBuffer[[encryptionImageData length]];
+    [encryptionImageData getBytes:aBuffer];
+    for (int i=0; i<[encryptionImageData length]; i++) {
+        NSLog(@"%i,",aBuffer[i]);
+    }
+        
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{
