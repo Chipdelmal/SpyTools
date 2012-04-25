@@ -37,7 +37,7 @@
     
     /*Decryption Operations*/
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
-    NSData *decryptedImageData = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    NSArray *decryptedImageArray = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
     //[decryptedImageData writeToFile:@"/Users/Chip/Pictures/decrypted.png" atomically:NO];
     
     //NSBitmapImageRep *decryptedImageRep = [[NSBitmapImageRep alloc] initWithData:decryptedImageData];
@@ -47,12 +47,15 @@
     /*Tests*/
     unsigned char inputBuffer[[imageToBeEncrypted length]];
     [imageToBeEncrypted getBytes:inputBuffer];
-    unsigned char outputBuffer[[decryptedImageData length]];
-    [decryptedImageData getBytes:outputBuffer];
     
-    for (int i=0; i<[decryptedImageData length]; i++) {
-        NSLog(@"[%i,%i]",inputBuffer[i],outputBuffer[i]);
+    unsigned char outputBuffer[[imageToBeEncrypted length]];
+    for (int i=0; i<[imageToBeEncrypted length]; i++) {
+        outputBuffer[i]=[[decryptedImageArray objectAtIndex:i] intValue];
+        NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
     }
+    
+    NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:[imageToBeEncrypted length]];
+    [dataOutput writeToFile:@"/Users/Chip/Pictures/decrypted.png" atomically:NO];
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{

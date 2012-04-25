@@ -164,16 +164,14 @@
     //NSData *dataOutput = [[self imageBitmapRep] representationUsingType:NSPNGFileType properties:nil];
     return [self imageBitmapRep];
 }
--(NSData *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
-    int length = 8380;
+-(NSArray *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
+    
     /*Declaration of reading variables*/
     unsigned long readTempPixelValues[numberOfComponents];
-    //NSMutableArray *readString = [[NSMutableArray alloc] init];
-    unsigned char aBuffer[length];
+    NSMutableArray *readString = [[NSMutableArray alloc] init];
     NSMutableArray *readCharacterBinary = [[NSMutableArray alloc] initWithCapacity:numberOfBits];
     NSArray *readComponent = [[NSArray alloc] init];
     
-    int bufferIndex = 0;
     int readCharacterIndex = 0; 
     /*-----Read characters from image-----*/
     for (int j=0; j<imageHeight; j++){
@@ -187,23 +185,17 @@
                 readComponent = characterToBinaryArray(readTempPixelValues[k], numberOfBits);
                 [readCharacterBinary insertObject:[readComponent objectAtIndex:0] atIndex:readCharacterIndex];
                 
-                if (readCharacterIndex>=(numberOfBits-1)) {
-                    //[readString addObject:[NSNumber numberWithInt:binaryArrayToCharacter(readCharacterBinary, numberOfBits)]];
-                    if (bufferIndex<length) {
-                        aBuffer[bufferIndex]=binaryArrayToCharacter(readCharacterBinary, numberOfBits);
-                    }
+                if (readCharacterIndex>=7) {
+                    [readString addObject:[NSNumber numberWithInt:binaryArrayToCharacter(readCharacterBinary, numberOfBits)]];
                     readCharacterIndex = 0;
                 }else {
                     readCharacterIndex++;                
                 }
-                bufferIndex++;
             }
         }
     }
     
-    NSLog(@"Data has been succesfully decrypted!");
-    NSData *dataOut = [[NSData alloc] initWithBytes:aBuffer length:length];
-    return dataOut;
+    return readString;
 }
 
 
