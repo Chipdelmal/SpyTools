@@ -24,13 +24,35 @@
     [self processActionSelectorChange:self];
     [self processSequence:self];
     
-    NSData *encryptionImageData = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];    
-    unsigned char aBuffer[[encryptionImageData length]];
-    [encryptionImageData getBytes:aBuffer];
-    for (int i=0; i<[encryptionImageData length]; i++) {
-        NSLog(@"%i,",aBuffer[i]);
+    /*Debug*/
+    /*Encryption Operations*/
+    NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/lena.bmp"];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];
+    
+    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageToBeEncrypted];
+    
+    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
+    [encryptedImageOutput writeToFile:@"/Users/Chip/Pictures/encrypted.bmp" atomically:NO];
+    
+    /*Decryption Operations*/
+    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
+    NSData *decryptedImageData = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    //[decryptedImageData writeToFile:@"/Users/Chip/Pictures/decrypted.png" atomically:NO];
+    
+    //NSBitmapImageRep *decryptedImageRep = [[NSBitmapImageRep alloc] initWithData:decryptedImageData];
+    //NSData *imageConverted = [decryptedImageRep representationUsingType:NSBMPFileType properties:nil];
+    //[imageConverted writeToFile:@"/Users/Chip/Pictures/decrypted.bmp" atomically:NO];
+    
+    /*Tests*/
+    unsigned char inputBuffer[[imageToBeEncrypted length]];
+    [imageToBeEncrypted getBytes:inputBuffer];
+    unsigned char outputBuffer[[decryptedImageData length]];
+    [decryptedImageData getBytes:outputBuffer];
+    
+    for (int i=0; i<[decryptedImageData length]; i++) {
+        NSLog(@"[%i,%i]",inputBuffer[i],outputBuffer[i]);
     }
-        
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{
