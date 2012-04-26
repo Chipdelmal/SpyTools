@@ -39,6 +39,11 @@
     IBOutlet    NSProgressIndicator *stProgressIndicator;
     IBOutlet    NSButton            *stProcessButton;
     IBOutlet    NSButton            *stSendToTextButton;
+    /*Image in Image*/
+    IBOutlet    NSImageView         *stiRepositoryImageWell;
+    IBOutlet    NSImageView         *stiToEncryptImageWell;
+    IBOutlet    NSImageView         *stiOutputImageWell;
+    IBOutlet    NSButton            *stiProcessButton;
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender;
@@ -61,6 +66,10 @@
 -(IBAction)decryptText:(id)sender;
 -(IBAction)processTextImage:(id)sender;
 -(IBAction)sendResultToText:(id)sender;
+/*Image in Image Encryption*/
+-(IBAction)encryptImageImage:(id)sender;
+-(IBAction)decryptImageImage:(id)sender;
+-(IBAction)processImageImage:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

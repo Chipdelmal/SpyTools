@@ -26,46 +26,22 @@
     
     /*Debug*/
     /*Encryption Operations*/
-    NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/lena.bmp"];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];
+    /*NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/gordon.jpeg"];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/TestTiff.tiff"];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
     NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageToBeEncrypted];
     
-    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
-    [encryptedImageOutput writeToFile:@"/Users/Chip/Pictures/encrypted.bmp" atomically:NO];
-    
+    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSPNGFileType properties:nil];
+    [encryptedImageOutput writeToFile:@"/Users/Chip/Pictures/encrypted.png" atomically:NO];
+    */
     /*Decryption Operations*/
-    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
-    NSArray *decryptedImageArray = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    /*HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
+    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
     //NSLog(@"%@",decryptedImageArray);
-    
-    NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
-    for (int i=0; i<30; i++) {
-        [lengthArray addObject:[decryptedImageArray objectAtIndex:i]];
-    }
-    int dataLength = binaryArrayToCharacter(lengthArray, 30);
-    //NSLog(@"%i",dataLength);
-    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-    for (int k=30; k<[decryptedImageArray count]; k++) {
-        [dataArray addObject:[decryptedImageArray objectAtIndex:k]];
-    }
-    //NSLog(@"%@",dataArray);
-    
-    
-    /*Tests*/
-    unsigned char inputBuffer[[imageToBeEncrypted length]];
-    [imageToBeEncrypted getBytes:inputBuffer];
-    
-    unsigned char outputBuffer[[imageToBeEncrypted length]];
-    //*outputBuffer = NSArrayToUnsignedCharArray(decryptedImageArray);
-    for (int i=0; i<dataLength; i++) {
-        outputBuffer[i]=[[dataArray objectAtIndex:i] intValue];
-        //NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
-    }
-    
-    NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:[imageToBeEncrypted length]];
-    [dataOutput writeToFile:@"/Users/Chip/Pictures/decrypted.png" atomically:NO];
+
+    [dataOutput writeToFile:@"/Users/Chip/Pictures/decrypted" atomically:NO];
+    */
 }
 /*Global*/
 -(IBAction)processActionSelectorChange:(id)sender{
@@ -329,7 +305,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
-    NSLog(@"%@",desktopPath);
+    //NSLog(@"%@",desktopPath);
     
     
     if([stImageFormatSelector selectedSegment]==0){
@@ -381,4 +357,49 @@
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
     [processActionSelector setSelectedSegment:1];
 }
+/*Image in Image encryption*/
+-(IBAction)encryptImageImage:(id)sender{    
+    /*Encryption Operations*/
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[stiRepositoryImageWell image] TIFFRepresentation]];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[stiToEncryptImageWell image] TIFFRepresentation]];
+    
+    NSBitmapImageRep *tempConversion = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSPNGFileType properties:NULL];
+    
+    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageConvertedToEncrypt];
+    NSImage *imageEncrypted = [[NSImage alloc] init];
+    [imageEncrypted addRepresentation:imageEncryptedBitmap];
+    [stiOutputImageWell setImage:imageEncrypted];
+    
+    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
+    [encryptedImageOutput writeToFile:fullWriteString atomically:NO];
+}
+-(IBAction)decryptImageImage:(id)sender{
+    /*Decryption Operations*/
+    NSData *encryptedImageData = [[NSData alloc] initWithData:[[stiRepositoryImageWell image] TIFFRepresentation]];
+    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
+    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    
+    NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
+    [stiOutputImageWell setImage:imageEncrypted];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
+    [dataOutput writeToFile:fullWriteString atomically:NO];
+}
+-(IBAction)processImageImage:(id)sender{
+    if ([processActionSelector selectedSegment]==0) {
+        NSLog(@"Encrypting...");
+        [self encryptImageImage:self];
+    }else {
+        NSLog(@"Decrypting...");
+        [self decryptImageImage:self];
+    }
+}
+
 @end

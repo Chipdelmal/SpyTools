@@ -176,7 +176,7 @@
     //NSData *dataOutput = [[self imageBitmapRep] representationUsingType:NSPNGFileType properties:nil];
     return [self imageBitmapRep];
 }
--(NSArray *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
+-(NSData *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
     
     /*Declaration of reading variables*/
     unsigned long readTempPixelValues[numberOfComponents];
@@ -207,7 +207,28 @@
         }
     }
     
-    return readString;
+    /*Raw array manipulation and final decryption*/
+    NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<dataLengthBits; i++) {
+        [lengthArray addObject:[readString objectAtIndex:i]];
+    }
+    int dataLength = binaryArrayToCharacter(lengthArray, dataLengthBits);
+    //NSLog(@"%i",dataLength);
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    for (int k=dataLengthBits; k<[readString count]; k++) {
+        [dataArray addObject:[readString objectAtIndex:k]];
+    }
+    
+    unsigned char outputBuffer[dataLength];
+    //*outputBuffer = NSArrayToUnsignedCharArray(decryptedImageArray);
+    for (int i=0; i<dataLength; i++) {
+        outputBuffer[i]=[[dataArray objectAtIndex:i] intValue];
+        //NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
+    }
+    
+    NSLog(@"Data has been succesfully decrypted");
+    NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:dataLength];
+    return dataOutput;
 }
 
 
