@@ -27,7 +27,7 @@
     /*Debug*/
     /*Encryption Operations*/
     NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/lena.bmp"];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test5.png"];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
     NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageToBeEncrypted];
@@ -50,7 +50,7 @@
     for (int k=30; k<[decryptedImageArray count]; k++) {
         [dataArray addObject:[decryptedImageArray objectAtIndex:k]];
     }
-    NSLog(@"%@",dataArray);
+    //NSLog(@"%@",dataArray);
     
     
     /*Tests*/

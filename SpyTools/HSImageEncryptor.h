@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "HSCryptoFunctions.h"
 
+#define dataLengthBits        30
+
 @interface HSImageEncryptor : NSObject{
     int                 imageHeight;
     int                 imageWidth;

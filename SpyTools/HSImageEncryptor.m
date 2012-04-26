@@ -121,14 +121,14 @@
     
     /*Data Length Header*/
     int sizeOfString = dataLength;
-    NSArray *binaryLength = characterToBinaryArray(dataLength, 30);
+    NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
     //NSLog(@"%i::%@", dataLength, binaryLength);
-    unsigned char testChar[dataLength+30];
-    for (int i=0; i<dataLength+30; i++) {
-        if (i<30) {
+    unsigned char testChar[dataLength+dataLengthBits];
+    for (int i=0; i<dataLength+dataLengthBits; i++) {
+        if (i<dataLengthBits) {
             testChar[i]=[[binaryLength objectAtIndex:i] intValue];
         }else {
-            testChar[i]=testCharTemp[i-30];
+            testChar[i]=testCharTemp[i-dataLengthBits];
         }
     }
     
