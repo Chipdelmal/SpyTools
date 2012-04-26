@@ -29,6 +29,8 @@ NSArray *setBitWithArrayValue(NSArray *inputArray, NSArray *modifierArray, int b
 int checkIndex(int maxValue, int indexValue);
 NSString *bitArrayDescriptor(NSArray *inputArray);
 
+//unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray);
+
 NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents);
 NSBitmapImageRep *NSArrayToNSBitmapImageRep(NSArray *inputArray, int numberOfComponents);
 

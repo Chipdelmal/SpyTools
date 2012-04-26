@@ -114,16 +114,28 @@
 
 -(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents andData:(NSData *)dataToBeEncrypted{
     
-    //char *testChar = NSStringToCharArray(prepareStringForEncryption(stringToBeEncrypted));
-    unsigned char testChar[[dataToBeEncrypted length]];
-     [dataToBeEncrypted getBytes:testChar];
-    int sizeOfString = [dataToBeEncrypted length];
+    int dataLength = [dataToBeEncrypted length];
+    /*Creating buffer for data*/
+    unsigned char testCharTemp[dataLength];
+     [dataToBeEncrypted getBytes:testCharTemp];
     
+    /*Data Length Header*/
+    int sizeOfString = dataLength;
+    NSArray *binaryLength = characterToBinaryArray(dataLength, 30);
+    //NSLog(@"%i::%@", dataLength, binaryLength);
+    unsigned char testChar[dataLength+30];
+    for (int i=0; i<dataLength+30; i++) {
+        if (i<30) {
+            testChar[i]=[[binaryLength objectAtIndex:i] intValue];
+        }else {
+            testChar[i]=testCharTemp[i-30];
+        }
+    }
+    
+    /*Image processing*/
     unsigned long tempPixelValues[numberOfComponents];
-    
     int characterBitsIndex = 0;
     int characterNumberIndex = 0;
-    
     NSMutableArray *characterBinary = [[NSMutableArray alloc] initWithArray:characterToBinaryArray(testChar[characterNumberIndex], numberOfBits)];
     for (int j=0; j<imageHeight; j++) {
         for (int i=0; i<imageWidth; i++) {

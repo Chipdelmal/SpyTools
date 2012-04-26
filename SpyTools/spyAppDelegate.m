@@ -27,7 +27,7 @@
     /*Debug*/
     /*Encryption Operations*/
     NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/lena.bmp"];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test6.png"];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/Test5.png"];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
     NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageToBeEncrypted];
@@ -38,20 +38,30 @@
     /*Decryption Operations*/
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
     NSArray *decryptedImageArray = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
-    //[decryptedImageData writeToFile:@"/Users/Chip/Pictures/decrypted.png" atomically:NO];
+    //NSLog(@"%@",decryptedImageArray);
     
-    //NSBitmapImageRep *decryptedImageRep = [[NSBitmapImageRep alloc] initWithData:decryptedImageData];
-    //NSData *imageConverted = [decryptedImageRep representationUsingType:NSBMPFileType properties:nil];
-    //[imageConverted writeToFile:@"/Users/Chip/Pictures/decrypted.bmp" atomically:NO];
+    NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<30; i++) {
+        [lengthArray addObject:[decryptedImageArray objectAtIndex:i]];
+    }
+    int dataLength = binaryArrayToCharacter(lengthArray, 30);
+    //NSLog(@"%i",dataLength);
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    for (int k=30; k<[decryptedImageArray count]; k++) {
+        [dataArray addObject:[decryptedImageArray objectAtIndex:k]];
+    }
+    NSLog(@"%@",dataArray);
+    
     
     /*Tests*/
     unsigned char inputBuffer[[imageToBeEncrypted length]];
     [imageToBeEncrypted getBytes:inputBuffer];
     
     unsigned char outputBuffer[[imageToBeEncrypted length]];
-    for (int i=0; i<[imageToBeEncrypted length]; i++) {
-        outputBuffer[i]=[[decryptedImageArray objectAtIndex:i] intValue];
-        NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
+    //*outputBuffer = NSArrayToUnsignedCharArray(decryptedImageArray);
+    for (int i=0; i<dataLength; i++) {
+        outputBuffer[i]=[[dataArray objectAtIndex:i] intValue];
+        //NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
     }
     
     NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:[imageToBeEncrypted length]];

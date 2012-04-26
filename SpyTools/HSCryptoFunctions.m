@@ -182,6 +182,15 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
     [outputString appendFormat:@"]"];
     return outputString;
 }
+/*unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray){
+    int length = [inputArray count];
+    unsigned char outputBuffer[length];
+    for (int i=0; i<length; i++) {
+        outputBuffer[i]=[[inputArray objectAtIndex:i] intValue];
+        //NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
+    }
+    return *outputBuffer;
+}*/
 
 NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents){
     
