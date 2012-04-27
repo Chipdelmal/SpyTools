@@ -9,396 +9,163 @@
 #import "spyAppDelegate.h"
 
 @implementation spyAppDelegate
+@synthesize tiOperationSelector;
+@synthesize tiKeyTypeSelector;
+@synthesize tiInputTextField;
+@synthesize tiInputImageWell;
+@synthesize tiKeyLengthSelector;
+@synthesize tiKeyTextField;
+@synthesize tiGenerateKeyButton;
+@synthesize tiProcessButton;
+@synthesize tiOutputTextField;
+@synthesize tiInputTextLabel;
+@synthesize tiOutputTextLabel;
+@synthesize tiProgressIndicator;
+@synthesize teOperationSelector;
+@synthesize teInputTextField;
+@synthesize teKeyTypeSelector;
+@synthesize teKeyLengthSelector;
+@synthesize teGenerateKeyButton;
+@synthesize teProcessButton;
+@synthesize teOutputText;
+@synthesize teInformationLabel;
+@synthesize teRandomKeyBox;
+@synthesize teKeyTextField;
+@synthesize teKeyTypeLabel;
+@synthesize teKeyLengthLabel;
+@synthesize teInputTextLabel;
+@synthesize teKeyFieldLabel;
+@synthesize teOutputTextLabel;
+@synthesize glTabView;
 
 @synthesize window = _window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
-    [processActionSelector setSelectedSegment:0];
-    [informationLabel setStringValue:@"Enter the text to be encrypted."];
-    [stProgressIndicator setHidden:TRUE];
-    [sendToSteganographyButton setEnabled:FALSE];
-    [stSendToTextButton setEnabled:FALSE];
+    [self operationSelectorChange:self];
+    [self keyTypeSelectorChange:self];
     
-    stTextFits = FALSE;
-    
-    [self processActionSelectorChange:self];
-    [self processSequence:self];
-    
-    /*Debug*/
-    /*Encryption Operations*/
-    /*NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/gordon.jpeg"];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Pictures/TestTiff.tiff"];
-    
-    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageToBeEncrypted];
-    
-    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSPNGFileType properties:nil];
-    [encryptedImageOutput writeToFile:@"/Users/Chip/Pictures/encrypted.png" atomically:NO];
-    */
-    /*Decryption Operations*/
-    /*HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageOutput];
-    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
-    //NSLog(@"%@",decryptedImageArray);
-
-    [dataOutput writeToFile:@"/Users/Chip/Pictures/decrypted" atomically:NO];
-    */
 }
-/*Global*/
--(IBAction)processActionSelectorChange:(id)sender{
-    [self processSequence:self];
-}
--(IBAction)clearInterface:(id)sender{
-    [textToProcessField setStringValue:@""];
-    [keyField setStringValue:@""];
-    [keyLengthTextField setStringValue:@""];
-    [maxRandomValueField setStringValue:@""];
-    [textProcessedField setStringValue:@""];
-    [stTextProcessedField setStringValue:@""];
-    [stTextToProcessField setStringValue:@""];
-    [stInputImageWell setImage:NULL];
-    [self processActionSelectorChange:self];
-}
--(IBAction)processSequence:(id)sender{
-    if ([processActionSelector selectedSegment]==0) {
-        NSLog(@"Interface: Text Encryption Selected");
-        [processButton setTitle:@"Encrypt"];
-        [stProcessButton setTitle:@"Encrypt"];
-        [textToProcessField setTextColor:[NSColor blackColor]];
-        [textProcessedField setTextColor:[NSColor blackColor]];
-        [self textEncryptionSequence:self];
-        [self textImageEncryptionSequence:self];
-    }else if([processActionSelector selectedSegment]==1){
-        NSLog(@"Interface: Text Decryption Selected");
-        [processButton setTitle:@"Decrypt"];
-        [stProcessButton setTitle:@"Decrypt"];
-        [textToProcessField setTextColor:[NSColor blackColor]];
-        [textProcessedField setTextColor:[NSColor blackColor]];
-        [self textDecryptionSequence:self];
-        [self textImageDecryptionSequence:self];
-    }
-}
--(IBAction)textEncryptionSequence:(id)sender{
-    NSLog(@"Interface: Text Encryption Sequence");
-    if ([[textToProcessField stringValue] length]==0){
-        [informationLabel setStringValue:@"Enter a text to encrypt and press Enter."];
-        NSLog(@"Interface: No text entered.");
-        [keyLengthTextField setEnabled:FALSE];
-        [maxRandomValueField setEnabled:FALSE];
-        [generateRandomKeyButton setEnabled:FALSE];
-        [keyField setEnabled:FALSE];
-        [processButton setEnabled:FALSE];
-        [textProcessedField setEnabled:FALSE];
-        [generateRandomPassphraseButton setEnabled:FALSE];
-    }else if([[keyField stringValue] length]==0){
-        [informationLabel setStringValue:@"Enter an encryption key or generate one."];
-        NSLog(@"Interface: No key entered.");
-        [keyLengthTextField setEnabled:TRUE];
-        [maxRandomValueField setEnabled:TRUE];
-        [generateRandomKeyButton setEnabled:TRUE];
-        [keyField setEnabled:TRUE];
-        [processButton setEnabled:FALSE];
-        [textProcessedField setEnabled:FALSE];
-        [self autoGenerateRandomKeyParameters:self];
-        [generateRandomPassphraseButton setEnabled:TRUE];
-    }else if([[textProcessedField stringValue] length]==0){
-        [informationLabel setStringValue:@"Ready to process."];
-        NSLog(@"Interface: Ready to Process.");
-        [keyLengthTextField setEnabled:TRUE];
-        [maxRandomValueField setEnabled:TRUE];
-        [generateRandomKeyButton setEnabled:TRUE];
-        [keyField setEnabled:TRUE];
-        [processButton setEnabled:TRUE];
-        [textProcessedField setEnabled:TRUE];
-        [generateRandomPassphraseButton setEnabled:TRUE];
+/*Interface Methods*/
+-(IBAction)operationSelectorChange:(id)sender{
+    [self keyTypeSelectorChange:self];
+    if ([teOperationSelector selectedSegment]==0) {
+        //[teKeyTypeSelector setEnabled:TRUE];
+        //[teKeyLengthSelector setEnabled:TRUE];
+        [teGenerateKeyButton setEnabled:TRUE];
+        [teProcessButton setTitle:@"Encrypt"];
+        [teKeyFieldLabel setStringValue:@"Encryption Key:"];
+        [teKeyLengthLabel setEnabled:TRUE];
+        [teKeyTypeLabel setEnabled:TRUE];
+        [teInputTextLabel setStringValue:@"Text to be Encrypted:"];
+        [teOutputTextLabel setStringValue:@"Encrypted Text:"];
     }else {
-        [informationLabel setStringValue:@"Your text has been processed."];
-        NSLog(@"Interface: Text processed.");
+        //[teKeyTypeSelector setEnabled:TRUE];
+        //[teKeyLengthSelector setEnabled:FALSE];
+        [teGenerateKeyButton setEnabled:FALSE];
+        [teProcessButton setTitle:@"Decrypt"];
+        [teKeyFieldLabel setStringValue:@"Decryption Key:"];
+        [teKeyLengthLabel setEnabled:FALSE];
+        [teKeyTypeLabel setEnabled:FALSE];
+        [teInputTextLabel setStringValue:@"Text to be Decrypted:"];
+        [teOutputTextLabel setStringValue:@"Decrypted Text:"];
     }
+}
+-(IBAction)keyTypeSelectorChange:(id)sender{
+    if (([teKeyTypeSelector selectedSegment]==0)&&([teOperationSelector selectedSegment]==0)) {
+        [teKeyLengthSelector setEnabled:TRUE];
+    }else {
+        [teKeyLengthSelector setEnabled:FALSE];
+    }
+}
+/*Text Encryption*/
+-(IBAction)generateRandomKey:(id)sender{
+    int inputStringLength = [[teInputTextField stringValue] length];
+    float lengthFraction = 1;
+    if ([teKeyLengthSelector selectedSegment]==0) {
+        lengthFraction = 1;
+    }else if ([teKeyLengthSelector selectedSegment]==1) {
+        lengthFraction = .5;
+    }else {
+        lengthFraction = .25;
+    }
+    int keyLength = lengthFraction*inputStringLength;
+    NSArray *randomlyGeneratedKey = generateRandomPad(keyLength, 122-32);
+    [teKeyTextField setStringValue:padArrayToString(randomlyGeneratedKey)];
     
-    if (([[textProcessedField stringValue] length]!=0)&&([processActionSelector selectedSegment]==0)) {
-        [sendToSteganographyButton setEnabled:TRUE];
-    }else {
-        [sendToSteganographyButton setEnabled:FALSE];
-    }
+    //NSLog(@"[Input String Length: %i :: Key Length: %i]", inputStringLength, keyLength);
 }
--(IBAction)textDecryptionSequence:(id)sender{
-    NSLog(@"Interface: Text Decryption Sequence");
-    if ([[textToProcessField stringValue] length]==0) {
-        [informationLabel setStringValue:@"Enter a text to decrypt and press Enter."];
-        NSLog(@"Interface: No text entered.");
-        [keyLengthTextField setEnabled:FALSE];
-        [maxRandomValueField setEnabled:FALSE];
-        [generateRandomKeyButton setEnabled:FALSE];
-        [keyField setEnabled:FALSE];
-        [processButton setEnabled:FALSE];
-        [textProcessedField setEnabled:FALSE];
-        [generateRandomPassphraseButton setEnabled:FALSE];
-    }else if([[keyField stringValue] length]==0){
-        [informationLabel setStringValue:@"Enter a decryption key and press Enter."];
-        NSLog(@"Interface: No key entered.");
-        [keyLengthTextField setEnabled:FALSE];
-        [maxRandomValueField setEnabled:FALSE];
-        [generateRandomKeyButton setEnabled:FALSE];
-        [keyField setEnabled:TRUE];
-        [processButton setEnabled:FALSE];
-        [textProcessedField setEnabled:FALSE];
-        [generateRandomPassphraseButton setEnabled:FALSE];
-    }else {
-        [informationLabel setStringValue:@"Ready to process."];
-        NSLog(@"Interface: Ready to Process.");
-        [keyLengthTextField setEnabled:FALSE];
-        [maxRandomValueField setEnabled:FALSE];
-        [generateRandomKeyButton setEnabled:FALSE];
-        [keyField setEnabled:TRUE];
-        [processButton setEnabled:TRUE];
-        [textProcessedField setEnabled:TRUE];
-        [generateRandomPassphraseButton setEnabled:FALSE];
-    }
-}
--(IBAction)textImageEncryptionSequence:(id)sender{
-    if ([[stTextToProcessField stringValue] length]==0) {
-        NSLog(@"Interface: Text to encrypt has not been entered.");
-        [stTextToProcessField setEnabled:TRUE];
-        [stTextProcessedField setEnabled:FALSE];
-        [stInputImageWell setEnabled:FALSE];
-        [stImageFormatSelector setEnabled:FALSE];
-        [stAnalyzeLabel setHidden:TRUE];
-        [stProcessButton setEnabled:FALSE];
-        [informationLabel setStringValue:@"Enter a text to be encrypted and press Enter."];
-    }else if(([[stTextToProcessField stringValue] length]!=0)&&([stInputImageWell image]==NULL)){
-        NSLog(@"Interface: Image has not been entered.");
-        [stInputImageWell setEnabled:TRUE];
-        [stTextProcessedField setEnabled:FALSE];
-        [stImageFormatSelector setEnabled:FALSE];
-        [stAnalyzeLabel setHidden:TRUE];
-        [stProcessButton setEnabled:FALSE];
-        [informationLabel setStringValue:@"Drag and drop an image to the container."];
-    }else if (([[stTextToProcessField stringValue] length]!=0)&&([stInputImageWell image]!=NULL)) {
-        NSLog(@"Interface: Image is ready.");
-        [stImageFormatSelector setEnabled:TRUE];
-        [stTextProcessedField setEnabled:FALSE];
-        [self analyzeSpace:self];
-        [stAnalyzeLabel setHidden:FALSE];
-        if (stTextFits) {
-            [stProcessButton setEnabled:TRUE];
-            [informationLabel setStringValue:@"The text is ready to be encrypted."];
-        }else {
-            [informationLabel setStringValue:@"The text does not fit selected image."];
-        }
-    }else {
-        [informationLabel setStringValue:@"Your text has been encrypted."];
-    }
-}
--(IBAction)textImageDecryptionSequence:(id)sender{
-    [stImageFormatSelector setEnabled:FALSE];
-    [stInputImageWell setEnabled:TRUE];
-    [stTextToProcessField setEnabled:FALSE];
-    if([stInputImageWell image]==NULL){
-        [stProcessButton setEnabled:FALSE];
-        [informationLabel setStringValue:@"Drag and drop the encrypted image to the container."];
-    }else {
-        [stTextProcessedField setEnabled:TRUE];
-        [stProcessButton setEnabled:TRUE];
-        [informationLabel setStringValue:@"Image is ready to be decrypted."];
-    }
-    
-    if (([[stTextProcessedField stringValue] length]!=0)&&([processActionSelector selectedSegment]!=0)) {
-        [stSendToTextButton setEnabled:TRUE];
-    }else {
-        [stSendToTextButton setEnabled:FALSE];
-    }
-    
-}
-/*Text encryption*/
 -(IBAction)generateRandomPassphrase:(id)sender{
     HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
     NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
-    [keyField setStringValue:encryptionString];
-    [self textEncryptionSequence:self];
+    [teKeyTextField setStringValue:encryptionString];
 }
--(IBAction)generateRandomKey:(id)sender{
-    NSArray *keyArray = generateRandomPad([keyLengthTextField intValue], [maxRandomValueField intValue]);
-    NSString *keyString = padArrayToString(keyArray);
-    [keyField setStringValue:keyString];
-    [self textEncryptionSequence:self];
-}
--(IBAction)autoGenerateRandomKeyParameters:(id)sender{
-    int keyLength = [[textToProcessField stringValue] length];
-    [keyLengthTextField setIntValue:keyLength];
-    [maxRandomValueField setIntValue:(122-65)];
-}
--(IBAction)processText:(id)sender{
-    if ([processActionSelector selectedSegment]==0) {
-        [self encryptText:self];
+-(IBAction)generateKeySelector:(id)sender{
+    if ([teKeyTypeSelector selectedSegment]==0) {
+        [self generateRandomKey:self];
     }else {
-        [self decryptText:self];
+        [self generateRandomPassphrase:self];
     }
 }
--(IBAction)encryptText:(id)sender{
-    NSLog(@"Interface: Encryption Started");
-    NSString *stringToProcess = [textToProcessField stringValue];
-    NSString *keyString = [keyField stringValue];    
-    HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToProcess];
-    NSString *encryptedString = [[NSString alloc] init];
+-(IBAction)oneTimePadEncryptText:(id)sender{
+    NSString *stringToEncrypt = [[NSString alloc] initWithString:[teInputTextField stringValue]];
+    NSString *keyString = [[NSString alloc] initWithString:[teKeyTextField stringValue]];
+    HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToEncrypt];
+    NSString *encryptedString;
     
-    if([keyTypeTabView indexOfTabViewItem:[keyTypeTabView selectedTabViewItem]]==1){
+    if ([teKeyTypeSelector selectedSegment]==0) {
         encryptedString = [encryptorObject encryptStringToProcessWithKey:keyString];
     }else {
         encryptedString = [encryptorObject encryptStringToProcessWithPassphrase:keyString];
     }
-        
-    NSLog(@"Interface: Encryption Finished With result [%@]", encryptedString);
-    [textProcessedField setStringValue:encryptedString];
-    [self textEncryptionSequence:self];
-}
--(IBAction)decryptText:(id)sender{
-    NSLog(@"Interface: Encryption Started");
-    NSString *stringToProcess = [textToProcessField stringValue];
-    NSString *keyString = [keyField stringValue];
-    HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToProcess];
-    NSString *decryptedString = [[NSString alloc] init];
     
-    if ([keyTypeTabView indexOfTabViewItem:[keyTypeTabView selectedTabViewItem]]==1) {
+    [teOutputText setStringValue:encryptedString];
+}
+-(IBAction)onetimePadDecryptText:(id)sender{
+    NSString *stringToDecrypt = [[NSString alloc] initWithString:[teInputTextField stringValue]];
+    NSString *keyString = [[NSString alloc] initWithString:[teKeyTextField stringValue]];
+    HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToDecrypt];
+    NSString *decryptedString;
+    
+    if ([teKeyTypeSelector selectedSegment]==0) {
         decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
     }else {
         decryptedString = [encryptorObject decryptStringToProcessWithPassphrase:keyString];
     }
     
-    NSLog(@"Interface: Decryption Finished With result [%@]", decryptedString);
-    [textProcessedField setStringValue:decryptedString];
-    [self textDecryptionSequence:self];
+    [teOutputText setStringValue:decryptedString]; 
 }
--(IBAction)sendResultToImage:(id)sender{
-    [stTextToProcessField setStringValue:[textProcessedField stringValue]];
-    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:1]];
-    [processActionSelector setSelectedSegment:0];
-}
-/*Text in Image encryption*/
--(IBAction)analyzeSpace:(id)sender{
-    NSData *imageData = [[NSData alloc] initWithData:[[stInputImageWell image] TIFFRepresentation]];
-    HSImageEncryptor *imageObject = [[HSImageEncryptor alloc] initWithData:imageData];
-    int pixelsNumber = [imageObject imageWidth]*[imageObject imageHeight];
-    int charactersNumber = pixelsNumber / 8;
-    int inputStringSize = [[stTextToProcessField stringValue] length];
-    NSString *warningString = [[NSString alloc] initWithString:@"Test"];
-    if (inputStringSize<charactersNumber) {
-        [processButton setEnabled:TRUE];
-        stTextFits = TRUE;
-        warningString = @"Text fits the image.";
+-(IBAction)oneTimePadSelector:(id)sender{
+    if ([teOperationSelector selectedSegment]==0) {
+        [self oneTimePadEncryptText:self];
     }else {
-        [processButton setEnabled:FALSE];
-        stTextFits = FALSE;
-        warningString = @"Text does not fit the image. Please select a bigger image or a shorter text.";
-    }
-    
-    NSString *analyzeStringLabel = [[NSString alloc] initWithFormat:@"Number of pixels: %i \nNumber of characters allowed: %i \nString Size: %i \n\n%@",pixelsNumber,charactersNumber, inputStringSize,warningString];
-    [stAnalyzeLabel setStringValue:analyzeStringLabel];
-}
--(IBAction)encryptTextImage:(id)sender{
-    [informationLabel setStringValue:@"Working. Please wait."];
-    [stProgressIndicator setHidden:FALSE];
-    [stProgressIndicator startAnimation:self];
-
-    NSData *imageData = [[NSData alloc] initWithData:[[stInputImageWell image] TIFFRepresentation]];
-    HSImageEncryptor    *imageObject = [[HSImageEncryptor alloc] initWithData:imageData];
-    NSBitmapImageRep    *bitmapRep = [imageObject encryptImageWithBits:8 andComponents:3 andString:[stTextToProcessField stringValue]];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
-    NSString *desktopPath = [paths objectAtIndex:0];
-    //NSLog(@"%@",desktopPath);
-    
-    
-    if([stImageFormatSelector selectedSegment]==0){
-        NSData *dataOutput = [bitmapRep representationUsingType:NSBMPFileType properties:nil];
-        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
-        [dataOutput writeToFile:fullWriteString atomically: NO]; 
-    }else if([stImageFormatSelector selectedSegment]==1){
-        NSData *dataOutput = [bitmapRep representationUsingType:NSPNGFileType properties:nil];
-        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.png"];
-        [dataOutput writeToFile:fullWriteString atomically: NO];
-    }else if ([stImageFormatSelector selectedSegment]==2) {
-        NSData *dataOutput = [bitmapRep representationUsingType:NSTIFFFileType properties:nil];
-        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.tiff"];
-        [dataOutput writeToFile:fullWriteString atomically: NO];
-    }
-    
-    [informationLabel setStringValue:@"Image succesfully encrypted and saved on your desktop."];
-    [stProgressIndicator setHidden:TRUE];
-    [stProgressIndicator stopAnimation:self];
-    [self textImageEncryptionSequence:self];
-}
--(IBAction)decryptTextImage:(id)sender{
-    [informationLabel setStringValue:@"Working. Please wait."];
-    [stProgressIndicator setHidden:FALSE];
-    [stProgressIndicator startAnimation:self];
-   
-    NSData *imageData = [[NSData alloc] initWithData:[[stInputImageWell image] TIFFRepresentation]];
-    HSImageEncryptor  *imageObject2 = [[HSImageEncryptor alloc] initWithData:imageData];
-    NSString *stringOutput = [[NSString alloc] initWithString:[imageObject2 decryptImageWithBits:8 andComponents:3]];
-    NSLog(@"%@",stringOutput);
-    [stTextProcessedField setStringValue:stringOutput];
-    
-    [stProgressIndicator setHidden:TRUE];
-    [stProgressIndicator stopAnimation:self];
-    [informationLabel setStringValue:@"Text successfully decrypted."];
-    [self textImageDecryptionSequence:self];
-}
--(IBAction)processTextImage:(id)sender{
-    if ([processActionSelector selectedSegment]==0) {
-        NSLog(@"Encrypting...");
-        [self encryptTextImage:self];
-    }else {
-        NSLog(@"Decrypting...");
-        [self decryptTextImage:self];
+        [self onetimePadDecryptText:self];
     }
 }
--(IBAction)sendResultToText:(id)sender{
-    [textToProcessField setStringValue:[stTextProcessedField stringValue]];
-    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
-    [processActionSelector setSelectedSegment:1];
-}
-/*Image in Image encryption*/
--(IBAction)encryptImageImage:(id)sender{    
-    /*Encryption Operations*/
-    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[stiRepositoryImageWell image] TIFFRepresentation]];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[stiToEncryptImageWell image] TIFFRepresentation]];
-    
-    NSBitmapImageRep *tempConversion = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
-    NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSPNGFileType properties:NULL];
-    
-    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageConvertedToEncrypt];
-    NSImage *imageEncrypted = [[NSImage alloc] init];
-    [imageEncrypted addRepresentation:imageEncryptedBitmap];
-    [stiOutputImageWell setImage:imageEncrypted];
-    
-    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
-    NSString *desktopPath = [paths objectAtIndex:0];
-    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
-    [encryptedImageOutput writeToFile:fullWriteString atomically:NO];
-}
--(IBAction)decryptImageImage:(id)sender{
-    /*Decryption Operations*/
-    NSData *encryptedImageData = [[NSData alloc] initWithData:[[stiRepositoryImageWell image] TIFFRepresentation]];
-    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
-    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
-    
-    NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
-    [stiOutputImageWell setImage:imageEncrypted];
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
-    NSString *desktopPath = [paths objectAtIndex:0];
-    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
-    [dataOutput writeToFile:fullWriteString atomically:NO];
-}
--(IBAction)processImageImage:(id)sender{
-    if ([processActionSelector selectedSegment]==0) {
-        NSLog(@"Encrypting...");
-        [self encryptImageImage:self];
+/*Text in Image Encryption*/
+-(IBAction)tiGenerateRandomKey:(id)sender{
+    int inputStringLength = [[tiInputTextField stringValue] length];
+    float lengthFraction = 1;
+    if ([tiKeyLengthSelector selectedSegment]==0) {
+        lengthFraction = 1;
+    }else if ([tiKeyLengthSelector selectedSegment]==1) {
+        lengthFraction = .5;
     }else {
-        NSLog(@"Decrypting...");
-        [self decryptImageImage:self];
+        lengthFraction = .25;
+    }
+    int keyLength = lengthFraction*inputStringLength;
+    NSArray *randomlyGeneratedKey = generateRandomPad(keyLength, 122-32);
+    [tiKeyTextField setStringValue:padArrayToString(randomlyGeneratedKey)]; 
+}
+-(IBAction)tiGenerateRandomPassphrase:(id)sender{
+    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
+    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
+    [tiKeyTextField setStringValue:encryptionString];
+}
+-(IBAction)tiGenerateKeySelector:(id)sender{
+    if ([tiKeyTypeSelector selectedSegment]==0) {
+        [self tiGenerateRandomKey:self];
+    }else {
+        [self tiGenerateRandomPassphrase:self];
     }
 }
 

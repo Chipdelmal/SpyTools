@@ -14,6 +14,7 @@
 int fixEncryptToPrintableUTF8(int summValue, int highPrintable, int lowPrintable);
 int fixDecryptToPrintableUTF8(int summValue, int highPrintable, int lowPrintable);
 NSArray *generateRandomPad(int padSize, int maxNumber);
+NSString *generateRandomKey(int padLength, int maxNumber);
 NSString *encryptUTF8StringWithPad(NSString *inputString, NSArray *padArray);
 NSString *decryptUTF8StringWithPad(NSString *inputString, NSArray *padArray);
 NSString *padArrayToString(NSArray *padArray);

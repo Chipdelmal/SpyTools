@@ -13,63 +13,56 @@
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
     BOOL        stTextFits;
-    /*Global*/
-    IBOutlet    NSSegmentedControl  *processActionSelector;
-    IBOutlet    NSTextField         *informationLabel;
-    IBOutlet    NSTabView           *tabView;
-    IBOutlet    NSButton            *startOverButton;
-    /*Text Encryption*/
-    IBOutlet    NSBox               *keyGenerationBox;
-    IBOutlet    NSTextField         *textToProcessField;
-    IBOutlet    NSTextField         *keyLengthTextField;
-    IBOutlet    NSTextField         *maxRandomValueField;
-    IBOutlet    NSButton            *generateRandomKeyButton;
-    IBOutlet    NSButton            *generateRandomPassphraseButton;
-    IBOutlet    NSTextField         *keyField;
-    IBOutlet    NSButton            *processButton;
-    IBOutlet    NSTextField         *textProcessedField;
-    IBOutlet    NSButton            *sendToSteganographyButton;
-    IBOutlet    NSTabView           *keyTypeTabView;
-    /*Text in Image*/
-    IBOutlet    NSImageView         *stInputImageWell;
-    IBOutlet    NSTextField         *stTextToProcessField;
-    IBOutlet    NSTextField         *stTextProcessedField;
-    IBOutlet    NSSegmentedControl  *stImageFormatSelector;
-    IBOutlet    NSTextField         *stAnalyzeLabel;
-    IBOutlet    NSProgressIndicator *stProgressIndicator;
-    IBOutlet    NSButton            *stProcessButton;
-    IBOutlet    NSButton            *stSendToTextButton;
-    /*Image in Image*/
-    IBOutlet    NSImageView         *stiRepositoryImageWell;
-    IBOutlet    NSImageView         *stiToEncryptImageWell;
-    IBOutlet    NSImageView         *stiOutputImageWell;
-    IBOutlet    NSButton            *stiProcessButton;
 }
 /*Global*/
--(IBAction)processActionSelectorChange:(id)sender;
--(IBAction)textEncryptionSequence:(id)sender;
--(IBAction)textDecryptionSequence:(id)sender;
--(IBAction)clearInterface:(id)sender;
--(IBAction)textImageEncryptionSequence:(id)sender;
--(IBAction)textImageDecryptionSequence:(id)sender;
+@property (weak) IBOutlet NSTabView *glTabView;
 /*Text Encryption*/
--(IBAction)generateRandomPassphrase:(id)sender;
+@property (weak) IBOutlet NSSegmentedControl *teOperationSelector;
+@property (weak) IBOutlet NSTextField *teInputTextField;
+@property (weak) IBOutlet NSSegmentedControl *teKeyTypeSelector;
+@property (weak) IBOutlet NSSegmentedControl *teKeyLengthSelector;
+@property (weak) IBOutlet NSButton *teGenerateKeyButton;
+@property (weak) IBOutlet NSButton *teProcessButton;
+@property (weak) IBOutlet NSTextField *teOutputText;
+@property (weak) IBOutlet NSTextField *teInformationLabel;
+@property (weak) IBOutlet NSTextField *teInputTextLabel;
+@property (weak) IBOutlet NSTextField *teKeyFieldLabel;
+@property (weak) IBOutlet NSTextField *teOutputTextLabel;
+@property (weak) IBOutlet NSBox *teRandomKeyBox;
+@property (weak) IBOutlet NSTextField *teKeyTextField;
+@property (weak) IBOutlet NSTextField *teKeyTypeLabel;
+@property (weak) IBOutlet NSTextField *teKeyLengthLabel;
+/*Text In Image Encryption*/
+@property (weak) IBOutlet NSSegmentedControl *tiOperationSelector;
+@property (weak) IBOutlet NSSegmentedControl *tiKeyTypeSelector;
+@property (weak) IBOutlet NSTextField *tiInputTextField;
+@property (weak) IBOutlet NSImageView *tiInputImageWell;
+@property (weak) IBOutlet NSSegmentedControl *tiKeyLengthSelector;
+@property (weak) IBOutlet NSTextField *tiKeyTextField;
+@property (weak) IBOutlet NSButton *tiGenerateKeyButton;
+@property (weak) IBOutlet NSButton *tiProcessButton;
+@property (weak) IBOutlet NSTextField *tiOutputTextField;
+@property (weak) IBOutlet NSTextField *tiInputTextLabel;
+@property (weak) IBOutlet NSTextField *tiOutputTextLabel;
+@property (weak) IBOutlet NSProgressIndicator *tiProgressIndicator;
+
+
+/*Interface Methods-----------------------*/
+-(IBAction)operationSelectorChange:(id)sender;
+-(IBAction)keyTypeSelectorChange:(id)sender;
+/*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender;
--(IBAction)autoGenerateRandomKeyParameters:(id)sender;
--(IBAction)processText:(id)sender;
--(IBAction)encryptText:(id)sender;
--(IBAction)decryptText:(id)sender;
--(IBAction)sendResultToImage:(id)sender;
+-(IBAction)generateRandomPassphrase:(id)sender;
+-(IBAction)generateKeySelector:(id)sender;
+-(IBAction)oneTimePadEncryptText:(id)sender;
+-(IBAction)onetimePadDecryptText:(id)sender;
+-(IBAction)oneTimePadSelector:(id)sender;
 /*Text in Image Encryption*/
--(IBAction)analyzeSpace:(id)sender;
--(IBAction)encryptTextImage:(id)sender;
--(IBAction)decryptText:(id)sender;
--(IBAction)processTextImage:(id)sender;
--(IBAction)sendResultToText:(id)sender;
+-(IBAction)tiGenerateRandomKey:(id)sender;
+-(IBAction)tiGenerateRandomPassphrase:(id)sender;
+-(IBAction)tiGenerateKeySelector:(id)sender;
 /*Image in Image Encryption*/
--(IBAction)encryptImageImage:(id)sender;
--(IBAction)decryptImageImage:(id)sender;
--(IBAction)processImageImage:(id)sender;
+
 
 @property (assign) IBOutlet NSWindow *window;
 @end

@@ -34,6 +34,13 @@ NSArray *generateRandomPad(int padSize, int maxNumber){
     }
     return phaseArray;
 }
+NSString *generateRandomKey(int keyLength, int maxNumber){
+    NSArray *keyArray = [[NSArray alloc] initWithArray:generateRandomPad(keyLength, maxNumber)];
+    char *keyCharArray = NSArrayToCharArray(keyArray);
+    NSLog(@"%s",keyCharArray);
+    NSString *returnString = [[NSString alloc] initWithCString:keyCharArray encoding:4];
+    return returnString;
+}
 NSString *encryptUTF8StringWithPad(NSString *inputString, NSArray *padArray){
     /*Encrypts a string given a key in the form of an array*/
     NSString *preparedString = [[NSString alloc] initWithString:prepareStringForEncryption(inputString)];
