@@ -13,6 +13,7 @@
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
     BOOL        stTextFits;
+    NSString    *stringToProcess;
 }
 /*Global*/
 @property (weak) IBOutlet NSTabView *glTabView;
@@ -45,6 +46,7 @@
 @property (weak) IBOutlet NSTextField *tiInputTextLabel;
 @property (weak) IBOutlet NSTextField *tiOutputTextLabel;
 @property (weak) IBOutlet NSProgressIndicator *tiProgressIndicator;
+@property (weak) IBOutlet NSSegmentedControl *tiOutputFormatSelector;
 
 
 /*Interface Methods-----------------------*/
@@ -61,8 +63,13 @@
 -(IBAction)tiGenerateRandomKey:(id)sender;
 -(IBAction)tiGenerateRandomPassphrase:(id)sender;
 -(IBAction)tiGenerateKeySelector:(id)sender;
-/*Image in Image Encryption*/
+-(IBAction)tiOneTimePadEncryptText:(id)sender;
+-(IBAction)tiOnetimePadDecryptText:(id)sender;
+-(IBAction)tiOneTimePadSelector:(id)sender;
+-(IBAction)tiEncryptSteganography:(id)sender;
+-(IBAction)tiDecryptSteganography:(id)sender;
 
+/*Image in Image Encryption*/
 
 @property (assign) IBOutlet NSWindow *window;
 @end

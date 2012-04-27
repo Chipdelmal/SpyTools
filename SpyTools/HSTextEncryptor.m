@@ -36,7 +36,7 @@
 -(NSString *)encryptStringToProcessWithKey:(NSString *)keyString{
     NSArray *keyArray = [[NSArray alloc] initWithArray:keyStringToKeyArray(keyString)];
     NSString *encryptedString = [[NSString alloc] initWithString:encryptUTF8StringWithPad(stringToProcess, keyArray)];
-    //NSLog(@"HSTextEncryptor Encrypted String: %@",encryptedString);
+    NSLog(@"HSTextEncryptor Encrypted String: %@",encryptedString);
     return encryptedString;
 }
 -(NSString *)decryptStringToProcessWithKey:(NSString *)keyString{
@@ -55,7 +55,9 @@
 -(NSString *)encryptProcessAutoSelector:(NSString *)keyString{
     NSString *testEncryptedString = [[NSString alloc] initWithString:[self encryptStringToProcessWithKey:keyString]];
     NSString *returnEncryptedString;
-    if ([testEncryptedString isEqualToString:stringToProcess]) {
+    if ([keyString length]==0) {
+        returnEncryptedString = stringToProcess;
+    }else if([testEncryptedString isEqualToString:stringToProcess]){
         returnEncryptedString = [self encryptStringToProcessWithPassphrase:keyString];
         NSLog(@"Using passphrase encryption.");
     }else {
