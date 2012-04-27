@@ -49,8 +49,8 @@
 -(IBAction)operationSelectorChange:(id)sender{
     [self keyTypeSelectorChange:self];
     if ([teOperationSelector selectedSegment]==0) {
-        //[teKeyTypeSelector setEnabled:TRUE];
-        //[teKeyLengthSelector setEnabled:TRUE];
+        [teKeyTypeSelector setEnabled:TRUE];
+        [teKeyLengthSelector setEnabled:TRUE];
         [teGenerateKeyButton setEnabled:TRUE];
         [teProcessButton setTitle:@"Encrypt"];
         [teKeyFieldLabel setStringValue:@"Encryption Key:"];
@@ -59,8 +59,8 @@
         [teInputTextLabel setStringValue:@"Text to be Encrypted:"];
         [teOutputTextLabel setStringValue:@"Encrypted Text:"];
     }else {
-        //[teKeyTypeSelector setEnabled:TRUE];
-        //[teKeyLengthSelector setEnabled:FALSE];
+        [teKeyTypeSelector setEnabled:FALSE];
+        [teKeyLengthSelector setEnabled:FALSE];
         [teGenerateKeyButton setEnabled:FALSE];
         [teProcessButton setTitle:@"Decrypt"];
         [teKeyFieldLabel setStringValue:@"Decryption Key:"];
@@ -110,13 +110,13 @@
     NSString *stringToEncrypt = [[NSString alloc] initWithString:[teInputTextField stringValue]];
     NSString *keyString = [[NSString alloc] initWithString:[teKeyTextField stringValue]];
     HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToEncrypt];
-    NSString *encryptedString;
-    
-    if ([teKeyTypeSelector selectedSegment]==0) {
+    NSString *encryptedString = [encryptorObject encryptProcessAutoSelector:keyString];
+
+    /*if ([teKeyTypeSelector selectedSegment]==0) {
         encryptedString = [encryptorObject encryptStringToProcessWithKey:keyString];
     }else {
         encryptedString = [encryptorObject encryptStringToProcessWithPassphrase:keyString];
-    }
+    }*/
     
     [teOutputText setStringValue:encryptedString];
 }
@@ -124,13 +124,13 @@
     NSString *stringToDecrypt = [[NSString alloc] initWithString:[teInputTextField stringValue]];
     NSString *keyString = [[NSString alloc] initWithString:[teKeyTextField stringValue]];
     HSTextEncryptor *encryptorObject = [[HSTextEncryptor alloc] initWithNSString:stringToDecrypt];
-    NSString *decryptedString;
+    NSString *decryptedString = [encryptorObject decryptProcessAutoSelector:keyString];
     
-    if ([teKeyTypeSelector selectedSegment]==0) {
+    /*if ([teKeyTypeSelector selectedSegment]==0) {
         decryptedString = [encryptorObject decryptStringToProcessWithKey:keyString];
     }else {
         decryptedString = [encryptorObject decryptStringToProcessWithPassphrase:keyString];
-    }
+    }*/
     
     [teOutputText setStringValue:decryptedString]; 
 }
@@ -164,7 +164,7 @@
 -(IBAction)tiGenerateKeySelector:(id)sender{
     if ([tiKeyTypeSelector selectedSegment]==0) {
         [self tiGenerateRandomKey:self];
-    }else {
+    }else if([tiKeyTypeSelector selectedSegment]==1){
         [self tiGenerateRandomPassphrase:self];
     }
 }

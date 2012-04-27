@@ -25,4 +25,7 @@
 -(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString;
 -(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString;
 
+-(NSString *)encryptProcessAutoSelector:(NSString *)keyString;
+-(NSString *)decryptProcessAutoSelector:(NSString *)keyString;
+
 @end

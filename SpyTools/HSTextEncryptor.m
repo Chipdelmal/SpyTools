@@ -36,13 +36,13 @@
 -(NSString *)encryptStringToProcessWithKey:(NSString *)keyString{
     NSArray *keyArray = [[NSArray alloc] initWithArray:keyStringToKeyArray(keyString)];
     NSString *encryptedString = [[NSString alloc] initWithString:encryptUTF8StringWithPad(stringToProcess, keyArray)];
-    NSLog(@"HSTextEncryptor Encrypted String: %@",encryptedString);
+    //NSLog(@"HSTextEncryptor Encrypted String: %@",encryptedString);
     return encryptedString;
 }
 -(NSString *)decryptStringToProcessWithKey:(NSString *)keyString{
     NSArray *keyArray = [[NSArray alloc] initWithArray:keyStringToKeyArray(keyString)];
     NSString *decryptedString = [[NSString alloc] initWithString:decryptUTF8StringWithPad(stringToProcess, keyArray)];
-    NSLog(@"HSTextEncryptor Decrypted String: %@",decryptedString);
+    //NSLog(@"HSTextEncryptor Decrypted String: %@",decryptedString);
     return decryptedString;
 }
 -(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString{
@@ -50,6 +50,31 @@
 }
 -(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString{
     return decryptUTF8StringWithPad(stringToProcess, NSStringToKeyArray(passphraseString));
+}
+
+-(NSString *)encryptProcessAutoSelector:(NSString *)keyString{
+    NSString *testEncryptedString = [[NSString alloc] initWithString:[self encryptStringToProcessWithKey:keyString]];
+    NSString *returnEncryptedString;
+    if ([testEncryptedString isEqualToString:stringToProcess]) {
+        returnEncryptedString = [self encryptStringToProcessWithPassphrase:keyString];
+        NSLog(@"Using passphrase encryption.");
+    }else {
+        returnEncryptedString = [self encryptStringToProcessWithKey:keyString];
+        NSLog(@"Using key encryption.");
+    }
+    return returnEncryptedString;
+}
+-(NSString *)decryptProcessAutoSelector:(NSString *)keyString{
+    NSString *testDecryptedString = [[NSString alloc] initWithString:[self decryptStringToProcessWithKey:keyString]];
+    NSString *returnDecryptedString;
+    if ([testDecryptedString isEqualToString:stringToProcess]) {
+        returnDecryptedString = [self decryptStringToProcessWithPassphrase:keyString];
+        NSLog(@"Using passphrase decryption.");
+    }else {
+        returnDecryptedString = [self decryptStringToProcessWithKey:keyString];
+        NSLog(@"Using key decryption.");
+    }
+    return returnDecryptedString;
 }
 
 @end
