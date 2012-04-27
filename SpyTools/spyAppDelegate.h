@@ -51,6 +51,17 @@
 @property (weak) IBOutlet NSTextField *tiImageInputLabel;
 @property (weak) IBOutlet NSTextField *tiImageOutputLabel;
 @property (weak) IBOutlet NSImageView *tiOutputImageWell;
+/*Image In Image Encryption*/
+@property (weak) IBOutlet NSSegmentedControl *iiOperationSelector;
+@property (weak) IBOutlet NSImageView *iiInputImageWell;
+@property (weak) IBOutlet NSImageView *iiInputImageToBeEncryptedWell;
+
+@property (weak) IBOutlet NSTextField *iiInputImageLabel;
+@property (weak) IBOutlet NSTextField *iiInputToBeEncryptedLabel;
+@property (weak) IBOutlet NSSegmentedControl *iiOutputFormatSelector;
+@property (weak) IBOutlet NSImageView *iiOutputImageWell;
+@property (weak) IBOutlet NSTextField *iiOutputImageLabel;
+@property (weak) IBOutlet NSButton *iiProcessButton;
 
 
 
@@ -75,8 +86,11 @@
 -(IBAction)tiOneTimePadSelector:(id)sender;
 -(IBAction)tiEncryptSteganography:(id)sender;
 -(IBAction)tiDecryptSteganography:(id)sender;
-
+-(IBAction)tiTextSteganographySelector:(id)sender;
 /*Image in Image Encryption*/
+-(IBAction)iiEncryptImage:(id)sender;
+-(IBAction)iiDecryptImage:(id)sender;
+-(IBAction)iiImageSteganographySelector:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

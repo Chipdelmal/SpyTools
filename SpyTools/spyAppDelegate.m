@@ -9,6 +9,15 @@
 #import "spyAppDelegate.h"
 
 @implementation spyAppDelegate
+@synthesize iiOperationSelector;
+@synthesize iiInputImageWell;
+@synthesize iiInputImageToBeEncryptedWell;
+@synthesize iiInputImageLabel;
+@synthesize iiInputToBeEncryptedLabel;
+@synthesize iiOutputFormatSelector;
+@synthesize iiOutputImageWell;
+@synthesize iiOutputImageLabel;
+@synthesize iiProcessButton;
 @synthesize tiOperationSelector;
 @synthesize tiKeyTypeSelector;
 @synthesize tiInputTextField;
@@ -289,5 +298,44 @@
         [self tiDecryptSteganography:self];
     }
 }
-
+/*Image in Image Encription*/
+-(IBAction)iiEncryptImage:(id)sender{
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
+    
+    NSBitmapImageRep *tempConversion = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSPNGFileType properties:NULL];
+    
+    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageConvertedToEncrypt];
+    NSImage *imageEncrypted = [[NSImage alloc] init];
+    [imageEncrypted addRepresentation:imageEncryptedBitmap];
+    [iiOutputImageWell setImage:imageEncrypted];
+    
+    NSData *encryptedImageOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
+    [encryptedImageOutput writeToFile:fullWriteString atomically:NO];
+}
+-(IBAction)iiDecryptImage:(id)sender{
+    NSData *encryptedImageData = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
+    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
+    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    
+    NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
+    [iiOutputImageWell setImage:imageEncrypted];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
+    [dataOutput writeToFile:fullWriteString atomically:NO];
+}
+-(IBAction)iiImageSteganographySelector:(id)sender{
+    if ([iiOperationSelector selectedSegment]==0) {
+        [self iiEncryptImage:self];
+    }else {
+        [self iiDecryptImage:self];
+    }
+}
 @end
