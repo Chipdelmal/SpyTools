@@ -55,13 +55,13 @@
 @property (weak) IBOutlet NSSegmentedControl *iiOperationSelector;
 @property (weak) IBOutlet NSImageView *iiInputImageWell;
 @property (weak) IBOutlet NSImageView *iiInputImageToBeEncryptedWell;
-
 @property (weak) IBOutlet NSTextField *iiInputImageLabel;
 @property (weak) IBOutlet NSTextField *iiInputToBeEncryptedLabel;
 @property (weak) IBOutlet NSSegmentedControl *iiOutputFormatSelector;
 @property (weak) IBOutlet NSImageView *iiOutputImageWell;
 @property (weak) IBOutlet NSTextField *iiOutputImageLabel;
 @property (weak) IBOutlet NSButton *iiProcessButton;
+@property (weak) IBOutlet NSProgressIndicator *iiProgressIndicator;
 
 
 
@@ -70,6 +70,7 @@
 -(IBAction)keyTypeSelectorChange:(id)sender;
 -(IBAction)tiOperationSelectorChange:(id)sender;
 -(IBAction)tiKeyTypeSelectorChange:(id)sender;
+-(IBAction)iiOperationSelectorChange:(id)sender;
 /*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender;
 -(IBAction)generateRandomPassphrase:(id)sender;
