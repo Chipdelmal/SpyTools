@@ -69,7 +69,9 @@
 -(NSString *)decryptProcessAutoSelector:(NSString *)keyString{
     NSString *testDecryptedString = [[NSString alloc] initWithString:[self decryptStringToProcessWithKey:keyString]];
     NSString *returnDecryptedString;
-    if ([testDecryptedString isEqualToString:stringToProcess]) {
+    if ([keyString length]==0){
+        returnDecryptedString = stringToProcess;
+    }else if([testDecryptedString isEqualToString:stringToProcess]) {
         returnDecryptedString = [self decryptStringToProcessWithPassphrase:keyString];
         NSLog(@"Using passphrase decryption.");
     }else {

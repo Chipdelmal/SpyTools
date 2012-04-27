@@ -47,11 +47,18 @@
 @property (weak) IBOutlet NSTextField *tiOutputTextLabel;
 @property (weak) IBOutlet NSProgressIndicator *tiProgressIndicator;
 @property (weak) IBOutlet NSSegmentedControl *tiOutputFormatSelector;
+@property (weak) IBOutlet NSTextField *tiKeyTextLabel;
+@property (weak) IBOutlet NSTextField *tiImageInputLabel;
+@property (weak) IBOutlet NSTextField *tiImageOutputLabel;
+@property (weak) IBOutlet NSImageView *tiOutputImageWell;
+
 
 
 /*Interface Methods-----------------------*/
 -(IBAction)operationSelectorChange:(id)sender;
 -(IBAction)keyTypeSelectorChange:(id)sender;
+-(IBAction)tiOperationSelectorChange:(id)sender;
+-(IBAction)tiKeyTypeSelectorChange:(id)sender;
 /*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender;
 -(IBAction)generateRandomPassphrase:(id)sender;

@@ -138,6 +138,7 @@ char *NSArrayToCharArray(NSArray *inputArray){
     for (int i=0; i<stringLength; i++) {
         tempCString[i] = [[inputArray objectAtIndex:i] intValue];
     }
+    /*Remember to free char array after using*/
     return tempCString;
 }
 NSMutableArray *characterToBinaryArray(int characterToConvert, int bitsNumber){

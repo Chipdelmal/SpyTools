@@ -22,6 +22,10 @@
 @synthesize tiOutputTextLabel;
 @synthesize tiProgressIndicator;
 @synthesize tiOutputFormatSelector;
+@synthesize tiKeyTextLabel;
+@synthesize tiImageInputLabel;
+@synthesize tiImageOutputLabel;
+@synthesize tiOutputImageWell;
 @synthesize teOperationSelector;
 @synthesize teInputTextField;
 @synthesize teKeyTypeSelector;
@@ -43,7 +47,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
     [self operationSelectorChange:self];
-    [self keyTypeSelectorChange:self];
+    //[self keyTypeSelectorChange:self];
+    [self tiOperationSelectorChange:self];
+    [tiProgressIndicator setHidden:TRUE];
 }
 /*Interface Methods*/
 -(IBAction)operationSelectorChange:(id)sender{
@@ -69,6 +75,9 @@
         [teInputTextLabel setStringValue:@"Text to be Decrypted:"];
         [teOutputTextLabel setStringValue:@"Decrypted Text:"];
     }
+    
+    [teOutputText setStringValue:@""];
+    [teInputTextField setStringValue:@""];
 }
 -(IBAction)keyTypeSelectorChange:(id)sender{
     if (([teKeyTypeSelector selectedSegment]==0)&&([teOperationSelector selectedSegment]==0)) {
@@ -76,6 +85,51 @@
     }else {
         [teKeyLengthSelector setEnabled:FALSE];
     }
+}
+-(IBAction)tiOperationSelectorChange:(id)sender{
+    [self tiKeyTypeSelectorChange:self];
+    if ([tiOperationSelector selectedSegment]==0) {
+        [tiKeyTypeSelector setEnabled:TRUE];
+        [tiKeyLengthSelector setEnabled:TRUE];
+        [tiGenerateKeyButton setEnabled:TRUE];
+        [tiProcessButton setTitle:@"Encrypt"];
+        [tiKeyTextLabel setStringValue:@"Encryption Key:"];
+        [tiInputTextLabel setStringValue:@"Text to be Encrypted:"];
+        [tiOutputTextLabel setStringValue:@"Encrypted Text:"];
+        [tiKeyTypeSelector setEnabled:TRUE];
+        [tiInputTextField setEnabled:TRUE];
+        [tiImageInputLabel setStringValue:@"Image to Encrypt In:"];
+        [tiOutputFormatSelector setEnabled:TRUE];
+        [tiOutputImageWell setEnabled:TRUE];
+        [tiOutputTextField setEnabled:FALSE];
+    }else {
+        [tiKeyTypeSelector setEnabled:FALSE];
+        [tiKeyLengthSelector setEnabled:FALSE];
+        [tiGenerateKeyButton setEnabled:FALSE];
+        [tiProcessButton setTitle:@"Decrypt"];
+        [tiKeyTextLabel setStringValue:@"Decryption Key:"];
+        //[tiInputTextLabel setStringValue:@"Text to be Decrypted:"];
+        [tiOutputTextLabel setStringValue:@"Decrypted Text:"];
+        [tiKeyTypeSelector setEnabled:FALSE];
+        [tiInputTextField setEnabled:FALSE];
+        [tiImageInputLabel setStringValue:@"Image to Decrypt:"];
+        [tiOutputFormatSelector setEnabled:FALSE];
+        [tiOutputImageWell setEnabled:FALSE];
+        [tiOutputTextField setEnabled:TRUE];
+        [tiOutputImageWell setImage:NULL];
+        
+        [tiInputTextField setStringValue:@""];
+        [tiInputImageWell setImage:NULL];
+        [tiOutputImageWell setImage:NULL];
+        [tiOutputTextField setStringValue:@""];
+    }
+}
+-(IBAction)tiKeyTypeSelectorChange:(id)sender{
+    if (([tiKeyTypeSelector selectedSegment]==0)&&([tiOperationSelector selectedSegment]==0)) {
+        [tiKeyLengthSelector setEnabled:TRUE];
+    }else {
+        [tiKeyLengthSelector setEnabled:FALSE];
+    } 
 }
 /*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender{
@@ -178,11 +232,15 @@
 }
 -(IBAction)tiEncryptSteganography:(id)sender{
     NSLog(@"Text in Image Steganography encryption started.");
-    [self tiOneTimePadEncryptText:self];
+    [tiProgressIndicator setHidden:FALSE];
+    [tiProgressIndicator startAnimation:self];
     
+    [self tiOneTimePadEncryptText:self];
     NSData *imageData = [[NSData alloc] initWithData:[[tiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor    *imageObject = [[HSImageEncryptor alloc] initWithData:imageData];
     NSBitmapImageRep    *bitmapRep = [imageObject encryptImageWithBits:8 andComponents:3 andString:stringToProcess];
+    NSImage *imageToWell = [[NSImage alloc] initWithData:imageData];
+    [tiOutputImageWell setImage:imageToWell];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
@@ -190,7 +248,7 @@
     if([tiOutputFormatSelector selectedSegment]==0){
         NSData *dataOutput = [bitmapRep representationUsingType:NSBMPFileType properties:nil];
         NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
-        [dataOutput writeToFile:fullWriteString atomically: NO]; 
+        [dataOutput writeToFile:fullWriteString atomically: NO];
     }else if([tiOutputFormatSelector selectedSegment]==1){
         NSData *dataOutput = [bitmapRep representationUsingType:NSPNGFileType properties:nil];
         NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.png"];
@@ -200,10 +258,15 @@
         NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.tiff"];
         [dataOutput writeToFile:fullWriteString atomically: NO];
     }
+    
+    [tiProgressIndicator setHidden:TRUE];
+    [tiProgressIndicator stopAnimation:self];
     NSLog(@"Text in Image Steganography encryption finished.");
 }
 -(IBAction)tiDecryptSteganography:(id)sender{
     NSLog(@"Text in Image Steganography decryption started.");
+    [tiProgressIndicator setHidden:FALSE];
+    [tiProgressIndicator startAnimation:self];
     
     NSData *imageData = [[NSData alloc] initWithData:[[tiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor  *imageObject2 = [[HSImageEncryptor alloc] initWithData:imageData];
@@ -215,6 +278,8 @@
     
     [self tiOnetimePadDecryptText:self];
     
+    [tiProgressIndicator setHidden:TRUE];
+    [tiProgressIndicator stopAnimation:self];
     NSLog(@"Text in Image Steganography decryption finished.");
 }
 -(IBAction)tiTextSteganographySelector:(id)sender{
