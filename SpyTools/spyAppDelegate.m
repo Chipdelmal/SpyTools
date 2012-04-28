@@ -19,6 +19,7 @@
 @synthesize iiOutputImageLabel;
 @synthesize iiProcessButton;
 @synthesize iiProgressIndicator;
+@synthesize iiAnalyzeLabel;
 @synthesize tiOperationSelector;
 @synthesize tiKeyTypeSelector;
 @synthesize tiInputTextField;
@@ -388,4 +389,15 @@
         [self iiDecryptImage:self];
     }
 }
+-(IBAction)iiSizeCheck:(id)sender{
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
+    NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
+    int requiredSize = imageToBeEncryptedRequiredSize(imageToBeEncryptedBMP, 8);
+    NSString *analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i",availableSize,requiredSize];
+    [iiAnalyzeLabel setStringValue:analyzeString];
+}
+
 @end

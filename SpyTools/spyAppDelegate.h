@@ -10,6 +10,7 @@
 #import "HSTextEncryptor.h"
 #import "HSImageEncryptor.h"
 #import "HSKeyLibrary.h"
+#import "HSCryptoFunctions.h"
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
     BOOL        stTextFits;
@@ -62,6 +63,7 @@
 @property (weak) IBOutlet NSTextField *iiOutputImageLabel;
 @property (weak) IBOutlet NSButton *iiProcessButton;
 @property (weak) IBOutlet NSProgressIndicator *iiProgressIndicator;
+@property (weak) IBOutlet NSTextField *iiAnalyzeLabel;
 
 
 
@@ -92,6 +94,7 @@
 -(IBAction)iiEncryptImage:(id)sender;
 -(IBAction)iiDecryptImage:(id)sender;
 -(IBAction)iiImageSteganographySelector:(id)sender;
+-(IBAction)iiSizeCheck:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

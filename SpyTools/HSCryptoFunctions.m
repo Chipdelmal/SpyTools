@@ -190,6 +190,18 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
     [outputString appendFormat:@"]"];
     return outputString;
 }
+int imageToEncryptInSizeInBits(NSBitmapImageRep *imageToAnalyze){
+    int imageWidth = CGImageGetWidth([imageToAnalyze CGImage]);
+    int imageHeight = CGImageGetHeight([imageToAnalyze CGImage]);
+    return imageWidth*imageHeight*3;
+}
+int imageToBeEncryptedRequiredSize(NSBitmapImageRep *imageToAnalyze, int numberOfBits){
+    int imageWidth = CGImageGetWidth([imageToAnalyze CGImage]);
+    int imageHeight = CGImageGetHeight([imageToAnalyze CGImage]);
+    return imageWidth*imageHeight*3*numberOfBits;
+}
+
+/*Prototypes*/
 /*unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray){
     int length = [inputArray count];
     unsigned char outputBuffer[length];
@@ -199,7 +211,6 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
     }
     return *outputBuffer;
 }*/
-
 NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents){
     
     NSMutableArray *imageArray = [[NSMutableArray alloc] init];
