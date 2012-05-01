@@ -193,12 +193,15 @@ NSString *bitArrayDescriptor(NSArray *inputArray){
 int imageToEncryptInSizeInBits(NSBitmapImageRep *imageToAnalyze){
     int imageWidth = CGImageGetWidth([imageToAnalyze CGImage]);
     int imageHeight = CGImageGetHeight([imageToAnalyze CGImage]);
-    return imageWidth*imageHeight*3;
+    return imageWidth*imageHeight*[imageToAnalyze samplesPerPixel];
 }
 int imageToBeEncryptedRequiredSize(NSBitmapImageRep *imageToAnalyze, int numberOfBits){
     int imageWidth = CGImageGetWidth([imageToAnalyze CGImage]);
     int imageHeight = CGImageGetHeight([imageToAnalyze CGImage]);
-    return imageWidth*imageHeight*3*numberOfBits;
+    return imageWidth*imageHeight*[imageToAnalyze samplesPerPixel]*numberOfBits+dataLengthBits;
+}
+int stringToBeEncryptedRequiredSize(NSString *stringToAnalyze){
+    return [stringToAnalyze length]*8;
 }
 
 /*Prototypes*/

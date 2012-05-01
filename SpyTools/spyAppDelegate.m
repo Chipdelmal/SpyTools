@@ -37,6 +37,7 @@
 @synthesize tiImageInputLabel;
 @synthesize tiImageOutputLabel;
 @synthesize tiOutputImageWell;
+@synthesize tiAnalyzeLabel;
 @synthesize teOperationSelector;
 @synthesize teInputTextField;
 @synthesize teKeyTypeSelector;
@@ -57,12 +58,72 @@
 @synthesize window = _window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
+    tiTextFits = FALSE;
+    iiImageFits = FALSE;
+    [iiProcessButton setEnabled:FALSE];
+    [tiProcessButton setEnabled:FALSE];
     [self operationSelectorChange:self];
-    //[self keyTypeSelectorChange:self];
     [self tiOperationSelectorChange:self];
     [self iiOperationSelectorChange:self];
     [tiProgressIndicator setHidden:TRUE];
     [iiProgressIndicator setHidden:TRUE];
+    
+    /*Debug*/
+    
+    /*Generate an array with the allowed characters and a string to be encrypted*/
+    NSMutableArray *allowedCharactersArray = [[NSMutableArray alloc] initWithCapacity:(127-32)];
+    for(int i=32; i<127;i++){
+        [allowedCharactersArray addObject:[NSNumber numberWithInt:i]];
+    }
+    //NSLog(@"%@", allowedCharactersArray);
+    NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
+    char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(testString));
+    //NSLog(@"%s",stringToBeEncrypted);
+
+    /*Generate an array containing the characters to be encrypted*/
+    NSMutableArray *requiredCharactersArray = [[NSMutableArray alloc] init];
+    for(int i=0;i<strlen(stringToBeEncrypted);i++){
+        int counter = 0;
+        for(int k=0;k<[requiredCharactersArray count];k++){
+            if(stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:k] intValue]){
+                counter++;
+            }
+        }
+        if(counter==0){
+            [requiredCharactersArray addObject:[NSNumber numberWithInt:stringToBeEncrypted[i]]];
+        }
+    }
+    NSLog(@"Required Characters:%@",requiredCharactersArray);
+    
+    /*Generate a random key*/
+    //[requiredCharactersArray order]
+    NSMutableArray *keyArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<[requiredCharactersArray count]; i++) {
+        int randomValue = arc4random()%[allowedCharactersArray count];
+        [keyArray addObject:[allowedCharactersArray objectAtIndex:randomValue]];
+        [allowedCharactersArray removeObjectAtIndex:randomValue];
+    }
+    NSLog(@"Substitution Key: %@",keyArray);
+    
+    /*Encrypt*/
+    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
+        for (int j=0; j<[requiredCharactersArray count]; j++) {
+            if (stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:j] intValue]) {
+                stringToBeEncrypted[i]=[[keyArray objectAtIndex:j] intValue];
+            }
+        }
+    }
+    NSLog(@"%s",stringToBeEncrypted);
+    
+    /*Decrypt*/
+    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
+        for (int j=0; j<[requiredCharactersArray count]; j++) {
+            if (stringToBeEncrypted[i]==[[keyArray objectAtIndex:j] intValue]) {
+                stringToBeEncrypted[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
+            }
+        }
+    }
+    NSLog(@"%s",stringToBeEncrypted);
 }
 /*Interface Methods*/
 -(IBAction)operationSelectorChange:(id)sender{
@@ -269,7 +330,7 @@
     [self tiOneTimePadEncryptText:self];
     NSData *imageData = [[NSData alloc] initWithData:[[tiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor    *imageObject = [[HSImageEncryptor alloc] initWithData:imageData];
-    NSBitmapImageRep    *bitmapRep = [imageObject encryptImageWithBits:8 andComponents:3 andString:stringToProcess];
+    NSBitmapImageRep    *bitmapRep = [imageObject encryptImageWithBits:8 andString:stringToProcess];
     NSImage *imageToWell = [[NSImage alloc] initWithData:imageData];
     [tiOutputImageWell setImage:imageToWell];
     
@@ -301,7 +362,7 @@
     
     NSData *imageData = [[NSData alloc] initWithData:[[tiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor  *imageObject2 = [[HSImageEncryptor alloc] initWithData:imageData];
-    NSString *stringOutput = [[NSString alloc] initWithString:[imageObject2 decryptImageWithBits:8 andComponents:3]];
+    NSString *stringOutput = [[NSString alloc] initWithString:[imageObject2 decryptImageWithBits:8]];
     NSLog(@"%@",stringOutput);
     stringToProcess = stringOutput;
     NSLog(@"String to Decrypt: %@",stringToProcess);
@@ -320,6 +381,21 @@
         [self tiDecryptSteganography:self];
     }
 }
+-(IBAction)tiSizeCheck:(id)sender{
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[tiInputImageWell image] TIFFRepresentation]];
+    NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
+    int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
+    NSString *analyzeString;
+    int requiredSize = stringToBeEncryptedRequiredSize([tiInputTextField stringValue]);
+    if (availableSize>requiredSize) {
+        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nText fits the available space.",availableSize,requiredSize];
+        [tiProcessButton setEnabled:TRUE];
+    }else {
+        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nText does not fit the available space.",availableSize,requiredSize];
+        [tiProcessButton setEnabled:FALSE];
+    }
+    [tiAnalyzeLabel setStringValue:analyzeString];
+}
 /*Image in Image Encription*/
 -(IBAction)iiEncryptImage:(id)sender{
     NSLog(@"Image in Image Encryption Started.");
@@ -333,7 +409,7 @@
     NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSPNGFileType properties:NULL];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andComponents:3 andData:imageConvertedToEncrypt];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
@@ -368,7 +444,7 @@
     
     NSData *encryptedImageData = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
-    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andComponents:3];
+    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8];
     
     NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
     [iiOutputImageWell setImage:imageEncrypted];
@@ -396,7 +472,16 @@
     NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
     int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
     int requiredSize = imageToBeEncryptedRequiredSize(imageToBeEncryptedBMP, 8);
-    NSString *analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i",availableSize,requiredSize];
+    NSString *analyzeString;
+    if (availableSize>requiredSize) {
+        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage fits the available space.",availableSize,requiredSize];
+        iiImageFits = TRUE;
+        [iiProcessButton setEnabled:TRUE];
+    }else {
+        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage does not fit the available space.",availableSize,requiredSize];
+        [iiProcessButton setEnabled:FALSE];
+    }
+    
     [iiAnalyzeLabel setStringValue:analyzeString];
 }
 

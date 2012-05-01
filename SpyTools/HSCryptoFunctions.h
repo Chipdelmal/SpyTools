@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HSImageEncryptor.h"
 
 @interface HSCryptoFunctions : NSObject
 
@@ -31,6 +32,7 @@ int checkIndex(int maxValue, int indexValue);
 NSString *bitArrayDescriptor(NSArray *inputArray);
 int imageToEncryptInSizeInBits(NSBitmapImageRep *imageToAnalyze);
 int imageToBeEncryptedRequiredSize(NSBitmapImageRep *imageToAnalyze, int numberOfBits);
+int stringToBeEncryptedRequiredSize(NSString *stringToAnalyze);
 
 /*Prototypes*/
 //unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray);

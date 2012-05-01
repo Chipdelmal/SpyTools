@@ -15,20 +15,24 @@
     int                 imageHeight;
     int                 imageWidth;
     NSBitmapImageRep    *imageBitmapRep;
+    int                 bitsPerPixel;
+    int                 numberOfComponents;
 }
 /*Initializers*/
 -(id)init;
 -(id)initWithData:(NSData *)imageData;
 /*Action Methods*/
--(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents andString:(NSString *)stringToBeEncrypted; 
--(NSString *)decryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents; 
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andString:(NSString *)stringToBeEncrypted; 
+-(NSString *)decryptImageWithBits:(int)numberOfBits; 
 
--(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents andData:(NSData *)dataToBeEncrypted; 
--(NSData *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents; 
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andData:(NSData *)dataToBeEncrypted; 
+-(NSData *)decryptImageDataWithBits:(int)numberOfBits; 
 
 
 @property (strong) NSBitmapImageRep *imageBitmapRep;
 @property int imageHeight;
 @property int imageWidth;
+@property int bitsPerPixel;
+@property int numberOfComponents;
 
 @end

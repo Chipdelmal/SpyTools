@@ -12,6 +12,8 @@
 @synthesize imageBitmapRep;
 @synthesize imageWidth;
 @synthesize imageHeight;
+@synthesize bitsPerPixel;
+@synthesize numberOfComponents;
 
 /*Initializers*/
 -(id)init{
@@ -23,12 +25,14 @@
         [self setImageBitmapRep:[[NSBitmapImageRep alloc] initWithData:imageData]];
         [self setImageWidth:CGImageGetWidth([imageBitmapRep CGImage])];
         [self setImageHeight:CGImageGetHeight([imageBitmapRep CGImage])];
-        NSLog(@"[%i,%i]", imageWidth, imageHeight);
+        [self setBitsPerPixel:[imageBitmapRep bitsPerPixel]];
+        [self setNumberOfComponents:[imageBitmapRep samplesPerPixel]];
+        NSLog(@"[%i,%i]::[bpp:%i - noc:%i]", imageWidth, imageHeight, bitsPerPixel, numberOfComponents);
     }
     return self;
 }
 /*Action Methods*/
--(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents andString:(NSString *)stringToBeEncrypted{
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andString:(NSString *)stringToBeEncrypted{
     
     char *testChar = NSStringToCharArray(prepareStringForEncryption(stringToBeEncrypted));
     int sizeOfString = strlen(testChar);
@@ -77,7 +81,7 @@
     //NSData *dataOutput = [[self imageBitmapRep] representationUsingType:NSPNGFileType properties:nil];
     return [self imageBitmapRep];
 }
--(NSString *)decryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
+-(NSString *)decryptImageWithBits:(int)numberOfBits{
     
     /*Declaration of reading variables*/
     unsigned long readTempPixelValues[numberOfComponents];
@@ -112,7 +116,7 @@
     return readNSString;
 }
 
--(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andComponents:(int)numberOfComponents andData:(NSData *)dataToBeEncrypted{
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andData:(NSData *)dataToBeEncrypted{
     
     int dataLength = [dataToBeEncrypted length];
     /*Creating buffer for data*/
@@ -176,7 +180,7 @@
     //NSData *dataOutput = [[self imageBitmapRep] representationUsingType:NSPNGFileType properties:nil];
     return [self imageBitmapRep];
 }
--(NSData *)decryptImageDataWithBits:(int)numberOfBits andComponents:(int)numberOfComponents{
+-(NSData *)decryptImageDataWithBits:(int)numberOfBits{
     
     /*Declaration of reading variables*/
     unsigned long readTempPixelValues[numberOfComponents];
@@ -230,6 +234,5 @@
     NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:dataLength];
     return dataOutput;
 }
-
 
 @end

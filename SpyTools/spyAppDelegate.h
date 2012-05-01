@@ -13,7 +13,8 @@
 #import "HSCryptoFunctions.h"
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
-    BOOL        stTextFits;
+    BOOL        tiTextFits;
+    BOOL        iiImageFits;
     NSString    *stringToProcess;
 }
 /*Global*/
@@ -52,6 +53,8 @@
 @property (weak) IBOutlet NSTextField *tiImageInputLabel;
 @property (weak) IBOutlet NSTextField *tiImageOutputLabel;
 @property (weak) IBOutlet NSImageView *tiOutputImageWell;
+@property (weak) IBOutlet NSTextField *tiAnalyzeLabel;
+
 /*Image In Image Encryption*/
 @property (weak) IBOutlet NSSegmentedControl *iiOperationSelector;
 @property (weak) IBOutlet NSImageView *iiInputImageWell;
@@ -90,6 +93,7 @@
 -(IBAction)tiEncryptSteganography:(id)sender;
 -(IBAction)tiDecryptSteganography:(id)sender;
 -(IBAction)tiTextSteganographySelector:(id)sender;
+-(IBAction)tiSizeCheck:(id)sender;
 /*Image in Image Encryption*/
 -(IBAction)iiEncryptImage:(id)sender;
 -(IBAction)iiDecryptImage:(id)sender;
