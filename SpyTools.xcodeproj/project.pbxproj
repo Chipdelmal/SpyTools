@@ -11,6 +11,7 @@
 		45013CB7153F0342007A557F /* Security-Camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB6153F0342007A557F /* Security-Camera.icns */; };
 		45013CB9153F03F4007A557F /* camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB8153F03F4007A557F /* camera.icns */; };
 		45013CBD153F049F007A557F /* search.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CBC153F049F007A557F /* search.icns */; };
+		45081C261552E846005674CA /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 45081C251552E846005674CA /* COPYING */; };
 		451678B91537A99A00B45007 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451678B81537A99A00B45007 /* Cocoa.framework */; };
 		451678C31537A99A00B45007 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 451678C11537A99A00B45007 /* InfoPlist.strings */; };
 		451678C51537A99A00B45007 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 451678C41537A99A00B45007 /* main.m */; };
@@ -42,9 +43,10 @@
 /* Begin PBXFileReference section */
 		45013CB3153F0246007A557F /* HSImageEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSImageEncryptor.h; sourceTree = "<group>"; };
 		45013CB4153F0246007A557F /* HSImageEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSImageEncryptor.m; sourceTree = "<group>"; };
-		45013CB6153F0342007A557F /* Security-Camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Security-Camera.icns"; sourceTree = "<group>"; };
-		45013CB8153F03F4007A557F /* camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = camera.icns; sourceTree = "<group>"; };
-		45013CBC153F049F007A557F /* search.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = search.icns; sourceTree = "<group>"; };
+		45013CB6153F0342007A557F /* Security-Camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Security-Camera.icns"; path = "../Security-Camera.icns"; sourceTree = "<group>"; };
+		45013CB8153F03F4007A557F /* camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = camera.icns; path = ../camera.icns; sourceTree = "<group>"; };
+		45013CBC153F049F007A557F /* search.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = search.icns; path = ../search.icns; sourceTree = "<group>"; };
+		45081C251552E846005674CA /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		451678B41537A99A00B45007 /* SpyTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpyTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		451678B81537A99A00B45007 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		451678BB1537A99A00B45007 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -64,7 +66,7 @@
 		451678DF1537A99B00B45007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		451678E11537A99B00B45007 /* SpyToolsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpyToolsTests.h; sourceTree = "<group>"; };
 		451678E21537A99B00B45007 /* SpyToolsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpyToolsTests.m; sourceTree = "<group>"; };
-		451EA7B4153DC167006ECB1D /* sputnik.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sputnik.icns; sourceTree = "<group>"; };
+		451EA7B4153DC167006ECB1D /* sputnik.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sputnik.icns; path = ../sputnik.icns; sourceTree = "<group>"; };
 		45240A0B153DAEE90029B229 /* HSCryptoFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSCryptoFunctions.h; sourceTree = "<group>"; };
 		45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSCryptoFunctions.m; sourceTree = "<group>"; };
 		45240A13153DB1470029B229 /* HSTextEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSTextEncryptor.h; sourceTree = "<group>"; };
@@ -100,10 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				45308282154064A200AA38EB /* README.txt */,
-				451EA7B4153DC167006ECB1D /* sputnik.icns */,
-				45013CB8153F03F4007A557F /* camera.icns */,
-				45013CBC153F049F007A557F /* search.icns */,
-				45013CB6153F0342007A557F /* Security-Camera.icns */,
 				451678BE1537A99A00B45007 /* SpyTools */,
 				451678DB1537A99B00B45007 /* SpyToolsTests */,
 				451678B71537A99A00B45007 /* Frameworks */,
@@ -162,12 +160,17 @@
 		451678BF1537A99A00B45007 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				451EA7B4153DC167006ECB1D /* sputnik.icns */,
+				45013CB8153F03F4007A557F /* camera.icns */,
+				45013CBC153F049F007A557F /* search.icns */,
+				45013CB6153F0342007A557F /* Security-Camera.icns */,
 				45D7665D153F526200F41EED /* 1984.txt */,
 				451678C01537A99A00B45007 /* SpyTools-Info.plist */,
 				451678C11537A99A00B45007 /* InfoPlist.strings */,
 				451678C41537A99A00B45007 /* main.m */,
 				451678C61537A99A00B45007 /* SpyTools-Prefix.pch */,
 				451678C71537A99A00B45007 /* Credits.rtf */,
+				45081C251552E846005674CA /* COPYING */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				45013CBD153F049F007A557F /* search.icns in Resources */,
 				45D7665E153F526200F41EED /* 1984.txt in Resources */,
 				45308283154064A200AA38EB /* README.txt in Resources */,
+				45081C261552E846005674CA /* COPYING in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

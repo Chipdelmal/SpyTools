@@ -3,7 +3,7 @@
 //  SpyTools
 //
 //  Created by Chip on 4/17/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 __Héctor Sánchez__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
