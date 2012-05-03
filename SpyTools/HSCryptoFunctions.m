@@ -163,10 +163,13 @@ NSArray *generateRandomSubstitutionKey(NSArray *requiredCharactersArray, NSArray
 }
 NSString *encryptSubstitution(NSString *stringToBeEncryptedIn, NSArray *requiredCharactersArray, NSArray *keyArray){
     char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(stringToBeEncryptedIn));
+    //NSLog(@"%s",stringToBeEncrypted);
     for (int i=0; i<strlen(stringToBeEncrypted); i++) {
         for (int j=0; j<[requiredCharactersArray count]; j++) {
             if (stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:j] intValue]) {
+                //NSLog(@"[%c (%i) = %c (%i)]",stringToBeEncrypted[i],stringToBeEncrypted[i],[[keyArray objectAtIndex:j] intValue],[[keyArray objectAtIndex:j] intValue]);
                 stringToBeEncrypted[i]=[[keyArray objectAtIndex:j] intValue];
+                break;
             }
         }
     }
@@ -180,6 +183,8 @@ NSString *decryptSubstitution(NSString *stringToBeDecryptedIn, NSArray *required
         for (int j=0; j<[requiredCharactersArray count]; j++) {
             if (stringToBeEncrypted[i]==[[keyArray objectAtIndex:j] intValue]) {
                 stringToBeEncrypted[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
+                //NSLog(@"[%c (%i) = %c (%i)]",stringToBeEncrypted[i],stringToBeEncrypted[i],[[keyArray objectAtIndex:j] intValue],[[keyArray objectAtIndex:j] intValue]);
+                break;
             }
         }
     }

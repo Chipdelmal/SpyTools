@@ -70,7 +70,7 @@
     
     /*Debug*/
     NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
-    char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(testString));
+    //char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(testString));
     //NSLog(@"%s",stringToBeEncrypted);
     
     /*Generate an array with the allowed characters*/
@@ -95,14 +95,8 @@
     
     /*Decrypt*/
     char *encryptedChar = NSStringToCharArray(encryptedString);
-    for (int i=0; i<strlen(encryptedChar); i++) {
-        for (int j=0; j<[requiredCharactersArray count]; j++) {
-            if (encryptedChar[i]==[[keyArray objectAtIndex:j] intValue]) {
-                encryptedChar[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
-            }
-        }
-    }
-    NSLog(@"%s",encryptedChar);
+    NSString *decryptedString = [[NSString alloc] initWithString:decryptSubstitution(encryptedString, requiredCharactersArray, keyArray)];
+    //NSLog(@"%s",encryptedChar);
 }
 /*Interface Methods*/
 -(IBAction)operationSelectorChange:(id)sender{
