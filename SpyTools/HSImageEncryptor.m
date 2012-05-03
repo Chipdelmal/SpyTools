@@ -22,11 +22,11 @@
 -(id)initWithData:(NSData *)imageData{
     self = [super init];
     if(self){
-        [self setImageBitmapRep:[[NSBitmapImageRep alloc] initWithData:imageData]];
-        [self setImageWidth:CGImageGetWidth([imageBitmapRep CGImage])];
-        [self setImageHeight:CGImageGetHeight([imageBitmapRep CGImage])];
-        [self setBitsPerPixel:[imageBitmapRep bitsPerPixel]];
-        [self setNumberOfComponents:[imageBitmapRep samplesPerPixel]];
+        imageBitmapRep = [[NSBitmapImageRep alloc] initWithData:imageData];
+        imageWidth = CGImageGetWidth([imageBitmapRep CGImage]);
+        imageHeight = CGImageGetHeight([imageBitmapRep CGImage]);
+        bitsPerPixel = [imageBitmapRep bitsPerPixel];
+        numberOfComponents = [imageBitmapRep samplesPerPixel];
         NSLog(@"[%i,%i]::[bpp:%i - noc:%i]", imageWidth, imageHeight, bitsPerPixel, numberOfComponents);
     }
     return self;
@@ -87,7 +87,7 @@
     unsigned long readTempPixelValues[numberOfComponents];
     NSMutableArray *readString = [[NSMutableArray alloc] init];
     NSMutableArray *readCharacterBinary = [[NSMutableArray alloc] initWithCapacity:numberOfBits];
-    NSArray *readComponent = [[NSArray alloc] init];
+    NSArray *readComponent;
     
     int readCharacterIndex = 0; 
     /*-----Read characters from image-----*/
@@ -186,7 +186,7 @@
     unsigned long readTempPixelValues[numberOfComponents];
     NSMutableArray *readString = [[NSMutableArray alloc] init];
     NSMutableArray *readCharacterBinary = [[NSMutableArray alloc] initWithCapacity:numberOfBits];
-    NSArray *readComponent = [[NSArray alloc] init];
+    NSArray *readComponent;
     
     int readCharacterIndex = 0; 
     /*-----Read characters from image-----*/

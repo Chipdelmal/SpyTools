@@ -69,61 +69,40 @@
     [iiProgressIndicator setHidden:TRUE];
     
     /*Debug*/
-    
-    /*Generate an array with the allowed characters and a string to be encrypted*/
-    NSMutableArray *allowedCharactersArray = [[NSMutableArray alloc] initWithCapacity:(127-32)];
-    for(int i=32; i<127;i++){
-        [allowedCharactersArray addObject:[NSNumber numberWithInt:i]];
-    }
-    //NSLog(@"%@", allowedCharactersArray);
     NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
     char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(testString));
     //NSLog(@"%s",stringToBeEncrypted);
+    
+    /*Generate an array with the allowed characters*/
+    NSMutableArray *allowedCharactersArray = [[NSMutableArray alloc] initWithArray: generateAllowedCharactersArray(32,127)];
+    //NSLog(@"%@", allowedCharactersArray);
 
     /*Generate an array containing the characters to be encrypted*/
-    NSMutableArray *requiredCharactersArray = [[NSMutableArray alloc] init];
-    for(int i=0;i<strlen(stringToBeEncrypted);i++){
-        int counter = 0;
-        for(int k=0;k<[requiredCharactersArray count];k++){
-            if(stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:k] intValue]){
-                counter++;
-            }
-        }
-        if(counter==0){
-            [requiredCharactersArray addObject:[NSNumber numberWithInt:stringToBeEncrypted[i]]];
-        }
-    }
-    NSLog(@"Required Characters:%@",requiredCharactersArray);
+    NSMutableArray *requiredCharactersArray = [[NSMutableArray alloc] initWithArray:generateRequiredCharactersArray(testString)];
+    //NSLog(@"Required Characters:%@",requiredCharactersArray);
     
-    /*Generate a random key*/
-    //[requiredCharactersArray order]
-    NSMutableArray *keyArray = [[NSMutableArray alloc] init];
-    for (int i=0; i<[requiredCharactersArray count]; i++) {
-        int randomValue = arc4random()%[allowedCharactersArray count];
-        [keyArray addObject:[allowedCharactersArray objectAtIndex:randomValue]];
-        [allowedCharactersArray removeObjectAtIndex:randomValue];
-    }
-    NSLog(@"Substitution Key: %@",keyArray);
+    /*Order required characters*/
+    NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+    [requiredCharactersArray sortUsingDescriptors:[NSArray arrayWithObject:highestToLowest]];
+    NSLog(@"Ordered Required Characters: %@", requiredCharactersArray);
+    
+    /*Generate random key*/
+    NSMutableArray *keyArray = [[NSMutableArray alloc] initWithArray:generateRandomSubstitutionKey(requiredCharactersArray, allowedCharactersArray)];
     
     /*Encrypt*/
-    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
-        for (int j=0; j<[requiredCharactersArray count]; j++) {
-            if (stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:j] intValue]) {
-                stringToBeEncrypted[i]=[[keyArray objectAtIndex:j] intValue];
-            }
-        }
-    }
-    NSLog(@"%s",stringToBeEncrypted);
+    NSString *encryptedString = [[NSString alloc] initWithString:encryptSubstitution(testString, requiredCharactersArray, keyArray)];
+    //NSLog(@"%s",stringToBeEncrypted);
     
     /*Decrypt*/
-    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
+    char *encryptedChar = NSStringToCharArray(encryptedString);
+    for (int i=0; i<strlen(encryptedChar); i++) {
         for (int j=0; j<[requiredCharactersArray count]; j++) {
-            if (stringToBeEncrypted[i]==[[keyArray objectAtIndex:j] intValue]) {
-                stringToBeEncrypted[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
+            if (encryptedChar[i]==[[keyArray objectAtIndex:j] intValue]) {
+                encryptedChar[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
             }
         }
     }
-    NSLog(@"%s",stringToBeEncrypted);
+    NSLog(@"%s",encryptedChar);
 }
 /*Interface Methods*/
 -(IBAction)operationSelectorChange:(id)sender{

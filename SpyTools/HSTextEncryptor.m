@@ -19,8 +19,8 @@
     if(self){
         stringToProcess = initializerString;
         stringLength = [initializerString length];
+        NSLog(@"HSTextEncryptor Initialized with string: %@", stringToProcess);
     }
-    NSLog(@"HSTextEncryptor Initialized with string: %@",stringToProcess);
     return self;
 }
 /*Accessors*/

@@ -11,6 +11,7 @@
 @implementation HSCryptoFunctions
 
 /*Text Encryption Functions*/
+/*One Time Pad*/
 int fixEncryptToPrintableUTF8(int summValue, int highPrintable, int lowPrintable){
     /*Corrects the value of the encrypted character if it lies beyond the printable characters set*/
     return ((summValue-lowPrintable) % (highPrintable-lowPrintable))+lowPrintable;
@@ -35,6 +36,7 @@ NSArray *generateRandomPad(int padSize, int maxNumber){
     return phaseArray;
 }
 NSString *generateRandomKey(int keyLength, int maxNumber){
+    /*Returns a random passphrase from the key array*/
     NSArray *keyArray = [[NSArray alloc] initWithArray:generateRandomPad(keyLength, maxNumber)];
     char *keyCharArray = NSArrayToCharArray(keyArray);
     NSLog(@"%s",keyCharArray);
@@ -122,6 +124,70 @@ NSArray *NSStringToKeyArray(NSString *inputString){
     }
     return keyArray;
 }
+/*Substitution Cypher*/
+NSArray *generateAllowedCharactersArray(int minUTF, int maxUTF){
+    /*Generates an array with the allowed C character values*/
+    NSMutableArray *allowedCharactersArray = [[NSMutableArray alloc] initWithCapacity:(maxUTF-minUTF)];
+    for(int i=minUTF; i<maxUTF;i++){
+        [allowedCharactersArray addObject:[NSNumber numberWithInt:i]];
+    }
+    return allowedCharactersArray;
+}
+NSArray *generateRequiredCharactersArray(NSString *stringToProcess){
+    char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(stringToProcess));
+    NSMutableArray *requiredCharactersArray = [[NSMutableArray alloc] init];
+    for(int i=0;i<strlen(stringToBeEncrypted);i++){
+        int counter = 0;
+        for(int k=0;k<[requiredCharactersArray count];k++){
+            if(stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:k] intValue]){
+                counter++;
+            }
+        }
+        if(counter==0){
+            [requiredCharactersArray addObject:[NSNumber numberWithInt:stringToBeEncrypted[i]]];
+        }
+    }
+    NSLog(@"Required Characters:%@",requiredCharactersArray);
+    return requiredCharactersArray;
+}
+NSArray *generateRandomSubstitutionKey(NSArray *requiredCharactersArray, NSArray *allowedCharactersArray){
+    NSMutableArray *mutableAllowedCharactersArray = [[NSMutableArray alloc] initWithArray:allowedCharactersArray];
+    NSMutableArray *keyArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<[requiredCharactersArray count]; i++) {
+        int randomValue = arc4random()%[mutableAllowedCharactersArray count];
+        [keyArray addObject:[mutableAllowedCharactersArray objectAtIndex:randomValue]];
+        [mutableAllowedCharactersArray removeObjectAtIndex:randomValue];
+    }
+    NSLog(@"Substitution Key: %@",keyArray); 
+    return keyArray;
+}
+NSString *encryptSubstitution(NSString *stringToBeEncryptedIn, NSArray *requiredCharactersArray, NSArray *keyArray){
+    char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(stringToBeEncryptedIn));
+    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
+        for (int j=0; j<[requiredCharactersArray count]; j++) {
+            if (stringToBeEncrypted[i]==[[requiredCharactersArray objectAtIndex:j] intValue]) {
+                stringToBeEncrypted[i]=[[keyArray objectAtIndex:j] intValue];
+            }
+        }
+    }
+    NSString *returnString = [[NSString alloc] initWithCString:stringToBeEncrypted encoding:4];
+    NSLog(@"%@", returnString);
+    return returnString;
+}
+NSString *decryptSubstitution(NSString *stringToBeDecryptedIn, NSArray *requiredCharactersArray, NSArray *keyArray){
+    char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(stringToBeDecryptedIn));
+    for (int i=0; i<strlen(stringToBeEncrypted); i++) {
+        for (int j=0; j<[requiredCharactersArray count]; j++) {
+            if (stringToBeEncrypted[i]==[[keyArray objectAtIndex:j] intValue]) {
+                stringToBeEncrypted[i]=[[requiredCharactersArray objectAtIndex:j] intValue];
+            }
+        }
+    }
+    NSString *returnString = [[NSString alloc] initWithCString:stringToBeEncrypted encoding:4];
+    NSLog(@"%@", returnString);
+    return returnString;
+}
+
 /*Image Encryption Functions*/
 char *NSStringToCharArray(NSString *inputString){
     /*Converts a NSString object to a char array*/

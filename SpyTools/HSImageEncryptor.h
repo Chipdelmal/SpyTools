@@ -29,10 +29,10 @@
 -(NSData *)decryptImageDataWithBits:(int)numberOfBits; 
 
 
-@property (strong) NSBitmapImageRep *imageBitmapRep;
-@property int imageHeight;
-@property int imageWidth;
-@property int bitsPerPixel;
-@property int numberOfComponents;
+@property (strong, readonly) NSBitmapImageRep *imageBitmapRep;
+@property (readonly) int imageHeight;
+@property (readonly) int imageWidth;
+@property (readonly) int bitsPerPixel;
+@property (readonly) int numberOfComponents;
 
 @end

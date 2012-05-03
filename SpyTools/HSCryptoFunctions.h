@@ -12,6 +12,7 @@
 @interface HSCryptoFunctions : NSObject
 
 /*Text Encryption Functions*/
+/*One Time Pad*/
 int fixEncryptToPrintableUTF8(int summValue, int highPrintable, int lowPrintable);
 int fixDecryptToPrintableUTF8(int summValue, int highPrintable, int lowPrintable);
 NSArray *generateRandomPad(int padSize, int maxNumber);
@@ -22,6 +23,13 @@ NSString *padArrayToString(NSArray *padArray);
 NSArray *keyStringToKeyArray(NSString *stringToSplit);
 NSString *prepareStringForEncryption(NSString *inputString);
 NSArray *NSStringToKeyArray(NSString *inputString);
+/*Substitution Cypher*/
+NSArray *generateAllowedCharactersArray(int minUTF, int maxUTF);
+NSArray *generateRequiredCharactersArray(NSString *stringToProcess);
+NSArray *generateRandomSubstitutionKey(NSArray *requiredCharactersArray, NSArray *allowedCharactersArray);
+NSString *encryptSubstitution(NSString *stringToBeEncrypted, NSArray *requiredCharactersArray, NSArray *keyArray);
+NSString *decryptSubstitution(NSString *stringToBeDecrypted, NSArray *requiredCharactersArray, NSArray *keyArray);
+
 /*Image Encryption Functions*/
 char *NSStringToCharArray(NSString *inputString);
 char *NSArrayToCharArray(NSArray *inputArray);

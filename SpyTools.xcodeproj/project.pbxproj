@@ -143,12 +143,12 @@
 		451678BE1537A99A00B45007 /* SpyTools */ = {
 			isa = PBXGroup;
 			children = (
+				4530827E15404D3200AA38EB /* HSKeyLibrary.h */,
+				4530827F15404D3300AA38EB /* HSKeyLibrary.m */,
 				45240A0B153DAEE90029B229 /* HSCryptoFunctions.h */,
 				45240A0C153DAEE90029B229 /* HSCryptoFunctions.m */,
 				45240A13153DB1470029B229 /* HSTextEncryptor.h */,
 				45240A14153DB1470029B229 /* HSTextEncryptor.m */,
-				4530827E15404D3200AA38EB /* HSKeyLibrary.h */,
-				4530827F15404D3300AA38EB /* HSKeyLibrary.m */,
 				45013CB3153F0246007A557F /* HSImageEncryptor.h */,
 				45013CB4153F0246007A557F /* HSImageEncryptor.m */,
 				451678CA1537A99A00B45007 /* spyAppDelegate.h */,
