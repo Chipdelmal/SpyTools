@@ -11,7 +11,7 @@
 		45013CB7153F0342007A557F /* Security-Camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB6153F0342007A557F /* Security-Camera.icns */; };
 		45013CB9153F03F4007A557F /* camera.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CB8153F03F4007A557F /* camera.icns */; };
 		45013CBD153F049F007A557F /* search.icns in Resources */ = {isa = PBXBuildFile; fileRef = 45013CBC153F049F007A557F /* search.icns */; };
-		45081C261552E846005674CA /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 45081C251552E846005674CA /* COPYING */; };
+		45081C261552E846005674CA /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 45081C251552E846005674CA /* COPYING.txt */; };
 		451678B91537A99A00B45007 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451678B81537A99A00B45007 /* Cocoa.framework */; };
 		451678C31537A99A00B45007 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 451678C11537A99A00B45007 /* InfoPlist.strings */; };
 		451678C51537A99A00B45007 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 451678C41537A99A00B45007 /* main.m */; };
@@ -46,7 +46,7 @@
 		45013CB6153F0342007A557F /* Security-Camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Security-Camera.icns"; path = "../Security-Camera.icns"; sourceTree = "<group>"; };
 		45013CB8153F03F4007A557F /* camera.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = camera.icns; path = ../camera.icns; sourceTree = "<group>"; };
 		45013CBC153F049F007A557F /* search.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = search.icns; path = ../search.icns; sourceTree = "<group>"; };
-		45081C251552E846005674CA /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		45081C251552E846005674CA /* COPYING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING.txt; sourceTree = "<group>"; };
 		451678B41537A99A00B45007 /* SpyTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpyTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		451678B81537A99A00B45007 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		451678BB1537A99A00B45007 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -170,7 +170,7 @@
 				451678C41537A99A00B45007 /* main.m */,
 				451678C61537A99A00B45007 /* SpyTools-Prefix.pch */,
 				451678C71537A99A00B45007 /* Credits.rtf */,
-				45081C251552E846005674CA /* COPYING */,
+				45081C251552E846005674CA /* COPYING.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -274,7 +274,7 @@
 				45013CBD153F049F007A557F /* search.icns in Resources */,
 				45D7665E153F526200F41EED /* 1984.txt in Resources */,
 				45308283154064A200AA38EB /* README.txt in Resources */,
-				45081C261552E846005674CA /* COPYING in Resources */,
+				45081C261552E846005674CA /* COPYING.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
