@@ -442,9 +442,10 @@
     NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
     NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
     NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    //NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
     int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
-    int requiredSize = imageToBeEncryptedRequiredSize(imageToBeEncryptedBMP, 8);
+    //int requiredSize = imageToBeEncryptedRequiredSize(imageToBeEncryptedBMP, 8);
+    int requiredSize = [imageToBeEncrypted length]*8;
     NSString *analyzeString;
     if (availableSize>requiredSize) {
         analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage fits the available space.",availableSize,requiredSize];
