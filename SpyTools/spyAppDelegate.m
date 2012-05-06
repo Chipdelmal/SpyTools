@@ -9,6 +9,7 @@
 #import "spyAppDelegate.h"
 
 @implementation spyAppDelegate
+@synthesize compressionFactor;
 @synthesize iiOperationSelector;
 @synthesize iiInputImageWell;
 @synthesize iiInputImageToBeEncryptedWell;
@@ -379,7 +380,11 @@
     NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
     
     NSBitmapImageRep *tempConversion = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
-    NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSPNGFileType properties:NULL];
+    NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithDouble:[self compressionFactor]], NSImageCompressionFactor,
+                                 [NSNumber numberWithBool:NO], NSImageProgressive,
+                                 nil];
+    NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSJPEGFileType properties:jpegOptions];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
     NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt];
@@ -424,7 +429,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
-    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.jpg"];
     [dataOutput writeToFile:fullWriteString atomically:NO];
     
     NSLog(@"Image in Image Encryption Finished.");
@@ -439,13 +444,57 @@
     }
 }
 -(IBAction)iiSizeCheck:(id)sender{
+    NSLog(@"Checking image size.");
     NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
     NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
-    //NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
+    NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    //NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:NULL];
+    
     int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
-    //int requiredSize = imageToBeEncryptedRequiredSize(imageToBeEncryptedBMP, 8);
-    int requiredSize = [imageToBeEncrypted length]*8;
+    int requiredSize = 0;//[imageBeEncryptedConverted length]*8;
+    
+    BOOL finishedFlag = FALSE;
+    BOOL failureFlag = FALSE;
+    float iiCompressionFactor = 1;
+    
+    
+    if (([imageToBeEncrypted length]!=0)&&([imageToEncryptIn length]!=0)) {
+        while (!finishedFlag) {
+            NSLog(@"Compression Factor: %f", iiCompressionFactor);
+            iiCompressionFactor = iiCompressionFactor-0.05;
+            NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:iiCompressionFactor], NSImageCompressionFactor,
+                                         [NSNumber numberWithBool:NO], NSImageProgressive,
+                                         nil];
+            NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:jpegOptions];
+            requiredSize = [imageBeEncryptedConverted length]*8+30;
+            
+            if (requiredSize<availableSize) {
+                [self setCompressionFactor:iiCompressionFactor];
+                NSLog(@"Compression Factor: %f",[self compressionFactor]);
+                finishedFlag = TRUE;
+                iiImageFits = TRUE;
+            }
+            if (iiCompressionFactor<0) {
+                break;
+            }
+        }
+        NSString *analyzeString;
+        if (!finishedFlag) {
+            analyzeString = [[NSString alloc] initWithFormat:@"The selected image is too large to be encrypted (even after JPEG compression)."];
+            [iiProcessButton setEnabled:FALSE];
+        }else {
+            analyzeString = [[NSString alloc] initWithFormat:@"The selected image will be encrypted with a JPEG compression factor of: %.1f",[self compressionFactor]];
+            [iiProcessButton setEnabled:TRUE];                                                                                                                                
+        }
+        [iiAnalyzeLabel setStringValue:analyzeString];
+    }
+    
+   
+    
+    /*
     NSString *analyzeString;
     if (availableSize>requiredSize) {
         analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage fits the available space.",availableSize,requiredSize];
@@ -456,7 +505,7 @@
         [iiProcessButton setEnabled:FALSE];
     }
     
-    [iiAnalyzeLabel setStringValue:analyzeString];
+    [iiAnalyzeLabel setStringValue:analyzeString];*/
 }
 
 @end

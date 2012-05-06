@@ -13,11 +13,13 @@
 #import "HSCryptoFunctions.h"
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
+    float         compressionFactor;
     BOOL        tiTextFits;
     BOOL        iiImageFits;
     NSString    *stringToProcess;
 }
 /*Global*/
+@property float compressionFactor;
 @property (weak) IBOutlet NSTabView *glTabView;
 /*Text Encryption*/
 @property (weak) IBOutlet NSSegmentedControl *teOperationSelector;

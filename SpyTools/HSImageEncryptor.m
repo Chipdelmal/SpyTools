@@ -121,7 +121,7 @@
     int dataLength = [dataToBeEncrypted length];
     /*Creating buffer for data*/
     unsigned char testCharTemp[dataLength];
-     [dataToBeEncrypted getBytes:testCharTemp];
+    [dataToBeEncrypted getBytes:testCharTemp];
     
     /*Data Length Header*/
     int sizeOfString = dataLength;
