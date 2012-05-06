@@ -459,38 +459,49 @@
     BOOL failureFlag = FALSE;
     float iiCompressionFactor = 1;
     
-    
-    if (([imageToBeEncrypted length]!=0)&&([imageToEncryptIn length]!=0)) {
-        while (!finishedFlag) {
-            NSLog(@"Compression Factor: %f", iiCompressionFactor);
-            iiCompressionFactor = iiCompressionFactor-0.05;
-            NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithDouble:iiCompressionFactor], NSImageCompressionFactor,
-                                         [NSNumber numberWithBool:NO], NSImageProgressive,
-                                         nil];
-            NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:jpegOptions];
-            requiredSize = [imageBeEncryptedConverted length]*8+30;
-            
-            if (requiredSize<availableSize) {
-                [self setCompressionFactor:iiCompressionFactor];
-                NSLog(@"Compression Factor: %f",[self compressionFactor]);
-                finishedFlag = TRUE;
-                iiImageFits = TRUE;
+    if ([iiOperationSelector selectedSegment]==0) {
+        
+        /*Compress image to fit*/
+        if (([imageToBeEncrypted length]!=0)&&([imageToEncryptIn length]!=0)) {
+            while (!finishedFlag) {
+                NSLog(@"Compression Factor: %f", iiCompressionFactor);
+                iiCompressionFactor = iiCompressionFactor-0.05;
+                NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithDouble:iiCompressionFactor], NSImageCompressionFactor,
+                                             [NSNumber numberWithBool:NO], NSImageProgressive,
+                                             nil];
+                NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:jpegOptions];
+                requiredSize = [imageBeEncryptedConverted length]*8+30;
+                
+                if (requiredSize<availableSize) {
+                    [self setCompressionFactor:iiCompressionFactor];
+                    NSLog(@"Compression Factor: %f",[self compressionFactor]);
+                    finishedFlag = TRUE;
+                    iiImageFits = TRUE;
+                }
+                if (iiCompressionFactor<0) {
+                    break;
+                }
             }
-            if (iiCompressionFactor<0) {
-                break;
+            NSString *analyzeString;
+            if (!finishedFlag) {
+                analyzeString = [[NSString alloc] initWithFormat:@"The selected image is too large to be encrypted (even after JPEG compression)."];
+                [iiProcessButton setEnabled:FALSE];
+            }else {
+                analyzeString = [[NSString alloc] initWithFormat:@"The selected image will be encrypted with a JPEG compression factor of: %.1f",[self compressionFactor]];
+                [iiProcessButton setEnabled:TRUE];                                                                                                                                
             }
+            [iiAnalyzeLabel setStringValue:analyzeString];
         }
-        NSString *analyzeString;
-        if (!finishedFlag) {
-            analyzeString = [[NSString alloc] initWithFormat:@"The selected image is too large to be encrypted (even after JPEG compression)."];
-            [iiProcessButton setEnabled:FALSE];
-        }else {
-            analyzeString = [[NSString alloc] initWithFormat:@"The selected image will be encrypted with a JPEG compression factor of: %.1f",[self compressionFactor]];
-            [iiProcessButton setEnabled:TRUE];                                                                                                                                
+        
+    }else {
+        
+        if ([imageToEncryptIn length]!=0) {
+            [iiProcessButton setEnabled:TRUE];
         }
-        [iiAnalyzeLabel setStringValue:analyzeString];
+        
     }
+    
     
    
     
