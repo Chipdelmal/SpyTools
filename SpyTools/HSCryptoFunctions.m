@@ -305,6 +305,19 @@ float calculateCompressionFactor(NSData *imageToEncryptIn, NSData *imageToBeEncr
     }
     return compressionFactor;
 }
+unsigned char *encryptCharArrayAllowingOverflow(unsigned char *charArray, NSString *keyString){
+    NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(keyString)];
+    int j=0;
+    for (int i=0; i<sizeof(charArray)/sizeof(unsigned char); i++) {
+        charArray[i]=charArray[i]+[[keyArray objectAtIndex:j] intValue];
+        if (j<[keyArray count]-1) {
+            j++;
+        }else {
+            j=0;
+        }
+    }
+    return charArray;
+}
 
 /*Prototypes*/
 /*unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray){

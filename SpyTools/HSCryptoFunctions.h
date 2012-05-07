@@ -42,6 +42,8 @@ int imageToEncryptInSizeInBits(NSBitmapImageRep *imageToAnalyze);
 int imageToBeEncryptedRequiredSize(NSBitmapImageRep *imageToAnalyze, int numberOfBits);
 int stringToBeEncryptedRequiredSize(NSString *stringToAnalyze);
 float calculateCompressionFactor(NSData *imageToEncryptIn, NSData *imageToBeEncrypted);
+unsigned char *encryptCharArrayAllowingOverflow(unsigned char *charArray, NSString *keyString);
+
 
 /*Prototypes*/
 //unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray);

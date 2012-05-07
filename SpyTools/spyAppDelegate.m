@@ -380,14 +380,11 @@
     NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
     
     NSBitmapImageRep *tempConversion = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
-    NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [NSNumber numberWithDouble:[self compressionFactor]], NSImageCompressionFactor,
-                                 [NSNumber numberWithBool:NO], NSImageProgressive,
-                                 nil];
+    NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:[self compressionFactor]], NSImageCompressionFactor,[NSNumber numberWithBool:NO], NSImageProgressive,nil];
     NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSJPEGFileType properties:jpegOptions];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt andKey:@"Test"];//Change for encryption----
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
@@ -422,7 +419,7 @@
     
     NSData *encryptedImageData = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
-    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8];
+    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andKey:@"Test"];//Change for decryption-------
     
     NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
     [iiOutputImageWell setImage:imageEncrypted];
