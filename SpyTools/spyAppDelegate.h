@@ -13,9 +13,8 @@
 #import "HSCryptoFunctions.h"
 
 @interface spyAppDelegate : NSObject <NSApplicationDelegate>{
-    float         compressionFactor;
+    float       compressionFactor;
     BOOL        tiTextFits;
-    BOOL        iiImageFits;
     NSString    *stringToProcess;
 }
 /*Global*/

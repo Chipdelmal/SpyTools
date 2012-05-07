@@ -60,7 +60,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
     tiTextFits = FALSE;
-    iiImageFits = FALSE;
     [iiProcessButton setEnabled:FALSE];
     [tiProcessButton setEnabled:FALSE];
     [self operationSelectorChange:self];
@@ -187,6 +186,7 @@
         [iiInputImageToBeEncryptedWell setEnabled:TRUE];
         [iiOutputImageLabel setStringValue:@"Encrypted Image:"];
     }else {
+        [iiAnalyzeLabel setStringValue:@""];
         [iiProcessButton setTitle:@"Decrypt"];
         [iiInputImageLabel setStringValue:@"Image to Decrypt:"];
         [iiOutputFormatSelector setEnabled:FALSE];
@@ -445,46 +445,19 @@
 }
 -(IBAction)iiSizeCheck:(id)sender{
     NSLog(@"Checking image size.");
+    
     NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
-    NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
-
     NSData *imageToBeEncrypted = [[NSData alloc] initWithData:[[iiInputImageToBeEncryptedWell image] TIFFRepresentation]];
-    NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
-    //NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:NULL];
-    
-    int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
-    int requiredSize = 0;//[imageBeEncryptedConverted length]*8;
-    
-    BOOL finishedFlag = FALSE;
-    BOOL failureFlag = FALSE;
-    float iiCompressionFactor = 1;
-    
+
     if ([iiOperationSelector selectedSegment]==0) {
-        
         /*Compress image to fit*/
         if (([imageToBeEncrypted length]!=0)&&([imageToEncryptIn length]!=0)) {
-            while (!finishedFlag) {
-                NSLog(@"Compression Factor: %f", iiCompressionFactor);
-                iiCompressionFactor = iiCompressionFactor-0.05;
-                NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             [NSNumber numberWithDouble:iiCompressionFactor], NSImageCompressionFactor,
-                                             [NSNumber numberWithBool:NO], NSImageProgressive,
-                                             nil];
-                NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:jpegOptions];
-                requiredSize = [imageBeEncryptedConverted length]*8+30;
-                
-                if (requiredSize<availableSize) {
-                    [self setCompressionFactor:iiCompressionFactor];
-                    NSLog(@"Compression Factor: %f",[self compressionFactor]);
-                    finishedFlag = TRUE;
-                    iiImageFits = TRUE;
-                }
-                if (iiCompressionFactor<0) {
-                    break;
-                }
-            }
+            /*Check if image fits and return compression factor*/
+            [self setCompressionFactor: calculateCompressionFactor(imageToEncryptIn, imageToBeEncrypted)];
+            
+            /*Set analize string and enable process button*/
             NSString *analyzeString;
-            if (!finishedFlag) {
+            if ([self compressionFactor]<0) {
                 analyzeString = [[NSString alloc] initWithFormat:@"The selected image is too large to be encrypted (even after JPEG compression)."];
                 [iiProcessButton setEnabled:FALSE];
             }else {
@@ -495,28 +468,10 @@
         }
         
     }else {
-        
         if ([imageToEncryptIn length]!=0) {
             [iiProcessButton setEnabled:TRUE];
         }
-        
     }
-    
-    
-   
-    
-    /*
-    NSString *analyzeString;
-    if (availableSize>requiredSize) {
-        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage fits the available space.",availableSize,requiredSize];
-        iiImageFits = TRUE;
-        [iiProcessButton setEnabled:TRUE];
-    }else {
-        analyzeString = [[NSString alloc] initWithFormat:@"Available Space:\t%i \nRequired Space:\t%i \nImage does not fit the available space.",availableSize,requiredSize];
-        [iiProcessButton setEnabled:FALSE];
-    }
-    
-    [iiAnalyzeLabel setStringValue:analyzeString];*/
 }
 
 @end

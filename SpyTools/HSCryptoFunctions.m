@@ -274,6 +274,37 @@ int imageToBeEncryptedRequiredSize(NSBitmapImageRep *imageToAnalyze, int numberO
 int stringToBeEncryptedRequiredSize(NSString *stringToAnalyze){
     return [stringToAnalyze length]*8;
 }
+float calculateCompressionFactor(NSData *imageToEncryptIn, NSData *imageToBeEncrypted){
+    NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageToBeEncryptedBMP = [[NSBitmapImageRep alloc] initWithData:imageToBeEncrypted];
+    
+    int availableSize = imageToEncryptInSizeInBits(imageToEncryptInBMP);
+    int requiredSize=0;
+    
+    BOOL finishedFlag = FALSE;
+    float compressionFactor=1;
+    
+    
+    while (!finishedFlag) {
+        NSLog(@"Compression Factor: %f", compressionFactor);
+        compressionFactor = compressionFactor-0.05;
+        NSDictionary* jpegOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithDouble:compressionFactor], NSImageCompressionFactor,
+                                     [NSNumber numberWithBool:NO], NSImageProgressive,
+                                     nil];
+        NSData *imageBeEncryptedConverted = [imageToBeEncryptedBMP representationUsingType:NSJPEGFileType properties:jpegOptions];
+        requiredSize = [imageBeEncryptedConverted length]*8+30;
+        
+        if (requiredSize<availableSize) {
+            NSLog(@"Compression Factor: %f", compressionFactor);
+            finishedFlag = TRUE;
+        }
+        if (compressionFactor<0) {
+            break;
+        }
+    }
+    return compressionFactor;
+}
 
 /*Prototypes*/
 /*unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray){
