@@ -17,7 +17,7 @@
 -(id)initWithNSString:(NSString *)initializerString{
     self = [super init];
     if(self){
-        stringToProcess = initializerString;
+        stringToProcess = prepareStringForEncryption(initializerString);
         stringLength = [initializerString length];
         NSLog(@"HSTextEncryptor Initialized with string: %@", stringToProcess);
     }
@@ -46,6 +46,7 @@
     return decryptedString;
 }
 -(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString{
+    
     return encryptUTF8StringWithPad(stringToProcess, NSStringToKeyArray(passphraseString));
 }
 -(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString{

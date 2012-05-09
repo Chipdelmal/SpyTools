@@ -45,7 +45,7 @@ NSString *generateRandomKey(int keyLength, int maxNumber){
 }
 NSString *encryptUTF8StringWithPad(NSString *inputString, NSArray *padArray){
     /*Encrypts a string given a key in the form of an array*/
-    NSString *preparedString = [[NSString alloc] initWithString:prepareStringForEncryption(inputString)];
+    NSString *preparedString = [[NSString alloc] initWithString:inputString];
     int stringLength = [preparedString length];
     int tempPhase = 0;
     char *tempCString = (char *)malloc(stringLength*sizeof(char)+sizeof(char));

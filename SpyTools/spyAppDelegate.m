@@ -67,6 +67,7 @@
     [self iiOperationSelectorChange:self];
     [tiProgressIndicator setHidden:TRUE];
     [iiProgressIndicator setHidden:TRUE];
+    [self tiKeyTypeSelectorChange:self];
     
     /*Debug*/
     NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
