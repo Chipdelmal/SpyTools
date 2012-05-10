@@ -21,6 +21,8 @@
 @synthesize iiProcessButton;
 @synthesize iiProgressIndicator;
 @synthesize iiAnalyzeLabel;
+@synthesize iiGeneratePassphraseButton;
+@synthesize iiPassphraseTextField;
 @synthesize tiOperationSelector;
 @synthesize tiKeyTypeSelector;
 @synthesize tiInputTextField;
@@ -385,11 +387,18 @@
     NSData *imageConvertedToEncrypt = [tempConversion representationUsingType:NSJPEGFileType properties:jpegOptions];
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt andKey:@"Test"];//Change for encryption----
+    NSString *encryptionKey = [[NSString alloc] initWithString:[iiPassphraseTextField stringValue]];
+    NSBitmapImageRep *imageEncryptedBitmap;
+    
+    /*Select if the image is to be encrypted with or without a passphrase*/
+    if ([encryptionKey length]==0) {
+        imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt];
+    }else {
+        imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andData:imageConvertedToEncrypt andKey:encryptionKey];
+    }
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
-    
     
     if([iiOutputFormatSelector selectedSegment]==0){
         NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
@@ -420,7 +429,15 @@
     
     NSData *encryptedImageData = [[NSData alloc] initWithData:[[iiInputImageWell image] TIFFRepresentation]];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
-    NSData *dataOutput = [imageEncryptedObject decryptImageDataWithBits:8 andKey:@"Test"];//Change for decryption-------
+    NSString *encryptionKey = [[NSString alloc] initWithString:[iiPassphraseTextField stringValue]];
+    NSData *dataOutput;
+    
+    /*Select if the image is to be decrypted with or without a passphrase*/
+    if ([encryptionKey length]==0) {
+        dataOutput = [imageEncryptedObject decryptImageDataWithBits:8];
+    }else {
+        dataOutput =  [imageEncryptedObject decryptImageDataWithBits:8 andKey:encryptionKey]; 
+    }
     
     NSImage *imageEncrypted = [[NSImage alloc] initWithData:dataOutput];
     [iiOutputImageWell setImage:imageEncrypted];
@@ -470,6 +487,11 @@
             [iiProcessButton setEnabled:TRUE];
         }
     }
+}
+-(IBAction)iiGenerateRandomPassphrase:(id)sender{
+    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
+    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
+    [iiPassphraseTextField setStringValue:encryptionString];
 }
 
 @end

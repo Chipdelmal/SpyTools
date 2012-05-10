@@ -258,7 +258,7 @@
     }
     
     /*Encryption*/
-    NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(keyString)];
+    NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(prepareStringForEncryption(keyString))];
     int j=0;
     for (int i=0; i<sizeof(testChar)/sizeof(unsigned char); i++) {
         testChar[i]=testChar[i]+[[keyArray objectAtIndex:j] intValue];
@@ -346,7 +346,7 @@
     }
     
     /*Decryption*/
-    NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(keyString)];
+    NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(prepareStringForEncryption(keyString))];
     int j=0;
     for (int i=0; i<[readString count]; i++) {
         int phased = [[readString objectAtIndex:i] intValue]-[[keyArray objectAtIndex:j] intValue];

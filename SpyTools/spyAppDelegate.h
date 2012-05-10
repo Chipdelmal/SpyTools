@@ -55,7 +55,6 @@
 @property (weak) IBOutlet NSTextField *tiImageOutputLabel;
 @property (weak) IBOutlet NSImageView *tiOutputImageWell;
 @property (weak) IBOutlet NSTextField *tiAnalyzeLabel;
-
 /*Image In Image Encryption*/
 @property (weak) IBOutlet NSSegmentedControl *iiOperationSelector;
 @property (weak) IBOutlet NSImageView *iiInputImageWell;
@@ -68,6 +67,8 @@
 @property (weak) IBOutlet NSButton *iiProcessButton;
 @property (weak) IBOutlet NSProgressIndicator *iiProgressIndicator;
 @property (weak) IBOutlet NSTextField *iiAnalyzeLabel;
+@property (weak) IBOutlet NSButton *iiGeneratePassphraseButton;
+@property (weak) IBOutlet NSTextField *iiPassphraseTextField;
 
 
 
@@ -100,6 +101,7 @@
 -(IBAction)iiDecryptImage:(id)sender;
 -(IBAction)iiImageSteganographySelector:(id)sender;
 -(IBAction)iiSizeCheck:(id)sender;
+-(IBAction)iiGenerateRandomPassphrase:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

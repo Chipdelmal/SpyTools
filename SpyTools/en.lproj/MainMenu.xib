@@ -1321,7 +1321,6 @@
 							<string key="NSFrame">{{13, 10}, {1059, 652}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="78644763"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="443232105">
@@ -2620,7 +2619,6 @@
 												<string key="NSFrame">{{770, 236}, {32, 32}}</string>
 												<reference key="NSSuperview" ref="78644763"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<string key="NSHuggingPriority">{250, 250}</string>
 												<int key="NSpiFlags">20495</int>
@@ -2762,7 +2760,6 @@
 							<string key="NSFrame">{{1015, 0}, {53, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="781259180">
@@ -3956,12 +3953,28 @@
 					<int key="connectionID">8980</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">generateKeySelector:</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">iiGeneratePassphraseButton</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="743310526"/>
 					</object>
-					<int key="connectionID">9007</int>
+					<int key="connectionID">9955</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">iiPassphraseTextField</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="977070226"/>
+					</object>
+					<int key="connectionID">9956</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">iiGenerateRandomPassphrase:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="743310526"/>
+					</object>
+					<int key="connectionID">9957</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -10843,7 +10856,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">9954</int>
+			<int key="maxID">9957</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -10864,6 +10877,7 @@
 						<string key="generateRandomPassphrase:">id</string>
 						<string key="iiDecryptImage:">id</string>
 						<string key="iiEncryptImage:">id</string>
+						<string key="iiGenerateRandomPassphrase:">id</string>
 						<string key="iiImageSteganographySelector:">id</string>
 						<string key="iiOperationSelectorChange:">id</string>
 						<string key="iiSizeCheck:">id</string>
@@ -10904,6 +10918,10 @@
 						</object>
 						<object class="IBActionInfo" key="iiEncryptImage:">
 							<string key="name">iiEncryptImage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="iiGenerateRandomPassphrase:">
+							<string key="name">iiGenerateRandomPassphrase:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="iiImageSteganographySelector:">
@@ -10990,6 +11008,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="glTabView">NSTabView</string>
 						<string key="iiAnalyzeLabel">NSTextField</string>
+						<string key="iiGeneratePassphraseButton">NSButton</string>
 						<string key="iiInputImageLabel">NSTextField</string>
 						<string key="iiInputImageToBeEncryptedWell">NSImageView</string>
 						<string key="iiInputImageWell">NSImageView</string>
@@ -10998,6 +11017,7 @@
 						<string key="iiOutputFormatSelector">NSSegmentedControl</string>
 						<string key="iiOutputImageLabel">NSTextField</string>
 						<string key="iiOutputImageWell">NSImageView</string>
+						<string key="iiPassphraseTextField">NSTextField</string>
 						<string key="iiProcessButton">NSButton</string>
 						<string key="iiProgressIndicator">NSProgressIndicator</string>
 						<string key="teGenerateKeyButton">NSButton</string>
@@ -11044,6 +11064,10 @@
 							<string key="name">iiAnalyzeLabel</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="iiGeneratePassphraseButton">
+							<string key="name">iiGeneratePassphraseButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="iiInputImageLabel">
 							<string key="name">iiInputImageLabel</string>
 							<string key="candidateClassName">NSTextField</string>
@@ -11075,6 +11099,10 @@
 						<object class="IBToOneOutletInfo" key="iiOutputImageWell">
 							<string key="name">iiOutputImageWell</string>
 							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="iiPassphraseTextField">
+							<string key="name">iiPassphraseTextField</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="iiProcessButton">
 							<string key="name">iiProcessButton</string>
