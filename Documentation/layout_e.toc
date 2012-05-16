@@ -1,0 +1,53 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {subsection}{\numberline {1.1}Programmers}{3}
+\contentsline {subsection}{\numberline {1.2}Programming Language}{3}
+\contentsline {section}{\numberline {2}Programming}{3}
+\contentsline {subsection}{\numberline {2.1}Classes and Methods}{3}
+\contentsline {subsection}{\numberline {2.2}Special note for technical descriptions}{4}
+\contentsline {section}{\numberline {3}How to change a \LaTeX \ layout?}{4}
+\contentsline {subsection}{\numberline {3.1}Advantages and Disadvantages of the text processing system \LaTeX }{4}
+\contentsline {subsection}{\numberline {3.2}Input files and class files}{5}
+\contentsline {subsection}{\numberline {3.3}Class files and Packages}{5}
+\contentsline {subsection}{\numberline {3.4}Changing the layout, step by step}{6}
+\contentsline {subsubsection}{\numberline {3.4.1}Defining the differences between the desired and the available layout}{6}
+\contentsline {subsubsection}{\numberline {3.4.2}Finding the original definition}{6}
+\contentsline {subsubsection}{\numberline {3.4.3}Writing a new package file}{7}
+\contentsline {subsubsection}{\numberline {3.4.4}Using the new package}{7}
+\contentsline {subsection}{\numberline {3.5}A simple example (Equation numbers)}{7}
+\contentsline {subsection}{\numberline {3.6}A more complex example (Reference Manual)}{8}
+\contentsline {subsubsection}{\numberline {3.6.1}Page layout}{8}
+\contentsline {subsubsection}{\numberline {3.6.2}Section headings}{9}
+\contentsline {subsubsection}{\numberline {3.6.3}Setting the margin notes}{10}
+\contentsline {subsubsection}{\numberline {3.6.4}Extensions}{10}
+\contentsline {section}{Appendix}{11}
+\contentsline {section}{\numberline {A}The page structure in \LaTeX }{11}
+\contentsline {section}{\numberline {B}Description of the refman-class family}{14}
+\contentsline {subsection}{\numberline {B.1}Invocation}{14}
+\contentsline {subsection}{\numberline {B.2}Options}{14}
+\contentsline {subsection}{\numberline {B.3}Layout changes}{14}
+\contentsline {subsubsection}{\numberline {B.3.1}Page design}{14}
+\contentsline {subsubsection}{\numberline {B.3.2}Section headings}{15}
+\contentsline {subsubsection}{\numberline {B.3.3}Paragraphs}{15}
+\contentsline {subsection}{\numberline {B.4}Footnotes}{15}
+\contentsline {subsubsection}{\numberline {B.4.1}Description environment}{15}
+\contentsline {subsubsection}{\numberline {B.4.2}Positioning of margin notes}{15}
+\contentsline {subsubsection}{\numberline {B.4.3}Headers and Footers}{16}
+\contentsline {subsection}{\numberline {B.5}Additional commands}{16}
+\contentsline {subsubsection}{\numberline {B.5.1}Marginlabel}{16}
+\contentsline {subsubsection}{\numberline {B.5.2}Attention}{16}
+\contentsline {subsubsection}{\numberline {B.5.3}Seealso}{17}
+\contentsline {subsubsection}{\numberline {B.5.4}Maxipage environment}{17}
+\contentsline {subsubsection}{\numberline {B.5.5}Fullpage environment}{17}
+\contentsline {subsubsection}{\numberline {B.5.6}Noparskip}{17}
+\contentsline {subsubsection}{\numberline {B.5.7}Setleftmarginwidth}{17}
+\contentsline {subsubsection}{\numberline {B.5.8}Descriptioncolon}{17}
+\contentsline {subsubsection}{\numberline {B.5.9}Descriptionleft}{18}
+\contentsline {subsubsection}{\numberline {B.5.10}Maxipagerule}{18}
+\contentsline {subsubsection}{\numberline {B.5.11}Condbreak}{18}
+\contentsline {subsubsection}{\numberline {B.5.12}Example}{18}
+\contentsline {subsubsection}{\numberline {B.5.13}Pageperchapter}{18}
+\contentsline {subsubsection}{\numberline {B.5.14}Smallborder}{18}
+\contentsline {subsubsection}{\numberline {B.5.15}Dvips}{18}
+\contentsline {subsubsection}{\numberline {B.5.16}Pdftex}{18}
+\contentsline {subsubsection}{\numberline {B.5.17}Pagesize}{18}
+\contentsline {subsubsection}{\numberline {B.5.18}Ifpdfoutput}{19}

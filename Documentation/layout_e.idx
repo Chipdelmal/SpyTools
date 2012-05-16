@@ -1,0 +1,49 @@
+\indexentry{Lead Programmer}{3}
+\indexentry{Testing and Programming}{3}
+\indexentry{layout design}{3}
+\indexentry{rules}{3}
+\indexentry{HSCryptoFunctions}{3}
+\indexentry{HSTextEncryptor}{3}
+\indexentry{design, logical}{4}
+\indexentry{design, generic}{4}
+\indexentry{design, visual}{5}
+\indexentry{changing the layout, step by step}{6}
+\indexentry{headings}{11}
+\indexentry{footings}{11}
+\indexentry{margin notes}{11}
+\indexentry{refrep.cls}{14}
+\indexentry{refart.cls}{14}
+\indexentry{refart, invocation}{14}
+\indexentry{refrep, invocation}{14}
+\indexentry{options}{14}
+\indexentry{page design, horizontal}{14}
+\indexentry{papermarginwidth}{14}
+\indexentry{settextfraction}{15}
+\indexentry{page design, vertical}{15}
+\indexentry{footnote}{15}
+\indexentry{description environment}{15}
+\indexentry{pagestyle}{16}
+\indexentry{headings}{16}
+\indexentry{myheadings}{16}
+\indexentry{footings}{16}
+\indexentry{myfootings}{16}
+\indexentry{marginlabel}{16}
+\indexentry{attention}{16}
+\indexentry{attentionsymbol}{16}
+\indexentry{manfnt}{16}
+\indexentry{seealso}{17}
+\indexentry{maxipage}{17}
+\indexentry{maxipagerule}{17}
+\indexentry{fullpage}{17}
+\indexentry{setleftmarginwidth}{17}
+\indexentry{descriptioncolon}{17}
+\indexentry{descriptionleft}{18}
+\indexentry{maxipagerule}{18}
+\indexentry{condbreak}{18}
+\indexentry{example}{18}
+\indexentry{pageperchapter}{18}
+\indexentry{smallborder}{18}
+\indexentry{dvips}{18}
+\indexentry{pdftex}{18}
+\indexentry{pagesize}{18}
+\indexentry{ifpdfoutput}{19}

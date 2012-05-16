@@ -1,0 +1,94 @@
+\begin{theindex}
+
+  \item attention, 16
+  \item attentionsymbol, 16
+
+  \indexspace
+
+  \item changing the layout, step by step, 6
+  \item condbreak, 18
+  \item corporate desing, 3
+
+  \indexspace
+
+  \item description environment, 15
+  \item descriptioncolon, 17
+  \item descriptionleft, 18
+  \item design, generic, 5
+  \item design, logical, 5
+  \item design, visual, 5
+  \item dvips, 18
+
+  \indexspace
+
+  \item example, 18
+
+  \indexspace
+
+  \item footings, 4, 11, 16
+  \item footnote, 15
+  \item fullpage, 17
+
+  \indexspace
+
+  \item headings, 4, 11, 16
+
+  \indexspace
+
+  \item ifpdfoutput, 19
+
+  \indexspace
+
+  \item layout design, 3
+  \item Lead Programmer, 3
+  \item line length, 3
+  \item line spacing, 3
+
+  \indexspace
+
+  \item manfnt, 16
+  \item manual, 3
+  \item margin notes, 4, 11
+  \item marginlabel, 16
+  \item maxipage, 17
+  \item maxipagerule, 17, 18
+  \item myfootings, 16
+  \item myheadings, 16
+
+  \indexspace
+
+  \item options, 14
+
+  \indexspace
+
+  \item page design, horizontal, 14
+  \item page design, vertical, 15
+  \item page layout, 4
+  \item pageperchapter, 18
+  \item pagesize, 18
+  \item pagestyle, 16
+  \item papermarginwidth, 14
+  \item pdftex, 18
+
+  \indexspace
+
+  \item refart, invocation, 14
+  \item refart.cls, 14
+  \item refrep, invocation, 14
+  \item refrep.cls, 14
+  \item rules, 3
+  \item rules of thumb, 3
+
+  \indexspace
+
+  \item seealso, 17
+  \item setleftmarginwidth, 17
+  \item settextfraction, 15
+  \item smallborder, 18
+
+  \indexspace
+
+  \item telephone directory, 3
+  \item Testing and Programming, 3
+
+\end{theindex}

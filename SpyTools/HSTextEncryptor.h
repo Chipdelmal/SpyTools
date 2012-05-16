@@ -16,9 +16,6 @@
 /*Initializers*/
 -(id)init;
 -(id)initWithNSString:(NSString *)initializerString;
-/*Accessors*/
--(NSString *)stringToProcess;
--(int)stringLength;
 /*Action Methods*/
 -(NSString *)encryptStringToProcessWithKey:(NSString *)keyString;
 -(NSString *)decryptStringToProcessWithKey:(NSString *)keyString;
@@ -27,5 +24,8 @@
 
 -(NSString *)encryptProcessAutoSelector:(NSString *)keyString;
 -(NSString *)decryptProcessAutoSelector:(NSString *)keyString;
+
+@property (strong, readonly) NSString *stringToProcess;
+@property (readonly) int stringLength;
 
 @end

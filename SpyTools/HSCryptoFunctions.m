@@ -318,62 +318,136 @@ unsigned char *encryptCharArrayAllowingOverflow(unsigned char *charArray, NSStri
     }
     return charArray;
 }
-
-/*Prototypes*/
-/*unsigned char NSArrayToUnsignedCharArray(NSArray *inputArray){
-    int length = [inputArray count];
-    unsigned char outputBuffer[length];
-    for (int i=0; i<length; i++) {
-        outputBuffer[i]=[[inputArray objectAtIndex:i] intValue];
-        //NSLog(@"IO: [%i,%@,%i]@%i",inputBuffer[i],[decryptedImageArray objectAtIndex:i],outputBuffer[i],i);
-    }
-    return *outputBuffer;
-}*/
-NSArray *NSBitmapImageRepToNSArray(NSBitmapImageRep *inputImage, int numberOfComponents){
+NSArray *decryptImageLinearly(NSBitmapImageRep *imageBitmapRep, int numberOfBits){
+    /*Returns an array of data bytes exctracted from the image*/
+    int imageWidth = CGImageGetWidth([imageBitmapRep CGImage]);
+    int imageHeight = CGImageGetHeight([imageBitmapRep CGImage]);
+    int numberOfComponents = [imageBitmapRep samplesPerPixel];
     
-    NSMutableArray *imageArray = [[NSMutableArray alloc] init];
-    int imageWidth = CGImageGetWidth([inputImage CGImage]);
-    int imageHeight = CGImageGetHeight([inputImage CGImage]);
-    
-    unsigned long tempPixelValues[numberOfComponents];
-    
-    [imageArray addObject:[NSNumber numberWithInt:imageWidth]];
-    [imageArray addObject:[NSNumber numberWithInt:imageHeight]];
-    
-    for (int j=0; j<imageHeight; j++) {
+    /*Declaration of reading variables*/
+    unsigned long readTempPixelValues[numberOfComponents];
+    NSMutableArray *readString = [[NSMutableArray alloc] init];
+    NSMutableArray *readCharacterBinary = [[NSMutableArray alloc] initWithCapacity:numberOfBits];
+    NSArray *readComponent;
+    int readCharacterIndex = 0; 
+    /*-----Read characters from image-----*/
+    for (int j=0; j<imageHeight; j++){
         for (int i=0; i<imageWidth; i++) {
-            [inputImage getPixel:tempPixelValues atX:i y:j];
-            for (int k=0; k<numberOfComponents; k++) {
-                //NSLog(@"[%i,%i]::[%i]",j,i,k);
-                [imageArray addObject:[NSNumber numberWithInt:tempPixelValues[k]]];
+            
+            /*Read current pixel's component values*/
+            [imageBitmapRep getPixel:readTempPixelValues atX:i y:j];
+            
+            /*Add components LSB to character array*/
+            for(int k=0; k<numberOfComponents; k++){
+                readComponent = characterToBinaryArray(readTempPixelValues[k], numberOfBits);
+                [readCharacterBinary insertObject:[readComponent objectAtIndex:0] atIndex:readCharacterIndex];
+                
+                if (readCharacterIndex>=7) {
+                    [readString addObject:[NSNumber numberWithInt:binaryArrayToCharacter(readCharacterBinary, numberOfBits)]];
+                    readCharacterIndex = 0;
+                }else {
+                    readCharacterIndex++;                
+                }
             }
         }
     }
-    return imageArray;    
+    return readString;
 }
-NSBitmapImageRep *NSArrayToNSBitmapImageRep(NSArray *inputArray, int numberOfComponents){
-    NSBitmapImageRep *image = [[NSBitmapImageRep alloc] init];
-    
-    int imageWidth = [[inputArray objectAtIndex:0] intValue];
-    int imageHeight = [[inputArray objectAtIndex:1] intValue];
-    
-    unsigned long tempPixelValues[numberOfComponents];
-    
-    int arrayIndex = 2;
-    
-    for (int j=0; j<imageHeight; j++) {
-        for (int i=0; i<imageWidth; i++) {
-            for (int k=0; k<numberOfComponents; k++) {
-                tempPixelValues[k] = [[inputArray objectAtIndex:arrayIndex] intValue];
-                arrayIndex++;
-            }
-            [image setPixel:tempPixelValues atX:i y:j];
-        }
+NSData *NSArrayToData(NSArray *readString){
+    /*Obtaining data length*/
+    NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<dataLengthBits; i++) {
+        [lengthArray addObject:[readString objectAtIndex:i]];
+    }
+    int dataLength = binaryArrayToCharacter(lengthArray, dataLengthBits);
+    /*Reading data into an array*/
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    for (int k=dataLengthBits; k<[readString count]; k++) {
+        [dataArray addObject:[readString objectAtIndex:k]];
+    }
+    /*Converting read array into bytes array*/
+    unsigned char outputBuffer[dataLength];
+    for (int i=0; i<dataLength; i++) {
+        outputBuffer[i]=[[dataArray objectAtIndex:i] intValue];
     }
     
-    return image;
+    NSLog(@"Data has been obtained succesfully.");
+    NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:dataLength];
+    
+    return dataOutput;
 }
-
+NSArray *unphasedArray(NSMutableArray *readString, NSArray *keyArray){
+    int j=0;
+    for (int i=0; i<[readString count]; i++) {
+        int phased = [[readString objectAtIndex:i] intValue]-[[keyArray objectAtIndex:j] intValue];
+        [readString replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:phased]];
+        if (j<[keyArray count]-1) {
+            j++;
+        }else {
+            j=0;
+        }
+    }
+    return readString;
+}
+NSBitmapImageRep *encryptInImage(NSBitmapImageRep *imageToEncryptIn, char *testChar, int numberOfBits, int sizeOfString){
+    /*Inserts a char array into an image according to least significant bit algorithm*/
+    int imageWidth = CGImageGetWidth([imageToEncryptIn CGImage]);
+    int imageHeight = CGImageGetHeight([imageToEncryptIn CGImage]);
+    int numberOfComponents = [imageToEncryptIn samplesPerPixel];
+    
+    /*Image processing*/
+    unsigned long tempPixelValues[numberOfComponents];
+    int characterBitsIndex = 0;
+    int characterNumberIndex = 0;
+    NSMutableArray *characterBinary = [[NSMutableArray alloc] initWithArray:characterToBinaryArray(testChar[characterNumberIndex], numberOfBits)];
+    for (int j=0; j<imageHeight; j++) {
+        for (int i=0; i<imageWidth; i++) {
+            /*Get current index components*/
+            [imageToEncryptIn getPixel:tempPixelValues atX:i y:j];
+            /*Process pixel's color components*/
+            for (int k=0; k<numberOfComponents; k++) {
+                /*Check if character bit index is higher or equal to the number of allowed bits*/
+                if (characterBitsIndex>=(numberOfBits)) {
+                    /*Reset bit index and increment character index*/
+                    characterBitsIndex = 0;
+                    characterNumberIndex++;
+                    /*Move to next character*/
+                    characterBinary = characterToBinaryArray(testChar[characterNumberIndex], numberOfBits);
+                }
+                
+                /*Conversion of color component to binary array*/
+                NSArray *tempComponentBitArray = [[NSArray alloc] initWithArray:characterToBinaryArray(tempPixelValues[k], numberOfBits)];
+                /*Modification of the original pixel according to the character's current bit*/
+                NSArray *tempModifiedBitArray = [[NSArray alloc] initWithArray:setBitWithArrayValue(tempComponentBitArray, characterBinary, characterBitsIndex, 0)];
+                /*Conversion of the color component's bits to an integer and assignement to the components array*/
+                tempPixelValues[k]=binaryArrayToCharacter(tempModifiedBitArray, numberOfBits);
+                
+                //NSLog(@"[%i,%i,%@]", binaryArrayToCharacter(tempComponentBitArray,8), binaryArrayToCharacter(tempModifiedBitArray, 8), [characterBinary objectAtIndex:characterBitsIndex]);
+                
+                /*Check if the string has ended so that the array is repeated*/
+                if (characterNumberIndex>=sizeOfString) {
+                    characterNumberIndex = 0;
+                }
+                characterBitsIndex++;
+            }
+            
+            [imageToEncryptIn setPixel:tempPixelValues atX:i y:j];
+        }
+    }
+    return imageToEncryptIn;
+}
+unsigned char addDataLengthAsHeader(unsigned char originalArray[], int dataLength){
+    NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
+    unsigned char testChar[dataLength+dataLengthBits];
+    for (int i=0; i<dataLength+dataLengthBits; i++) {
+        if (i<dataLengthBits) {
+            testChar[i]=[[binaryLength objectAtIndex:i] intValue];
+        }else {
+            testChar[i]=originalArray[i-dataLengthBits];
+        }
+    }
+    return (unsigned char)testChar;
+}
 
 
 @end

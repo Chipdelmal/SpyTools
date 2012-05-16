@@ -9,6 +9,8 @@
 #import "HSTextEncryptor.h"
 
 @implementation HSTextEncryptor
+@synthesize stringLength;
+@synthesize stringToProcess;
 
 /*Initializers*/
 -(id)init{
@@ -22,15 +24,6 @@
         NSLog(@"HSTextEncryptor Initialized with string: %@", stringToProcess);
     }
     return self;
-}
-/*Accessors*/
--(NSString *)stringToProcess{
-    NSLog(@"HSTextEncryptor Accessed: %@", stringToProcess);
-    return stringToProcess;
-}
--(int)stringLength{
-    NSLog(@"HSTextEncryptor String Length: %i", stringLength);
-    return stringLength;
 }
 /*Action Methods*/
 -(NSString *)encryptStringToProcessWithKey:(NSString *)keyString{
@@ -46,7 +39,6 @@
     return decryptedString;
 }
 -(NSString *)encryptStringToProcessWithPassphrase:(NSString *)passphraseString{
-    
     return encryptUTF8StringWithPad(stringToProcess, NSStringToKeyArray(passphraseString));
 }
 -(NSString *)decryptStringToProcessWithPassphrase:(NSString *)passphraseString{

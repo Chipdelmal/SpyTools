@@ -1,0 +1,207 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2012.2.14)  12 MAY 2012 14:58
+entering extended mode
+ \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**layout_e.tex
+(./layout_e.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, serbianc, slovak, sloven
+ian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded
+.
+(/usr/local/texlive/2011/texmf-dist/tex/latex/refman/refart.cls
+Document Class: refart 2006/11/13 v2.0e LaTeX document class
+\papermarginwidth=\skip41
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\leftmarginwidth=\dimen102
+\fullwidth=\dimen103
+\emptyfoottopmargin=\dimen104
+\emptyheadtopmargin=\dimen105
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\bibindent=\dimen106
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@indexfile=\write3
+\openout3 = `layout_e.idx'.
+
+
+Writing index file layout_e.idx
+(./layout_e.aux)
+\openout1 = `layout_e.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+ (./layout_e.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+ [1
+
+{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+\tf@toc=\write4
+\openout4 = `layout_e.toc'.
+
+ [2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 81.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 81.
+
+Overfull \hbox (31.97295pt too wide) in paragraph at lines 85--87
+[]\OT1/cmr/m/n/10 -(NSString *)en-crypt-String-To-Pro-cess-With-Key:(NSString *
+)keyString 
+ []
+
+
+Overfull \hbox (31.97295pt too wide) in paragraph at lines 87--89
+[]\OT1/cmr/m/n/10 -(NSString *)de-crypt-String-To-Pro-cess-With-Key:(NSString *
+)keyString 
+ []
+
+
+Overfull \hbox (9.7784pt too wide) in paragraph at lines 89--91
+[]\OT1/cmr/m/n/10 -(NSString *)en-crypt-String-To-Pro-cess-With-Passphrase:(NSS
+tring
+ []
+
+
+Overfull \hbox (9.7784pt too wide) in paragraph at lines 91--93
+[]\OT1/cmr/m/n/10 -(NSString *)de-crypt-String-To-Pro-cess-With-Passphrase:(NSS
+tring
+ []
+
+[3]
+Overfull \hbox (10.3062pt too wide) in paragraph at lines 93--95
+[]\OT1/cmr/m/n/10 -(NSString *)en-crypt-Pro-ces-sAutoS-e-lec-tor:(NSString *)ke
+yString 
+ []
+
+
+Overfull \hbox (10.3062pt too wide) in paragraph at lines 95--96
+[]\OT1/cmr/m/n/10 -(NSString *)de-crypt-Pro-ces-sAutoS-e-lec-tor:(NSString *)ke
+yString 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 106.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 106.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 145.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 154.
+[4] [5] [6] [7] [8] [9] (./lay_e2.tex [10] [11
+
+] [12]
+\T=\count87
+ [13]
+Overfull \hbox (18.16626pt too wide) in paragraph at lines 523--526
+[][]\OT1/cmr/m/n/10 The text height is cal-cu-lated as the pa-per height mi-nus
+ 2 \OT1/cmtt/m/n/10 \papermarginwidth\OT1/cmr/m/n/10 .
+ []
+
+[14
+
+
+
+] [15]
+Overfull \hbox (7.47023pt too wide) in paragraph at lines 651--657
+\OT1/cmr/m/n/10 com-mand us-ing a []\OT1/cmtt/m/n/10 \renewcommand{\attentionsy
+mbol}{\texttt\{:-)\}}
+ []
+
+
+Overfull \hbox (11.98961pt too wide) in paragraph at lines 651--657
+\OT1/cmr/m/n/10 com-mand. To get the de-fault back use []\OT1/cmtt/m/n/10 \rene
+wcommand{\attentionsymbol}
+ []
+
+[16] [17]
+Overfull \hbox (3.41617pt too wide) in paragraph at lines 737--741
+\OT1/cmr/m/n/10 You can dis-able the rules be-fore and af-ter a \OT1/cmtt/m/n/1
+0 maxipage \OT1/cmr/m/n/10 with the \OT1/cmtt/m/n/10 \maxipage-
+ []
+
+
+Overfull \hbox (14.22083pt too wide) in paragraph at lines 774--777
+[]\OT1/cmr/m/n/10 You can re-de-fine the bor-der with \OT1/cmtt/m/n/10 \setleng
+th\papermarginwidth []{0.25in}\OT1/cmr/m/n/10 .
+ []
+
+[18]) (./layout_e.ind [19] [20
+
+
+]) (./layout_e.aux) ) 
+Here is how much of TeX's memory you used:
+ 448 strings out of 493633
+ 5059 string characters out of 3143377
+ 55275 words of memory out of 3000000
+ 3791 multiletter control sequences out of 15000+200000
+ 10938 words of font info for 39 fonts, out of 3000000 for 9000
+ 831 hyphenation exceptions out of 8191
+ 23i,17n,26p,406b,431s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2011/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmbx12.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx7.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx8.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmcsc10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr10.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r6.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
+pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
+></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></
+usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></u
+sr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
+r/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/
+local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/l
+ocal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/lo
+cal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/loca
+l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/
+texlive/2011/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb>
+Output written on layout_e.pdf (20 pages, 265109 bytes).
+PDF statistics:
+ 150 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
