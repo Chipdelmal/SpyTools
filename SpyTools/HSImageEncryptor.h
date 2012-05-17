@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "HSCryptoFunctions.h"
 
-#define dataLengthBits        30
+#define dataLengthBits          32
+#define imageBits               8
 
 @interface HSImageEncryptor : NSObject{
     int                 imageHeight;
@@ -29,6 +30,9 @@
 -(NSData *)decryptImageDataWithBits:(int)numberOfBits; 
 -(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andData:(NSData *)dataToBeEncrypted andKey:(NSString *)key;
 -(NSData *)decryptImageDataWithBits:(int)numberOfBits andKey:(NSString *)key; 
+
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andFileData:(NSData *)dataToBeEncrypted;
+-(NSData *)decryptFileDataWithBits:(int)numberOfBits; 
 
 @property (strong, readonly) NSBitmapImageRep *imageBitmapRep;
 @property (readonly) int imageHeight;

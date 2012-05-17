@@ -71,7 +71,7 @@
     [iiProgressIndicator setHidden:TRUE];
     [self tiKeyTypeSelectorChange:self];
     
-    /*Debug*/
+    /*Substitution Encryption Tests----------------*/
     NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
     //char *stringToBeEncrypted = NSStringToCharArray(prepareStringForEncryption(testString));
     //NSLog(@"%s",stringToBeEncrypted);
@@ -100,6 +100,65 @@
     char *encryptedChar = NSStringToCharArray(encryptedString);
     NSString *decryptedString = [[NSString alloc] initWithString:decryptSubstitution(encryptedString, requiredCharactersArray, keyArray)];
     //NSLog(@"%s",encryptedChar);
+    
+    
+    /*File Encryption Tests--------------------------*/
+        
+    /*Encrypt....*/
+    /*NSString *imagePath = @"/Users/Chip/Desktop/lena.bmp";
+    NSString *fileExtension = [imagePath pathExtension];
+    NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:imagePath];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Desktop/test.png"];
+    
+    NSLog(@"%lu",[imageToBeEncrypted length]);
+    
+    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    
+    NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
+    [dataOutput writeToFile:fullWriteString atomically: NO];*/
+    
+    /*Decrypt....*/
+    /*NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
+    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
+    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8];
+    
+    NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
+    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];*/
+    
+    
+    
+    /*NSLog(@"\n------\nFile Encryption Tests.");
+    
+    NSString *filePath = @"/Users/Chip/Desktop/lena.bmp";
+    NSString *fileExtension = [filePath pathExtension];
+    NSLog(@"Extension: %@",fileExtension);
+    NSData *fileToBeEncrypted = [[NSData alloc] initWithContentsOfFile:filePath];
+    
+    NSData *fileToEncryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Desktop/lena.bmp"];
+    HSImageEncryptor *encryptionObject = [[HSImageEncryptor alloc] initWithData:fileToEncryptIn];
+    
+    NSBitmapImageRep *encryptedImage = [encryptionObject encryptImageWithBits:8 andData:fileToEncryptIn];
+    NSData *dataOutput = [encryptedImage representationUsingType:NSBMPFileType properties:nil];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
+    [dataOutput writeToFile:fullWriteString atomically: NO];*/
+    
+    /*Decrypt*/
+    //NSData *fileToDecryptIn = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Desktop/EncryptedImage.bmp"];
+    //HSImageEncryptor *decryptionObject = [[HSImageEncryptor alloc] initWithData:dataOutput];
+    
+    //NSData *decryptedData = [decryptionObject decryptImageDataWithBits:8];
+    
+    //NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"decryptedFile.rtf"];
+    //[decryptedData writeToFile:fullWriteString2 atomically: NO];
+
 }
 /*Interface Methods*/
 -(IBAction)operationSelectorChange:(id)sender{

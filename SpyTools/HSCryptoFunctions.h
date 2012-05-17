@@ -48,6 +48,9 @@ NSArray *decryptImageLinearly(NSBitmapImageRep *imageBitmapRep, int numberOfBits
 NSData *rawDataDecryption(NSArray *readString);
 NSArray *unphasedArray(NSMutableArray *readString, NSArray *keyArray);
 NSBitmapImageRep *encryptInImage(NSBitmapImageRep *imageToEncryptIn, char *testChar, int numberOfBits, int sizeOfString);
+NSArray *binaryArrayToBytesCharactersArray(NSArray *binaryArray, int bits);
+NSArray *bytesCharactersArrayToBinaryArray(NSArray *bytesArray, int bits);
+
 unsigned char addDataLengthAsHeader(unsigned char originalArray[], int dataLength);
 
 

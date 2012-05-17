@@ -354,12 +354,16 @@ NSArray *decryptImageLinearly(NSBitmapImageRep *imageBitmapRep, int numberOfBits
     return readString;
 }
 NSData *NSArrayToData(NSArray *readString){
-    /*Obtaining data length*/
+    /*Obtaining data length*/    
     NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
-    for (int i=0; i<dataLengthBits; i++) {
+    for (int i=0; i<dataLengthBits/8; i++) {
+        //NSLog(@"Read Character[i]: %@",[readString objectAtIndex:i]);
         [lengthArray addObject:[readString objectAtIndex:i]];
     }
-    int dataLength = binaryArrayToCharacter(lengthArray, dataLengthBits);
+    NSArray *lengthBinary = bytesCharactersArrayToBinaryArray(lengthArray, 8);
+    //NSLog(@"Length Binary: %@", lengthBinary);
+    int dataLength = binaryArrayToCharacter(lengthBinary, dataLengthBits);
+    NSLog(@"Decrypted Data Length: %i", dataLength);
     /*Reading data into an array*/
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
     for (int k=dataLengthBits; k<[readString count]; k++) {
@@ -436,6 +440,45 @@ NSBitmapImageRep *encryptInImage(NSBitmapImageRep *imageToEncryptIn, char *testC
     }
     return imageToEncryptIn;
 }
+NSArray *binaryArrayToBytesCharactersArray(NSArray *binaryArray, int bits){
+    /*Binary Array into Bytes Characters*/
+    
+    NSMutableArray *tempBinary = [[NSMutableArray alloc] init];
+    NSMutableArray *tempInt = [[NSMutableArray alloc] init];
+    /*Initialize with zero values so that they can be replaced*/
+    for (int i=0; i<bits; i++) {
+        [tempBinary addObject:[NSNumber numberWithInt:0]];
+    }
+    
+    //NSLog(@"Binary Array:%@",binaryArray);
+    int bitIndex=0;
+    int bitOriginalIndex=0;
+    for (int j=0; j<[binaryArray count]; j++) {
+        if (bitIndex<(bits)) {
+            //NSLog(@"[Bit Index,Bit]=[%i,%@]::%i",bitIndex,[binaryArray objectAtIndex:bitOriginalIndex],j);
+            [tempBinary replaceObjectAtIndex:bitIndex withObject:[binaryArray objectAtIndex:bitOriginalIndex]];
+            //NSLog(@"Binary to Bytes: %@",[tempBinary objectAtIndex:bitIndex]);
+            bitIndex++;
+            bitOriginalIndex++;
+        }else {
+            [tempInt addObject:[NSNumber numberWithInt:binaryArrayToCharacter(tempBinary,bits)]];
+            bitIndex=0;
+        }
+    }
+    return tempInt;
+}
+NSArray *bytesCharactersArrayToBinaryArray(NSArray *bytesArray, int bits){
+    NSMutableArray *tempBinaryArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<[bytesArray count]; i++) {
+        NSArray *binaryArray = characterToBinaryArray([[bytesArray objectAtIndex:i] intValue], bits); 
+        for (int j=0; j<[binaryArray count]; j++) {
+            [tempBinaryArray addObject:[binaryArray objectAtIndex:j]];
+        }
+    }
+    return tempBinaryArray;
+}
+
+
 unsigned char addDataLengthAsHeader(unsigned char originalArray[], int dataLength){
     NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
     unsigned char testChar[dataLength+dataLengthBits];

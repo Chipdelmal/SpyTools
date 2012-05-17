@@ -53,16 +53,25 @@
 
 -(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andData:(NSData *)dataToBeEncrypted{
     /*Creating buffer for data*/
-    int dataLength = [dataToBeEncrypted length];
+    int dataLength = [dataToBeEncrypted length]+dataLengthBits;
     unsigned char testCharTemp[dataLength];
     [dataToBeEncrypted getBytes:testCharTemp];
-    
+    NSLog(@"Encrypted Data Length: %i",dataLength);
+
     /*Data Length Header*/
     NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
+    //NSLog(@"Binary Length: %@", binaryLength);
+    NSArray *lengthInBytes = binaryArrayToBytesCharactersArray(binaryLength, 8);  /*The Error is Here!!!*/
+    //NSLog(@"Length in Bytes: %@", lengthInBytes);
     unsigned char testChar[dataLength+dataLengthBits];
-    for (int i=0; i<dataLength+dataLengthBits; i++) {
-        if (i<dataLengthBits) {
-            testChar[i]=[[binaryLength objectAtIndex:i] intValue];
+    for (int i=0; i<dataLength+[lengthInBytes count]; i++) {
+        if (i<dataLengthBits/8) {
+            if (i<[lengthInBytes count]) {
+                testChar[i]=[[lengthInBytes objectAtIndex:i] intValue];
+            }else {
+                testChar[i]=0;
+            }            
+            //NSLog(@"%i",testChar[i]);
         }else {
             testChar[i]=testCharTemp[i-dataLengthBits];
         }
@@ -79,21 +88,26 @@
     NSData *dataOutput = [[NSData alloc] initWithData:NSArrayToData(readString)];
     return dataOutput;
 }
-
 -(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andData:(NSData *)dataToBeEncrypted andKey:(NSString *)keyString{
     NSLog(@"Encrypting with key: %@",keyString);
     
     /*Creating buffer for data*/
-    int dataLength = [dataToBeEncrypted length];
+    int dataLength = [dataToBeEncrypted length]+dataLengthBits;
     unsigned char testCharTemp[dataLength];
     [dataToBeEncrypted getBytes:testCharTemp];
     
     /*Data Length Header*/
     NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
+    NSArray *lengthInBytes = binaryArrayToBytesCharactersArray(binaryLength, 8);    
     unsigned char testChar[dataLength+dataLengthBits];
-    for (int i=0; i<dataLength+dataLengthBits; i++) {
-        if (i<dataLengthBits) {
-            testChar[i]=[[binaryLength objectAtIndex:i] intValue];
+    for (int i=0; i<dataLength+[lengthInBytes count]; i++) {
+        if (i<dataLengthBits/8) {
+            if (i<[lengthInBytes count]) {
+                testChar[i]=[[lengthInBytes objectAtIndex:i] intValue];
+            }else {
+                testChar[i]=0;
+            }            
+            //NSLog(@"%i",testChar[i]);
         }else {
             testChar[i]=testCharTemp[i-dataLengthBits];
         }
@@ -121,6 +135,42 @@
     NSArray *keyArray = [[NSArray alloc] initWithArray:NSStringToKeyArray(prepareStringForEncryption(keyString))];
     NSArray *phased = [[NSArray alloc] initWithArray:unphasedArray(readString,keyArray)];
     NSData *dataOutput = [[NSData alloc] initWithData:NSArrayToData(phased)];
+    return dataOutput;
+}
+
+
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andFileData:(NSData *)dataToBeEncrypted{
+    /*Creating buffer for data*/
+    int dataLength = [dataToBeEncrypted length]+dataLengthBits;
+    unsigned char testCharTemp[dataLength];
+    [dataToBeEncrypted getBytes:testCharTemp];
+    
+    /*Data Length Header*/
+    NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
+    NSArray *lengthInBytes = binaryArrayToBytesCharactersArray(binaryLength, 8);    
+    unsigned char testChar[dataLength+dataLengthBits];
+    for (int i=0; i<dataLength+[lengthInBytes count]; i++) {
+        if (i<dataLengthBits/8) {
+            if (i<[lengthInBytes count]) {
+                testChar[i]=[[lengthInBytes objectAtIndex:i] intValue];
+            }else {
+                testChar[i]=0;
+            }            
+            //NSLog(@"%i",testChar[i]);
+        }else {
+            testChar[i]=testCharTemp[i-dataLengthBits];
+        }
+    }
+    
+    NSBitmapImageRep *imageBitmapRepOut = encryptInImage(imageBitmapRep, (char *)testChar, numberOfBits, dataLength);
+    NSLog(@"Data has been succesfully encrypted!");
+    return  imageBitmapRepOut; 
+}
+-(NSData *)decryptFileDataWithBits:(int)numberOfBits{
+    /*Obtain the data hidden in the image as a bytes array*/
+    NSArray *readString = [[NSArray alloc] initWithArray:decryptImageLinearly(imageBitmapRep, numberOfBits)];
+    /*Convert read array into NSData object*/
+    NSData *dataOutput = [[NSData alloc] initWithData:NSArrayToData(readString)];
     return dataOutput;
 }
 
