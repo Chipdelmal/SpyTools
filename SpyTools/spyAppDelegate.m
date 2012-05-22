@@ -114,7 +114,7 @@
     NSLog(@"%lu",[imageToBeEncrypted length]);
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted andExtension:(NSString *)fileExtension];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted andExtension:(NSString *)fileExtension andKey:@"1,2,3"];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
@@ -127,7 +127,7 @@
     NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
     NSString *extensionString = [[NSString alloc] init];
-    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString];
+    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString andKey:@"1,2,3"];
     NSLog(@"Decrypted Extension String: %@", extensionString);
     
     NSString *fileNameString = @"DecryptedFile.";
