@@ -139,16 +139,20 @@
 }
 
 
--(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andFileData:(NSData *)dataToBeEncrypted{
+-(NSBitmapImageRep *)encryptImageWithBits:(int)numberOfBits andFileData:(NSData *)dataToBeEncrypted andExtension:(NSString *)extensionString{
+    NSLog(@"Encrypting with extension.");
     /*Creating buffer for data*/
     int dataLength = [dataToBeEncrypted length]+dataLengthBits;
     unsigned char testCharTemp[dataLength];
     [dataToBeEncrypted getBytes:testCharTemp];
     
-    /*Data Length Header*/
+    /*Data Length and Extension Header*/
+    char *extensionArray = NSStringToCharArray(extensionString);
+    //NSLog(@"Extension: %s",extensionArray);
     NSArray *binaryLength = characterToBinaryArray(dataLength, dataLengthBits);
     NSArray *lengthInBytes = binaryArrayToBytesCharactersArray(binaryLength, 8);    
     unsigned char testChar[dataLength+dataLengthBits];
+    int charExtensionIndex=0;
     for (int i=0; i<dataLength+[lengthInBytes count]; i++) {
         if (i<dataLengthBits/8) {
             if (i<[lengthInBytes count]) {
@@ -157,20 +161,27 @@
                 testChar[i]=0;
             }            
             //NSLog(@"%i",testChar[i]);
-        }else {
-            testChar[i]=testCharTemp[i-dataLengthBits];
+        }else if(i<(extensionBits+dataLengthBits)/8){
+            testChar[i]=extensionArray[charExtensionIndex];
+            charExtensionIndex++;
+            //NSLog(@"Extension Character written: %i",testChar[i]);
+        }else{
+            testChar[i]=testCharTemp[i-(dataLengthBits+extensionBits)];
         }
     }
+    
     
     NSBitmapImageRep *imageBitmapRepOut = encryptInImage(imageBitmapRep, (char *)testChar, numberOfBits, dataLength);
     NSLog(@"Data has been succesfully encrypted!");
     return  imageBitmapRepOut; 
 }
--(NSData *)decryptFileDataWithBits:(int)numberOfBits{
+-(NSData *)decryptFileDataWithBits:(int)numberOfBits andStoreExtensionIn:(NSString **)extensionPtr{
     /*Obtain the data hidden in the image as a bytes array*/
     NSArray *readString = [[NSArray alloc] initWithArray:decryptImageLinearly(imageBitmapRep, numberOfBits)];
     /*Convert read array into NSData object*/
-    NSData *dataOutput = [[NSData alloc] initWithData:NSArrayToData(readString)];
+    NSString *readExtension = [[NSString alloc] init];
+    NSData *dataOutput = [[NSData alloc] initWithData:NSArrayToDataWithExtension(readString, &readExtension)];
+    *extensionPtr = readExtension;
     return dataOutput;
 }
 

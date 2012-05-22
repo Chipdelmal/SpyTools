@@ -44,7 +44,7 @@ NSString *generateRandomKey(int keyLength, int maxNumber){
     return returnString;
 }
 NSString *encryptUTF8StringWithPad(NSString *inputString, NSArray *padArray){
-    /*Encrypts a string given a key in the form of an array*/
+    /*Encrypts a string given a key in the form of a NSNumbers array*/
     NSString *preparedString = [[NSString alloc] initWithString:inputString];
     int stringLength = [preparedString length];
     int tempPhase = 0;
@@ -66,7 +66,7 @@ NSString *encryptUTF8StringWithPad(NSString *inputString, NSArray *padArray){
     return returnString;
 }
 NSString *decryptUTF8StringWithPad(NSString *inputString, NSArray *padArray){
-    /*Encrypts a string given a key in the form of an array*/
+    /*Decrypts a string given a key in the form of an NSNumbers array*/
     int stringLength = [inputString length];
     int tempPhase = 0;
     char *tempCString = (char *)malloc(stringLength*sizeof(char)+sizeof(char));
@@ -109,14 +109,14 @@ NSArray *keyStringToKeyArray(NSString *stringToSplit){
     return tempIntArray;
 }
 NSString *prepareStringForEncryption(NSString *inputString){
-    /*Prepares a string for encryption*/
+    /*Prepares a string for encryption by removing unwanted characters*/
     NSString *myString = inputString;
     NSData *stringData = [myString dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
     NSString *cleanString = [[NSString alloc] initWithData: stringData encoding: NSASCIIStringEncoding];
     return cleanString;
 }
 NSArray *NSStringToKeyArray(NSString *inputString){
-    /*Converts a string into an array that can be used ass an encryption key*/
+    /*Converts a string into an array that can be used as an encryption key*/
     char *encryptionCharArray = NSStringToCharArray(inputString);
     NSMutableArray *keyArray = [[NSMutableArray alloc] initWithCapacity:[inputString length]];
     for (int j=0; j<[inputString length]; j++) {
@@ -204,6 +204,7 @@ char *NSStringToCharArray(NSString *inputString){
     /*Remember to free char array after using*/
 }
 char *NSArrayToCharArray(NSArray *inputArray){
+    /*Converts an NSArray of NSNumbers into a char array*/
     int stringLength = [inputArray count];
     char *tempCString = (char *)malloc(stringLength*sizeof(char)+sizeof(char));
     for (int i=0; i<stringLength; i++) {
@@ -213,6 +214,7 @@ char *NSArrayToCharArray(NSArray *inputArray){
     return tempCString;
 }
 NSMutableArray *characterToBinaryArray(int characterToConvert, int bitsNumber){
+    /*Converts a character (int) into a Binary Array of a length defined by the argument bitsNumber*/
     int mask = 1;
     NSMutableArray *bitsArray = [[NSMutableArray alloc] initWithCapacity:bitsNumber];
     for (int i = 0; i<bitsNumber; i++) {
@@ -226,6 +228,7 @@ NSMutableArray *characterToBinaryArray(int characterToConvert, int bitsNumber){
     return bitsArray;
 }
 int binaryArrayToCharacter(NSArray *bitsArray, int bitsNumber){
+    /*Converts a binary array into a character*/
     int characterValue = 0;
     int mask = 1;
     for (int i = 0; i<bitsNumber; i++) {
@@ -380,6 +383,48 @@ NSData *NSArrayToData(NSArray *readString){
     
     return dataOutput;
 }
+NSData *NSArrayToDataWithExtension(NSArray *readString, NSString  **extensionPointer){
+    /*Decrypts a raw array of data taking into account the length of the data and returns the file's extension by reference*/
+    
+    NSLog(@"Decrypting with extension.");
+    /*Obtaining data length*/    
+    NSMutableArray *lengthArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<dataLengthBits/8; i++) {
+        //NSLog(@"Read Character[i]: %@",[readString objectAtIndex:i]);
+        [lengthArray addObject:[readString objectAtIndex:i]];
+    }
+    NSArray *lengthBinary = bytesCharactersArrayToBinaryArray(lengthArray, 8);
+    //NSLog(@"Length Binary: %@", lengthBinary);
+    int dataLength = binaryArrayToCharacter(lengthBinary, dataLengthBits);
+    NSLog(@"Decrypted Data Length: %i", dataLength);
+    
+    /*Extract file extension*/
+    NSMutableArray *tempBinary = [[NSMutableArray alloc] init];
+    for (int j=dataLengthBits/8; j<(dataLengthBits+extensionBits)/8; j++) {
+        [tempBinary addObject:[readString objectAtIndex:j]];
+    }
+    char *extensionCharArray = NSArrayToCharArray(tempBinary);
+    *extensionPointer = [NSString stringWithCString:extensionCharArray encoding:4];
+    NSLog(@"Read Extension: %s", extensionCharArray);
+    free(extensionCharArray);
+
+    
+    /*Reading data into an array*/
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+    for (int k=dataLengthBits+extensionBits; k<[readString count]; k++) {
+        [dataArray addObject:[readString objectAtIndex:k]];
+    }
+    /*Converting read array into bytes array*/
+    unsigned char outputBuffer[dataLength];
+    for (int i=0; i<dataLength; i++) {
+        outputBuffer[i]=[[dataArray objectAtIndex:i] intValue];
+    }
+    
+    NSLog(@"Data has been obtained succesfully.");
+    NSData *dataOutput = [[NSData alloc] initWithBytes:outputBuffer length:dataLength];
+    
+    return dataOutput;
+}
 NSArray *unphasedArray(NSMutableArray *readString, NSArray *keyArray){
     int j=0;
     for (int i=0; i<[readString count]; i++) {
@@ -441,7 +486,7 @@ NSBitmapImageRep *encryptInImage(NSBitmapImageRep *imageToEncryptIn, char *testC
     return imageToEncryptIn;
 }
 NSArray *binaryArrayToBytesCharactersArray(NSArray *binaryArray, int bits){
-    /*Binary Array into Bytes Characters*/
+    /*Separates a flattened Binary Array into Bytes Characters of a fixed length defined by the Bits argument*/
     
     NSMutableArray *tempBinary = [[NSMutableArray alloc] init];
     NSMutableArray *tempInt = [[NSMutableArray alloc] init];
@@ -468,6 +513,8 @@ NSArray *binaryArrayToBytesCharactersArray(NSArray *binaryArray, int bits){
     return tempInt;
 }
 NSArray *bytesCharactersArrayToBinaryArray(NSArray *bytesArray, int bits){
+    /*Flattens a Byte Characters Array into a Binary Array of a fixed length defined by the Bits argument*/
+    
     NSMutableArray *tempBinaryArray = [[NSMutableArray alloc] init];
     for (int i=0; i<[bytesArray count]; i++) {
         NSArray *binaryArray = characterToBinaryArray([[bytesArray objectAtIndex:i] intValue], bits); 

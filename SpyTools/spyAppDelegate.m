@@ -105,30 +105,34 @@
     /*File Encryption Tests--------------------------*/
         
     /*Encrypt....*/
-    /*NSString *imagePath = @"/Users/Chip/Desktop/lena.bmp";
-    NSString *fileExtension = [imagePath pathExtension];
+    NSString *imagePath = @"/Users/Chip/Desktop/lena.bmp";
+    NSString *filePath = @"/Users/Chip/Desktop/test.ppt";
+    NSString *fileExtension = [filePath pathExtension];
     NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:imagePath];
-    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:@"/Users/Chip/Desktop/test.png"];
+    NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:filePath];
     
     NSLog(@"%lu",[imageToBeEncrypted length]);
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted andExtension:(NSString *)fileExtension];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
     
     NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
     NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
-    [dataOutput writeToFile:fullWriteString atomically: NO];*/
+    [dataOutput writeToFile:fullWriteString atomically: NO];
     
     /*Decrypt....*/
-    /*NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
+    NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
-    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8];
+    NSString *extensionString = [[NSString alloc] init];
+    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString];
+    NSLog(@"Decrypted Extension String: %@", extensionString);
     
-    NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"DecryptedImage.png"];
-    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];*/
+    NSString *fileNameString = @"DecryptedFile.";
+    NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,[fileNameString stringByAppendingString:extensionString]];
+    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];
     
     
     

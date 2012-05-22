@@ -29,7 +29,6 @@ NSArray *generateRequiredCharactersArray(NSString *stringToProcess);
 NSArray *generateRandomSubstitutionKey(NSArray *requiredCharactersArray, NSArray *allowedCharactersArray);
 NSString *encryptSubstitution(NSString *stringToBeEncrypted, NSArray *requiredCharactersArray, NSArray *keyArray);
 NSString *decryptSubstitution(NSString *stringToBeDecrypted, NSArray *requiredCharactersArray, NSArray *keyArray);
-NSData *NSArrayToData(NSArray *readString);
 
 /*Image Encryption Functions-----*/
 char *NSStringToCharArray(NSString *inputString);
@@ -45,7 +44,9 @@ int stringToBeEncryptedRequiredSize(NSString *stringToAnalyze);
 float calculateCompressionFactor(NSData *imageToEncryptIn, NSData *imageToBeEncrypted);
 unsigned char *encryptCharArrayAllowingOverflow(unsigned char *charArray, NSString *keyString);
 NSArray *decryptImageLinearly(NSBitmapImageRep *imageBitmapRep, int numberOfBits);
-NSData *rawDataDecryption(NSArray *readString);
+NSData *NSArrayToData(NSArray *readString);
+NSData *NSArrayToDataWithExtension(NSArray *readString, NSString  **extensionPointer);
+//NSData *rawDataDecryption(NSArray *readString);
 NSArray *unphasedArray(NSMutableArray *readString, NSArray *keyArray);
 NSBitmapImageRep *encryptInImage(NSBitmapImageRep *imageToEncryptIn, char *testChar, int numberOfBits, int sizeOfString);
 NSArray *binaryArrayToBytesCharactersArray(NSArray *binaryArray, int bits);
