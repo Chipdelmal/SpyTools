@@ -69,7 +69,20 @@
 @property (weak) IBOutlet NSTextField *iiAnalyzeLabel;
 @property (weak) IBOutlet NSButton *iiGeneratePassphraseButton;
 @property (weak) IBOutlet NSTextField *iiPassphraseTextField;
-
+/*File In Image Encryption*/
+@property (weak) IBOutlet NSSegmentedControl *fiOperationSelector;
+@property (weak) IBOutlet NSImageView *fiInputImageWell;
+@property (weak) IBOutlet NSTextField *fiFileToBeEncryptedField;
+@property (weak) IBOutlet NSTextField *fiInputImageLabel;
+@property (weak) IBOutlet NSTextField *fiFileToBeEncryptedLabel;
+@property (weak) IBOutlet NSSegmentedControl *fiOutputFormatSelector;
+@property (weak) IBOutlet NSImageView *fiOutputImageWell;
+@property (weak) IBOutlet NSTextField *fiOutputImageLabel;
+@property (weak) IBOutlet NSProgressIndicator *fiProgressIndicator;
+@property (weak) IBOutlet NSTextField *fiAnalyzeLabel;
+@property (weak) IBOutlet NSButton *fiGeneratePassphraseButton;
+@property (weak) IBOutlet NSTextField *fiPassphraseTextField;
+@property (weak) IBOutlet NSButton *fiProcessButton;
 
 
 /*Interface Methods-----------------------*/
@@ -78,6 +91,7 @@
 -(IBAction)tiOperationSelectorChange:(id)sender;
 -(IBAction)tiKeyTypeSelectorChange:(id)sender;
 -(IBAction)iiOperationSelectorChange:(id)sender;
+-(IBAction)fiOperationSelectorChange:(id)sender;
 /*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender;
 -(IBAction)generateRandomPassphrase:(id)sender;
@@ -102,6 +116,12 @@
 -(IBAction)iiImageSteganographySelector:(id)sender;
 -(IBAction)iiSizeCheck:(id)sender;
 -(IBAction)iiGenerateRandomPassphrase:(id)sender;
+/*File in Image Encryption*/
+-(IBAction)fiEncryptImage:(id)sender;
+-(IBAction)fiDecryptImage:(id)sender;
+-(IBAction)fiImageSteganographySelector:(id)sender;
+-(IBAction)fiSizeCheck:(id)sender;
+-(IBAction)fiGenerateRandomPassphrase:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
 @end

@@ -9,6 +9,19 @@
 #import "spyAppDelegate.h"
 
 @implementation spyAppDelegate
+@synthesize fiOperationSelector;
+@synthesize fiInputImageWell;
+@synthesize fiFileToBeEncryptedField;
+@synthesize fiInputImageLabel;
+@synthesize fiFileToBeEncryptedLabel;
+@synthesize fiOutputFormatSelector;
+@synthesize fiOutputImageWell;
+@synthesize fiOutputImageLabel;
+@synthesize fiProgressIndicator;
+@synthesize fiAnalyzeLabel;
+@synthesize fiGeneratePassphraseButton;
+@synthesize fiPassphraseTextField;
+@synthesize fiProcessButton;
 @synthesize compressionFactor;
 @synthesize iiOperationSelector;
 @synthesize iiInputImageWell;
@@ -69,7 +82,13 @@
     [self iiOperationSelectorChange:self];
     [tiProgressIndicator setHidden:TRUE];
     [iiProgressIndicator setHidden:TRUE];
+    [fiProgressIndicator setHidden:TRUE];
     [self tiKeyTypeSelectorChange:self];
+    NSArray *desktopPaths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPathZero = [desktopPaths objectAtIndex:0];
+    [fiFileToBeEncryptedField setStringValue:desktopPathZero];
+    [fiProcessButton setEnabled:FALSE];
+    [self fiOperationSelectorChange:self];
     
     /*Substitution Encryption Tests----------------*/
     NSString *testString = [[NSString alloc] initWithString:@"The cake is a Lie!"];
@@ -105,34 +124,34 @@
     /*File Encryption Tests--------------------------*/
         
     /*Encrypt....*/
-    NSString *imagePath = @"/Users/Chip/Desktop/lena.bmp";
+    /*NSString *imagePath = @"/Users/Chip/Desktop/lena.bmp";
     NSString *filePath = @"/Users/Chip/Desktop/test.ppt";
     NSString *fileExtension = [filePath pathExtension];
     NSData *imageToEncryptIn = [[NSData alloc] initWithContentsOfFile:imagePath];
     NSData *imageToBeEncrypted = [[NSData alloc] initWithContentsOfFile:filePath];
     
-    NSLog(@"%lu",[imageToBeEncrypted length]);
+    //NSLog(@"%lu",[imageToBeEncrypted length]);
     
     HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
-    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted andExtension:(NSString *)fileExtension andKey:@"1,2,3"];
+    NSBitmapImageRep *imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:imageToBeEncrypted andExtension:(NSString *)fileExtension andKey:@"testing"];
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
     NSString *desktopPath = [paths objectAtIndex:0];
     
     NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
     NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
-    [dataOutput writeToFile:fullWriteString atomically: NO];
+    [dataOutput writeToFile:fullWriteString atomically: NO];*/
     
     /*Decrypt....*/
-    NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
+    /*NSData *encryptedImageData = [[NSData alloc] initWithData:dataOutput];
     HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
     NSString *extensionString = [[NSString alloc] init];
-    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString andKey:@"1,2,3"];
+    NSData *dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString andKey:@"testing"];
     NSLog(@"Decrypted Extension String: %@", extensionString);
     
     NSString *fileNameString = @"DecryptedFile.";
     NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,[fileNameString stringByAppendingString:extensionString]];
-    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];
+    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];*/
     
     
     
@@ -262,6 +281,27 @@
     [iiOutputImageWell setImage:NULL];
     [iiInputImageWell setImage:NULL];
     [iiInputImageToBeEncryptedWell setImage:NULL];
+}
+-(IBAction)fiOperationSelectorChange:(id)sender{
+    if ([fiOperationSelector selectedSegment]==0) {
+        [fiProcessButton setTitle:@"Encrypt"];
+        [fiInputImageLabel setStringValue:@"Image to Encrypt In:"];
+        [fiOutputFormatSelector setEnabled:TRUE];
+        [fiFileToBeEncryptedField setEnabled:TRUE];
+        [fiOutputImageLabel setStringValue:@"Encrypted Image:"];
+    }else {
+        [fiAnalyzeLabel setStringValue:@""];
+        [fiProcessButton setTitle:@"Decrypt"];
+        [fiInputImageLabel setStringValue:@"Image to Decrypt:"];
+        [fiOutputFormatSelector setEnabled:FALSE];
+        [fiFileToBeEncryptedField setEnabled:FALSE];
+        [fiOutputImageLabel setStringValue:@""];
+    }  
+    [fiOutputImageWell setImage:NULL];
+    [fiInputImageWell setImage:NULL];
+    NSArray *desktopPaths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPathZero = [desktopPaths objectAtIndex:0];
+    [fiFileToBeEncryptedField setStringValue:desktopPathZero];  
 }
 /*Text Encryption*/
 -(IBAction)generateRandomKey:(id)sender{
@@ -555,6 +595,107 @@
     HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
     NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
     [iiPassphraseTextField setStringValue:encryptionString];
+}
+/*File in Image Encryption*/
+-(IBAction)fiEncryptImage:(id)sender{
+    NSLog(@"Encrypting file in image.");
+    [fiProgressIndicator setHidden:FALSE];
+    [fiProgressIndicator startAnimation:self];
+   
+    
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[fiInputImageWell image] TIFFRepresentation]];
+    NSString *fileExtension = [[fiFileToBeEncryptedField stringValue] pathExtension];
+    NSData *fileToBeEncrypted = [[NSData alloc] initWithContentsOfFile:[fiFileToBeEncryptedField stringValue]];
+    
+    HSImageEncryptor *imageEncryptorObject = [[HSImageEncryptor alloc] initWithData:imageToEncryptIn];
+    NSString *encryptionKey = [[NSString alloc] initWithString:[fiPassphraseTextField stringValue]];
+    NSBitmapImageRep *imageEncryptedBitmap; 
+    
+    if ([encryptionKey length]==0) {
+        imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:fileToBeEncrypted andExtension:(NSString *)fileExtension];
+    }else {
+        imageEncryptedBitmap = [imageEncryptorObject encryptImageWithBits:8 andFileData:fileToBeEncrypted andExtension:(NSString *)fileExtension andKey:encryptionKey];
+
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    
+    if([fiOutputFormatSelector selectedSegment]==0){
+        NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSBMPFileType properties:nil];
+        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.bmp"];
+        [dataOutput writeToFile:fullWriteString atomically: NO];
+    }else if([fiOutputFormatSelector selectedSegment]==1){
+        NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSPNGFileType properties:nil];
+        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.png"];
+        [dataOutput writeToFile:fullWriteString atomically: NO];
+    }else if ([fiOutputFormatSelector selectedSegment]==2) {
+        NSData *dataOutput = [imageEncryptedBitmap representationUsingType:NSTIFFFileType properties:nil];
+        NSString *fullWriteString = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,@"EncryptedImage.tiff"];
+        [dataOutput writeToFile:fullWriteString atomically: NO];
+    }
+    
+    NSImage *imageEncrypted = [[NSImage alloc] init];
+    [imageEncrypted addRepresentation:imageEncryptedBitmap];
+    [fiOutputImageWell setImage:imageEncrypted];
+    [fiProgressIndicator setHidden:TRUE];
+    [fiProgressIndicator stopAnimation:self];
+}
+-(IBAction)fiDecryptImage:(id)sender{
+    NSLog(@"Decrypting file from image.");
+    [fiProgressIndicator setHidden:FALSE];
+    [fiProgressIndicator startAnimation:self];
+    
+    NSData *encryptedImageData = [[NSData alloc] initWithData:[[fiInputImageWell image] TIFFRepresentation]];
+    HSImageEncryptor *imageEncryptedObject = [[HSImageEncryptor alloc] initWithData:encryptedImageData];
+    NSString *encryptionKey = [[NSString alloc] initWithString:[fiPassphraseTextField stringValue]];
+    NSString *extensionString = [[NSString alloc] init];
+    NSData *dataOutput2; 
+    
+    if ([encryptionKey length]==0) {
+        dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString];
+    }else {
+        dataOutput2 = [imageEncryptedObject decryptFileDataWithBits:8 andStoreExtensionIn:&extensionString andKey:encryptionKey];
+    }
+    
+    NSLog(@"Decrypted Extension String: %@", extensionString);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    
+    NSString *fileNameString = @"DecryptedFile.";
+    NSString *fullWriteString2 = [[NSString alloc] initWithFormat:@"%@/%@",desktopPath,[fileNameString stringByAppendingString:extensionString]];
+    [dataOutput2 writeToFile:fullWriteString2 atomically:NO];
+    
+    [fiProgressIndicator setHidden:TRUE];
+    [fiProgressIndicator stopAnimation:self];
+}
+-(IBAction)fiImageSteganographySelector:(id)sender{
+    if ([fiOperationSelector selectedSegment]==0) {
+        [self fiEncryptImage:self];
+    }else {
+        [self fiDecryptImage:self];
+    }
+}
+-(IBAction)fiSizeCheck:(id)sender{
+    NSLog(@"Checking image size.");
+    NSData *imageToEncryptIn = [[NSData alloc] initWithData:[[fiInputImageWell image] TIFFRepresentation]];
+    NSData *fileToBeEncrypted = [[NSData alloc] initWithContentsOfFile:[fiFileToBeEncryptedField stringValue]];
+    NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
+    int spaceToWriteIn = imageToEncryptInSizeInBits(imageToEncryptInBMP);
+    
+    if (spaceToWriteIn>=[fileToBeEncrypted length]) {
+        [fiAnalyzeLabel setStringValue:@"File fits in the selected image."];
+        [fiProcessButton setEnabled:TRUE];
+    }else {
+        [fiAnalyzeLabel setStringValue:@"File does not fit in the selected image please select a larger one."];
+        [fiProcessButton setEnabled:FALSE];
+    }
+}
+-(IBAction)fiGenerateRandomPassphrase:(id)sender{
+    HSKeyLibrary *keyObject = [[HSKeyLibrary alloc] initWithFileName:@"1984"];
+    NSString *encryptionString = [[keyObject keysArray] objectAtIndex:(arc4random()%[[keyObject keysArray] count])];
+    [fiPassphraseTextField setStringValue:encryptionString];
 }
 
 @end
