@@ -684,7 +684,9 @@
     NSBitmapImageRep *imageToEncryptInBMP = [[NSBitmapImageRep alloc] initWithData:imageToEncryptIn];
     int spaceToWriteIn = imageToEncryptInSizeInBits(imageToEncryptInBMP);
     
-    if (spaceToWriteIn>=[fileToBeEncrypted length]) {
+    NSLog(@"\nSpace to Write in: %f\nRequired size: %f", spaceToWriteIn/8388608.0,([fileToBeEncrypted length]*8)/8388608.0);
+    
+    if (spaceToWriteIn>=[fileToBeEncrypted length]*8) {
         [fiAnalyzeLabel setStringValue:@"File fits in the selected image."];
         [fiProcessButton setEnabled:TRUE];
     }else {
