@@ -174,6 +174,7 @@
     
     NSBitmapImageRep *imageBitmapRepOut = encryptInImage(imageBitmapRep, (char *)testChar, numberOfBits, dataLength);
     NSLog(@"Data has been succesfully encrypted!");
+    free(extensionArray);
     return  imageBitmapRepOut; 
 }
 -(NSData *)decryptFileDataWithBits:(int)numberOfBits andStoreExtensionIn:(NSString **)extensionPtr{
@@ -230,6 +231,7 @@
     
     NSBitmapImageRep *imageBitmapRepOut = encryptInImage(imageBitmapRep, (char *)testChar, numberOfBits, dataLength);
     NSLog(@"Data has been succesfully encrypted!");
+    free(extensionArray);
     return  imageBitmapRepOut; 
 }
 -(NSData *)decryptFileDataWithBits:(int)numberOfBits andStoreExtensionIn:(NSString **)extensionPtr andKey:(NSString *)keyString{

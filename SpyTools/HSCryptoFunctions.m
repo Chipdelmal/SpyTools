@@ -122,6 +122,7 @@ NSArray *NSStringToKeyArray(NSString *inputString){
     for (int j=0; j<[inputString length]; j++) {
         [keyArray addObject:[NSNumber numberWithInt:encryptionCharArray[j]]];
     }
+    free(encryptionCharArray);
     return keyArray;
 }
 /*Substitution Cypher*/
@@ -147,6 +148,7 @@ NSArray *generateRequiredCharactersArray(NSString *stringToProcess){
             [requiredCharactersArray addObject:[NSNumber numberWithInt:stringToBeEncrypted[i]]];
         }
     }
+    free(stringToBeEncrypted);
     NSLog(@"Required Characters:%@",requiredCharactersArray);
     return requiredCharactersArray;
 }
@@ -175,6 +177,7 @@ NSString *encryptSubstitution(NSString *stringToBeEncryptedIn, NSArray *required
     }
     NSString *returnString = [[NSString alloc] initWithCString:stringToBeEncrypted encoding:4];
     NSLog(@"%@", returnString);
+    free(stringToBeEncrypted);
     return returnString;
 }
 NSString *decryptSubstitution(NSString *stringToBeDecryptedIn, NSArray *requiredCharactersArray, NSArray *keyArray){
@@ -190,6 +193,7 @@ NSString *decryptSubstitution(NSString *stringToBeDecryptedIn, NSArray *required
     }
     NSString *returnString = [[NSString alloc] initWithCString:stringToBeEncrypted encoding:4];
     NSLog(@"%@", returnString);
+    free(stringToBeEncrypted);
     return returnString;
 }
 
